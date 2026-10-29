@@ -2,6 +2,8 @@
 
 FastAPI and React/Leaflet vehicle routing application with five manually implemented search algorithms, exact directed-edge geometry, simulated road conditions, persisted overrides, and built-in/custom scenarios.
 
+See the [Functionality Report](FUNCTIONALITY_REPORT.md) for user workflows, algorithms, scenario behavior, API endpoints, verified results, and remaining limitations.
+
 ## Setup
 
 Requires Python 3.12 and Node.js 24. From this directory:
