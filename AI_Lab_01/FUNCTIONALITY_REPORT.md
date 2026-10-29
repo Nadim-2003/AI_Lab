@@ -234,8 +234,8 @@ The last completed verification before this documentation update produced:
 
 | Check | Confirmed result |
 | --- | --- |
-| Backend automated tests | 39 passed, including synthetic acquisition and backup checks |
-| Frontend component tests | 14 passed across three files, including readiness and recovery checks |
+| Backend automated tests | 42 passed, including synthetic acquisition and backup checks |
+| Frontend component tests | 15 passed across three files, including readiness and recovery checks |
 | Production frontend build | Passed, with a large-bundle advisory |
 | Backend startup | Passed during initial runtime validation |
 | Chromium/browser recovery tests | 3 passed: rendered map/setup state, mobile layout, request gating, and favicon response; map tiles mocked |
@@ -253,7 +253,7 @@ The frontend now waits for `/api/metadata` to report a usable dataset before req
 
 `setup_data.bat` provides a Windows entry point using the project's virtual environment. The acquisition script closes its temporary SQLite connection before cleaning the staging directory, avoiding an open-file cleanup problem on Windows. The pipeline and backup behavior are tested with synthetic source fixtures; an actual Windows OSM download remains unverified. The frontend also includes an SVG favicon. React DevTools advice remains an informational development message.
 
-The missing-data update passes 39 backend tests, 14 component tests, and three Chromium browser tests. Browser checks use the real local FastAPI/Vite application with an empty dataset and mocked external map tiles. The runner uses CommonJS configuration/test files to avoid the observed ESM-loader stall and supports either system Chromium or Playwright’s installed browser. These checks do not verify live OSM downloads or routing on an actual Dhaka graph.
+The missing-data update passes 42 backend tests, 15 component tests, and three Chromium browser tests. Browser checks use the real local FastAPI/Vite application with an empty dataset and mocked external map tiles. The runner uses CommonJS configuration/test files to avoid the observed ESM-loader stall and supports either system Chromium or Playwright’s installed browser. These checks do not verify live OSM downloads or routing on an actual Dhaka graph.
 
 
 ## 14. Public Overpass capacity handling
@@ -261,3 +261,10 @@ The missing-data update passes 39 backend tests, 14 component tests, and three C
 Acquisition now divides place queries into a configurable sequential grid (3 by 3 by default), retries temporary network/HTTP 429/500/502/503/504 failures with bounded exponential backoff, and honors server Retry-After instructions. A requests response hook surfaces these temporary statuses before OSMnx's internal retry handling and rejects JSON remarks that may signal incomplete query results. Access-denied responses are not automatically retried.
 
 The graph has a checksum-verified checkpoint, and each completed place tile has a standard JSON/GeoJSON checkpoint. They survive later download failures so the same command can resume. Repeated features across tile boundaries are deduplicated by source identity. Dataset metadata records graph and tile retrieval timestamps, the endpoint, and the grid size. Switching tile sizes retains the graph checkpoint but requires tiles for the selected grid. A private endpoint can be explicitly configured; there is no automatic switching between public servers. Tests cover backoff, attempt limits, Retry-After, incomplete-response rejection, graph reuse, and interrupted-tile resumption. Live public-server availability remains outside the application's control.
+
+
+## 15. Offline installation after an interrupted place download
+
+`setup_data.bat --publish-partial` installs an existing checksum-verified road checkpoint and completed place-tile checkpoints without sending network requests. The command preserves the distinction between a ready road graph and incomplete place coverage. Metadata records `places_complete`, `completed_place_tiles`, `total_place_tiles`, and `missing_place_tiles`. The frontend enables graph-based routing and available place search while displaying a partial-coverage warning. With no downloaded places, map-click selection is available and autocomplete stays disabled.
+
+Recovery requires the same study bounds, endpoint, and grid as the interrupted acquisition. Existing final datasets require explicit `--replace` and are backed up. Normal acquisition with `--replace` subsequently resumes missing place tiles and records complete coverage only when every tile has completed. Tests reproduce interruption before any place tile and after one completed tile, verify that offline recovery makes no network calls, load the installed graph and run a route, and verify later completion, backup preservation, and checksum rejection. A laptop's real OSM files are not accessible to cloud tests; user-reported counts are not substituted for locally measured integration results.

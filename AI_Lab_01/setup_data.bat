@@ -7,7 +7,7 @@ if not exist ".venv\Scripts\python.exe" (
   echo .venv\Scripts\python.exe -m pip install -r requirements.lock
   exit /b 1
 )
-echo Downloading actual OpenStreetMap roads and places. This may take several minutes.
+echo Preparing actual OpenStreetMap data. Downloads may take several minutes; --publish-partial uses saved checkpoints offline.
 ".venv\Scripts\python.exe" scripts\acquire_data.py %*
 if errorlevel 1 (
   echo Data acquisition failed. Read the error above; no sample data was substituted.

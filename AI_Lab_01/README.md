@@ -98,6 +98,32 @@ Changing the grid changes the tile checkpoints; previously completed tiles from 
 
 An authorized private Overpass service can be selected with `--overpass-url https://YOUR-HOST/api`; its hostname must also be allowed by your network settings. Normal startup never downloads data. After acquisition finishes, restart the backend and check dataset status in the frontend. Use `--replace` only when intentionally replacing an existing completed dataset; timestamped backups are retained.
 
+## Use downloaded roads when place acquisition is interrupted
+
+If the log reports a successful road graph download but stops on a place tile, restarting the backend alone does not install the saved checkpoints. Update the project, stop the backend, and run the following from `AI_Lab_01`:
+
+```bat
+setup_data.bat --publish-partial
+```
+
+This is an offline recovery operation: it verifies and installs the saved road graph and only the completed place tiles for the same study bounds, server, and grid. It never contacts Overpass. Keep `data/download-checkpoints/` intact. If you previously used nondefault `--bbox`, `--overpass-url`, or `--place-grid` options, supply those same options here.
+
+The installed graph enables routing and map-click endpoint selection. Search includes only the available valid places. Metadata and a frontend warning explicitly show incomplete place coverage and the completed/total tile counts. An incomplete place dataset is not reported as fully downloaded. Recovery also works with zero completed place tiles; use map clicks in that case. If no verified graph checkpoint exists, the command stops instead of generating substitute data.
+
+Restart the backend after the command completes:
+
+```bat
+.venv\Scripts\python.exe -m uvicorn backend.app.main:app --reload --port 8000
+```
+
+Click **Check dataset status** in the frontend. Later, when Overpass is available, resume full place acquisition with:
+
+```bat
+setup_data.bat --replace
+```
+
+Existing dataset files are backed up, completed checkpoints are reused, and missing tiles are requested. Stop/restart the backend after installation. If intentionally replacing an already installed dataset during offline recovery, add `--replace` to the recovery command as well. The term `publish-partial` refers only to installing local data files; it does not upload data or publish the cloud environment.
+
 ## Validation
 
 ```bash
@@ -112,7 +138,7 @@ With a backend using an empty dataset directory running on port 8000, browser re
 npm --prefix frontend run test:e2e
 ```
 
-Current automated validation passes 39 backend tests and 14 frontend component tests, including dataset-readiness gating, recovery after restart, and acquisition/file-backup behavior with synthetic source fixtures. The frontend production build and three Chromium browser checks also pass. Browser checks cover the missing-data workflow with a real local backend and mocked map tiles, including mobile layout, favicon loading, and suppression of unavailable road/place requests. Live OSM access was denied during initial setup, so actual Dhaka dataset counts, 1,000-place coverage, and routing on the real dataset remain unverified. Synthetic graphs are confined to automated tests.
+Current automated validation passes 42 backend tests and 15 frontend component tests, including dataset-readiness gating, recovery after restart, and acquisition/file-backup behavior with synthetic source fixtures. The frontend production build and three Chromium browser checks also pass. Browser checks cover the missing-data workflow with a real local backend and mocked map tiles, including mobile layout, favicon loading, and suppression of unavailable road/place requests. Live OSM access was denied during initial setup, so actual Dhaka dataset counts, 1,000-place coverage, and routing on the real dataset remain unverified. Synthetic graphs are confined to automated tests.
 
 ## Routing behavior
 

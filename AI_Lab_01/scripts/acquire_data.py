@@ -111,6 +111,8 @@ def load_graph_checkpoint(boundary, checkpoint, args):
             raise AcquisitionError(f'Graph checkpoint checksum mismatch: {graph_path}. Preserve it for diagnosis, then remove this checkpoint directory before retrying.')
         print('Resuming saved road graph; no new graph request needed.', flush=True)
         return ox.load_graphml(graph_path), manifest['retrieved_at']
+    if getattr(args, 'publish_partial', False):
+        raise AcquisitionError('No verified graph checkpoint exists for these study bounds and server. Run setup_data.bat first; offline recovery never downloads data.')
     print('Retrieving directed driving graph for explicit study rectangle', flush=True)
     graph = retry_download(lambda: ox.graph_from_polygon(boundary, network_type='drive', retain_all=True, simplify=True), 'Road graph', args.attempts, args.retry_delay)
     temporary = checkpoint / 'dhaka.pending.graphml'
@@ -133,6 +135,10 @@ def download_place_tiles(boundary, checkpoint, args):
             if path.exists():
                 print(f'{label}: using completed checkpoint.', flush=True)
                 payload = json.loads(path.read_text(encoding='utf-8'))
+            elif getattr(args, 'publish_partial', False):
+                print(f'{label}: not downloaded; recording incomplete place coverage.', flush=True)
+                timestamps.append(None)
+                continue
             else:
                 tile = box(west + (east - west) * column / args.place_grid, south + (north - south) * row / args.place_grid, west + (east - west) * (column + 1) / args.place_grid, south + (north - south) * (row + 1) / args.place_grid)
                 print(f'{label}: retrieving named OSM features.', flush=True)
@@ -168,6 +174,7 @@ def main():
     parser.add_argument('--bbox', nargs=4, type=float, default=[90.30, 23.65, 90.50, 23.90], metavar=('WEST', 'SOUTH', 'EAST', 'NORTH'))
     parser.add_argument('--output', type=Path, default=Path(__file__).resolve().parents[1] / 'data')
     parser.add_argument('--replace', action='store_true')
+    parser.add_argument('--publish-partial', action='store_true', help='Install the verified saved graph and available place tiles without any network requests; mark incomplete place coverage explicitly.')
     parser.add_argument('--place-grid', type=int, default=3, help='Split place acquisition into N by N sequential requests (default: 3).')
     parser.add_argument('--attempts', type=int, default=4)
     parser.add_argument('--retry-delay', type=float, default=10)
@@ -245,7 +252,7 @@ def main():
             snapshot = service.snapshot('normal')
             roads = [service.road(identifier, snapshot) for identifier in service.edges]
             (stage / 'roads.geojson').write_text(json.dumps({'type': 'FeatureCollection', 'features': roads}), encoding='utf-8')
-        metadata = {'source': 'OpenStreetMap contributors', 'license': 'ODbL 1.0', 'retrieved_at': datetime.now(timezone.utc).isoformat(), 'road_retrieved_at': road_retrieved_at, 'place_tile_retrieved_at': tile_timestamps, 'overpass_url': ox.settings.overpass_url, 'place_grid': args.place_grid, 'network_type': 'drive', 'study_area': {'description': 'Explicit configurable Dhaka study rectangle; not an administrative boundary', 'bbox': args.bbox, 'geometry': mapping(boundary)}, 'nodes': graph.number_of_nodes(), 'edges': graph.number_of_edges(), 'weak_components': __import__('networkx').number_weakly_connected_components(graph), 'unique_places': len(records), 'categories': dict(Counter(p['category'] for p in records)), 'quality_report': dict(rejected), 'graph_sha256': hashlib.sha256((stage / 'dhaka.graphml').read_bytes()).hexdigest()}
+        metadata = {'source': 'OpenStreetMap contributors', 'license': 'ODbL 1.0', 'retrieved_at': datetime.now(timezone.utc).isoformat(), 'road_retrieved_at': road_retrieved_at, 'place_tile_retrieved_at': tile_timestamps, 'overpass_url': ox.settings.overpass_url, 'place_grid': args.place_grid, 'places_complete': all(stamp is not None for stamp in tile_timestamps), 'completed_place_tiles': sum(stamp is not None for stamp in tile_timestamps), 'total_place_tiles': len(tile_timestamps), 'missing_place_tiles': [i + 1 for i, stamp in enumerate(tile_timestamps) if stamp is None], 'network_type': 'drive', 'study_area': {'description': 'Explicit configurable Dhaka study rectangle; not an administrative boundary', 'bbox': args.bbox, 'geometry': mapping(boundary)}, 'nodes': graph.number_of_nodes(), 'edges': graph.number_of_edges(), 'weak_components': __import__('networkx').number_weakly_connected_components(graph), 'unique_places': len(records), 'categories': dict(Counter(p['category'] for p in records)), 'quality_report': dict(rejected), 'graph_sha256': hashlib.sha256((stage / 'dhaka.graphml').read_bytes()).hexdigest()}
         (stage / 'metadata.json').write_text(json.dumps(metadata, indent=2, ensure_ascii=False), encoding='utf-8')
         if existing:
             backup = args.output / ('backup-' + datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%f'))
@@ -255,6 +262,8 @@ def main():
         for name in ['dhaka.graphml', 'roads.geojson', 'places.json', 'metadata.json']:
             (stage / name).replace(args.output / name)
         print(json.dumps(metadata, indent=2, ensure_ascii=False))
+        if not metadata['places_complete']:
+            print(f"Road graph installed. Place coverage is INCOMPLETE: {metadata['completed_place_tiles']}/{metadata['total_place_tiles']} tiles and {len(records)} valid places. Use map clicks for locations missing from search. Restart the backend now. Later rerun the normal acquisition command with --replace to resume missing tiles.", flush=True)
         if len(records) < 1000:
             print('WARNING: fewer than 1000 valid source records; inspect study area and quality_report. No artificial records were added.')
 
@@ -264,7 +273,7 @@ if __name__ == '__main__':
         main()
     except (AcquisitionError, requests.RequestException, ResponseStatusCodeError, InsufficientResponseError) as exc:
         print(f'Data acquisition stopped: {exc}', file=sys.stderr)
-        print('Completed graph and place tiles remain in data/download-checkpoints. Wait before rerunning the same command. Existing dataset files were not replaced by this failed download.', file=sys.stderr)
+        print('Completed graph and place tiles remain in data/download-checkpoints. Wait before rerunning the same command, or use setup_data.bat --publish-partial to install the saved graph and completed tiles offline. Existing dataset files were not replaced by this failed download.', file=sys.stderr)
         sys.exit(1)
     except KeyboardInterrupt:
         print('Download interrupted. Completed checkpoints are retained for the next run.', file=sys.stderr)

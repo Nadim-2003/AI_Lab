@@ -110,3 +110,70 @@ def test_place_tiles_resume_after_interruption(tmp_path, monkeypatch):
     assert download.call_count == 3
     assert len(data) == 4 and len(timestamps) == 4
     assert all(index == ('node', 1) for index in data.index)
+
+
+@pytest.mark.parametrize('completed', [0, 1])
+def test_offline_recovery_installs_graph_and_partial_places_then_resumes(tmp_path, graph, monkeypatch, completed):
+    numeric = nx.convert_node_labels_to_integers(graph, first_label=1)
+    converted = nx.MultiDiGraph(crs='EPSG:4326')
+    converted.add_nodes_from(numeric.nodes(data=True))
+    for u, v, key, attrs in numeric.edges(keys=True, data=True):
+        converted.add_edge(u, v, key=int(attrs['osmid']), **attrs)
+    frame = gpd.GeoDataFrame({'name': ['Saved OSM test feature'], 'amenity': ['university'], 'geometry': [Point(90.4, 23.77)]}, index=pd.MultiIndex.from_tuples([('node', 1)]), crs='EPSG:4326')
+    graph_request = Mock(return_value=converted)
+    monkeypatch.setattr(acquire_data.ox, 'graph_from_polygon', graph_request)
+    monkeypatch.setattr(acquire_data.ox, 'features_from_polygon', Mock(side_effect=[frame] * completed + [ResponseStatusCodeError('responded: 502 Bad Gateway')]))
+    monkeypatch.setattr(acquire_data.time, 'sleep', lambda _: None)
+    command = ['acquire_data.py', '--output', str(tmp_path), '--place-grid', '2', '--attempts', '1']
+    monkeypatch.setattr(sys, 'argv', command)
+    with pytest.raises(acquire_data.AcquisitionError):
+        acquire_data.main()
+    assert not (tmp_path / 'dhaka.graphml').exists()
+    checkpoint = next((tmp_path / 'download-checkpoints').iterdir())
+    graph_bytes = (checkpoint / 'dhaka.graphml').read_bytes()
+    no_network = Mock(side_effect=AssertionError('Offline recovery must not access the network'))
+    monkeypatch.setattr(acquire_data.ox, 'graph_from_polygon', no_network)
+    monkeypatch.setattr(acquire_data.ox, 'features_from_polygon', no_network)
+    monkeypatch.setattr(sys, 'argv', command + ['--publish-partial'])
+    acquire_data.main()
+    no_network.assert_not_called()
+    metadata = json.loads((tmp_path / 'metadata.json').read_text())
+    assert metadata['places_complete'] is False
+    assert metadata['completed_place_tiles'] == completed
+    assert metadata['total_place_tiles'] == 4
+    assert metadata['missing_place_tiles'] == list(range(completed + 1, 5))
+    assert metadata['unique_places'] == completed
+    service = Service(tmp_path)
+    try:
+        from backend.app.models import RouteQuery
+        assert service.stats()['ready']
+        assert service.stats()['nodes'] == 5 and service.stats()['edges'] == 6
+        assert service.route(RouteQuery(start='1', destination='4', algorithm='UCS'))['results'][0]['found']
+    finally:
+        service.store.db.close()
+    remaining = Mock(return_value=frame)
+    monkeypatch.setattr(acquire_data.ox, 'features_from_polygon', remaining)
+    monkeypatch.setattr(sys, 'argv', command + ['--replace'])
+    acquire_data.main()
+    assert remaining.call_count == 4 - completed
+    assert no_network.call_count == 0
+    final = json.loads((tmp_path / 'metadata.json').read_text())
+    assert final['places_complete'] is True
+    assert final['completed_place_tiles'] == 4 and final['missing_place_tiles'] == []
+    assert graph_request.call_count == 1
+    assert (checkpoint / 'dhaka.graphml').read_bytes() == graph_bytes
+    assert len(list(tmp_path.glob('backup-*'))) == 1
+
+
+def test_offline_recovery_rejects_missing_or_invalid_graph_without_downloading(tmp_path, monkeypatch):
+    operation = Mock(side_effect=AssertionError('No network allowed'))
+    monkeypatch.setattr(acquire_data.ox, 'graph_from_polygon', operation)
+    args = SimpleNamespace(publish_partial=True)
+    boundary = acquire_data.box(90.3, 23.65, 90.5, 23.9)
+    with pytest.raises(acquire_data.AcquisitionError, match='No verified graph checkpoint'):
+        acquire_data.load_graph_checkpoint(boundary, tmp_path, args)
+    (tmp_path / 'dhaka.graphml').write_text('broken')
+    (tmp_path / 'graph.json').write_text(json.dumps({'sha256': 'mismatch', 'retrieved_at': '2026-10-30'}))
+    with pytest.raises(acquire_data.AcquisitionError, match='checksum mismatch'):
+        acquire_data.load_graph_checkpoint(boundary, tmp_path, args)
+    operation.assert_not_called()

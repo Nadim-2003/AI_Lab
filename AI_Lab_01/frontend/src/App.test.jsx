@@ -64,3 +64,14 @@ it('recovers after a backend restart when the user checks dataset status', async
   expect(screen.queryByText('Real road data has not been loaded.')).not.toBeInTheDocument()
   expect(screen.getByLabelText('Start')).toBeEnabled()
 })
+
+it('enables routing with an installed graph while warning about incomplete place coverage', async () => {
+  const original = fetch.getMockImplementation()
+  fetch.mockImplementation(async (url, options) => url.includes('/metadata') ? {ok: true, json: async () => ({...stats, places: 12, metadata: {places_complete: false, completed_place_tiles: 4, total_place_tiles: 9}})} : original(url, options))
+  render(<App/>)
+  await screen.findByText('Road routing is ready; place coverage is incomplete.')
+  expect(screen.queryByText('Real road data has not been loaded.')).not.toBeInTheDocument()
+  expect(screen.getByLabelText('Start')).toBeEnabled()
+  expect(screen.getByText('Pick start on map')).toBeEnabled()
+  expect(screen.getByText(/4 of 9 place tiles installed/)).toBeInTheDocument()
+})
