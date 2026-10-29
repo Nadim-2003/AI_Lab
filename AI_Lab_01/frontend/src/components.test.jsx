@@ -21,6 +21,15 @@ describe('coordinates and errors', () => {
 })
 
 describe('place autocomplete', () => {
+  it('opens a place dropdown before the user types', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(mockResponse([{id: 'node/1', name: 'Dhaka University', category: 'amenity:university', lat: 23.73, lon: 90.39}])))
+    render(<Autocomplete label="Destination" value={null} onChange={vi.fn()} onError={vi.fn()}/>)
+    fireEvent.focus(screen.getByRole('combobox'))
+    expect(await screen.findByRole('listbox', {name: 'Destination places'})).toBeInTheDocument()
+    expect(await screen.findByRole('option')).toHaveTextContent('Dhaka University')
+    expect(fetch.mock.calls[0][0]).toContain('q=&limit=25')
+  })
+
   it('supports keyboard selection and resolves a real selected result', async () => {
     const changed = vi.fn()
     vi.stubGlobal('fetch', vi.fn().mockImplementation(url => Promise.resolve(mockResponse(url.includes('/places') ? [{id: 'node/1', name: 'ঢাকা', category: 'place:city', lat: 23.77, lon: 90.4}] : {node: '42', lat: 23.77, lon: 90.4, distance_m: 5}))))

@@ -10,14 +10,15 @@ export default function Autocomplete({label, value, onChange, onError, disabled 
   const id = useId()
   const selection = useRef(0)
   useEffect(() => {
-    if (disabled || query.trim().length < 2) {setItems([]); setBusy(false); return}
+    if (disabled || !open) {setItems([]); setBusy(false); return}
     const controller = new AbortController()
     const timer = setTimeout(() => {
       setBusy(true)
-      api(`/places?q=${encodeURIComponent(query)}`, {signal: controller.signal}).then(data => {setItems(data); setActive(0)}).catch(error => {if (error.name !== 'AbortError') onError(error.message)}).finally(() => {if (!controller.signal.aborted) setBusy(false)})
-    }, 250)
+      const params = new URLSearchParams({q: query.trim(), limit: '25'})
+      api(`/places?${params}`, {signal: controller.signal}).then(data => {setItems(data); setActive(0)}).catch(error => {if (error.name !== 'AbortError') onError(error.message)}).finally(() => {if (!controller.signal.aborted) setBusy(false)})
+    }, query.trim() ? 250 : 0)
     return () => {clearTimeout(timer); controller.abort()}
-  }, [query, disabled])
+  }, [query, disabled, open])
   async function choose(place) {
     if (disabled) return
     const version = ++selection.current
@@ -31,13 +32,13 @@ export default function Autocomplete({label, value, onChange, onError, disabled 
   return <div className="autocomplete">
     <label htmlFor={id}>{label}</label>
     {value && <div className="selection"><span><strong>{value.name}</strong><small>Road node {value.node} · snapped {value.distance_m.toFixed(0)} m</small></span><button aria-label={`Clear ${label}`} onClick={() => {selection.current++; onChange(null); setQuery(''); setBusy(false)}}>×</button></div>}
-    <input id={id} disabled={disabled} role="combobox" aria-autocomplete="list" aria-expanded={open} aria-controls={`${id}-list`} aria-activedescendant={open && items.length ? `${id}-${active}` : undefined} value={query} placeholder={`Search ${label.toLowerCase()}…`} onFocus={() => setOpen(true)} onChange={e => {setQuery(e.target.value); setOpen(true)}} onKeyDown={e => {
+    <input id={id} disabled={disabled} role="combobox" aria-autocomplete="list" aria-expanded={open} aria-controls={`${id}-list`} aria-activedescendant={open && items.length ? `${id}-${active}` : undefined} value={query} placeholder={`Choose or search ${label.toLowerCase()}…`} onFocus={() => setOpen(true)} onClick={() => setOpen(true)} onChange={e => {setQuery(e.target.value); setOpen(true)}} onKeyDown={e => {
       if (e.key === 'ArrowDown') {e.preventDefault(); setActive(i => Math.min(items.length - 1, i + 1)); setOpen(true)}
       if (e.key === 'ArrowUp') {e.preventDefault(); setActive(i => Math.max(0, i - 1))}
       if (e.key === 'Escape') setOpen(false)
       if (e.key === 'Enter' && open && items[active]) {e.preventDefault(); choose(items[active])}
     }}/>
     {busy && <small role="status">Searching / matching road…</small>}
-    {!disabled && open && query.trim().length >= 2 && <ul id={`${id}-list`} role="listbox" aria-label={`${label} suggestions`} className="suggestions">{items.length ? items.map((p, i) => <li key={p.id} id={`${id}-${i}`} role="option" aria-selected={active === i}><button onClick={() => choose(p)}><strong>{p.name}</strong><small>{p.category} {p.locality && `· ${p.locality}`}</small></button></li>) : <li className="empty">{busy ? 'Loading…' : 'No matching places'}</li>}</ul>}
+    {!disabled && open && <ul id={`${id}-list`} role="listbox" aria-label={`${label} places`} className="suggestions">{items.length ? items.map((p, i) => <li key={p.id} id={`${id}-${i}`} role="option" aria-selected={active === i}><button onClick={() => choose(p)}><strong>{p.name}</strong><small>{p.category} {p.locality && `· ${p.locality}`}</small></button></li>) : <li className="empty">{busy ? 'Loading places…' : query.trim() ? 'No matching places' : 'No places available'}</li>}</ul>}
   </div>
 }
