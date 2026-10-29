@@ -112,9 +112,11 @@ def test_snapping_validation_roads(client):
 
 def test_places_dedupe_bangla_and_search(tmp_path, graph):
     records = [{'id': 'node/1', 'name': 'ঢাকা University', 'name_en': 'Dhaka University', 'category': 'amenity:university', 'lon': 90.4, 'lat': 23.77}, {'id': 'node/2', 'name': 'Invalid', 'category': 'other', 'lon': 200, 'lat': 23.77}]
-    (tmp_path / 'places.json').write_text(json.dumps(records + [records[0]]))
+    (tmp_path / 'places.json').write_text(json.dumps(records + [records[0]], ensure_ascii=False), encoding='utf-8')
+    (tmp_path / 'metadata.json').write_text(json.dumps({'study_area': {'name': 'ঢাকা বিশ্ববিদ্যালয়'}}, ensure_ascii=False), encoding='utf-8')
     client = TestClient(create_app(tmp_path, graph))
     assert client.get('/api/metadata').json()['places'] == 1
+    assert client.get('/api/metadata').json()['study_area']['name'] == 'ঢাকা বিশ্ববিদ্যালয়'
     assert len(client.get('/api/places', params={'q': 'DHAKA'}).json()) == 1
     assert len(client.get('/api/places', params={'q': 'ঢাকা'}).json()) == 1
     assert client.get('/api/places', params={'q': 'xyz'}).json() == []

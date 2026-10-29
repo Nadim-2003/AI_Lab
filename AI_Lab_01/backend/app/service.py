@@ -71,7 +71,7 @@ class Service:
             self.dataset_id = hashlib.sha256(repr(identity).encode()).hexdigest()[:16]
             places_path = self.data_dir / 'places.json'
             if places_path.exists():
-                places = json.loads(places_path.read_text())
+                places = json.loads(places_path.read_text(encoding='utf-8'))
                 seen = set()
                 for place in places:
                     if place['id'] in seen or not place.get('name') or not valid_coordinate([place['lon'], place['lat']]):
@@ -81,7 +81,7 @@ class Service:
                     self.places.append(place)
             metadata_path = self.data_dir / 'metadata.json'
             if metadata_path.exists():
-                self.metadata = json.loads(metadata_path.read_text())
+                self.metadata = json.loads(metadata_path.read_text(encoding='utf-8'))
         except Exception as exc:
             self.graph = None
             self.error = f'Dataset loading failed: {exc}'
