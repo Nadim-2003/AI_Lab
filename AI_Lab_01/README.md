@@ -76,6 +76,28 @@ Open `http://localhost:5173`. If it was already open, click **Check dataset stat
 
 While metadata reports that the dataset is unavailable, the frontend disables place search and map endpoint selection and does not request road/place layers. The setup panel displays recovery steps. A bundled SVG favicon replaces the missing icon. React's “Download the React DevTools” console message is an informational development message, not a failure.
 
+## Overpass 502 / server-at-capacity recovery
+
+A `502 Bad Gateway` or “all query workers are busy” response comes from the public Overpass server. It does not mean React or Python failed to install. Update your local copy to include the resumable downloader, wait a few minutes before retrying, and run:
+
+```bat
+setup_data.bat
+```
+
+The downloader splits the same study area into a 3-by-3 grid of sequential place queries, retries surfaced temporary server/network failures up to four attempts, and uses exponential delays of 10, 20, and 40 seconds unless the server requests a longer wait. Requests are not parallelized. Incomplete responses with an Overpass remark are not accepted as a successful dataset.
+
+Completed road and place downloads are retained under `data/download-checkpoints/`, keyed by study bounds and server. Rerunning the same command resumes completed tiles. Keep this directory and `data/osm-cache/`; do not delete them to solve a temporary server outage. A failed acquisition does not replace the existing final dataset. The first run after upgrading may still need to reconstruct the graph from the previous OSMnx cache, because older versions did not save a durable graph checkpoint.
+
+If individual place queries still time out, use smaller tiles without reducing study-area coverage:
+
+```bat
+setup_data.bat --place-grid 6
+```
+
+Changing the grid changes the tile checkpoints; previously completed tiles from another grid are not reused, but the graph checkpoint is reused. More tiles mean more requests, so use this option for query-size/timeouts rather than repeatedly hammering a server that is at capacity. Run only one acquisition process at a time. If all attempts fail, wait longer and rerun later. No software change can guarantee that a busy public server will accept requests.
+
+An authorized private Overpass service can be selected with `--overpass-url https://YOUR-HOST/api`; its hostname must also be allowed by your network settings. Normal startup never downloads data. After acquisition finishes, restart the backend and check dataset status in the frontend. Use `--replace` only when intentionally replacing an existing completed dataset; timestamped backups are retained.
+
 ## Validation
 
 ```bash
@@ -90,7 +112,7 @@ With a backend using an empty dataset directory running on port 8000, browser re
 npm --prefix frontend run test:e2e
 ```
 
-Current automated validation passes 35 backend tests and 14 frontend component tests, including dataset-readiness gating, recovery after restart, and acquisition/file-backup behavior with synthetic source fixtures. The frontend production build and three Chromium browser checks also pass. Browser checks cover the missing-data workflow with a real local backend and mocked map tiles, including mobile layout, favicon loading, and suppression of unavailable road/place requests. Live OSM access was denied during initial setup, so actual Dhaka dataset counts, 1,000-place coverage, and routing on the real dataset remain unverified. Synthetic graphs are confined to automated tests.
+Current automated validation passes 39 backend tests and 14 frontend component tests, including dataset-readiness gating, recovery after restart, and acquisition/file-backup behavior with synthetic source fixtures. The frontend production build and three Chromium browser checks also pass. Browser checks cover the missing-data workflow with a real local backend and mocked map tiles, including mobile layout, favicon loading, and suppression of unavailable road/place requests. Live OSM access was denied during initial setup, so actual Dhaka dataset counts, 1,000-place coverage, and routing on the real dataset remain unverified. Synthetic graphs are confined to automated tests.
 
 ## Routing behavior
 

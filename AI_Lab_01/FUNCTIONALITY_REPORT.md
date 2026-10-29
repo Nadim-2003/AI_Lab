@@ -234,7 +234,7 @@ The last completed verification before this documentation update produced:
 
 | Check | Confirmed result |
 | --- | --- |
-| Backend automated tests | 35 passed, including synthetic acquisition and backup checks |
+| Backend automated tests | 39 passed, including synthetic acquisition and backup checks |
 | Frontend component tests | 14 passed across three files, including readiness and recovery checks |
 | Production frontend build | Passed, with a large-bundle advisory |
 | Backend startup | Passed during initial runtime validation |
@@ -253,4 +253,11 @@ The frontend now waits for `/api/metadata` to report a usable dataset before req
 
 `setup_data.bat` provides a Windows entry point using the project's virtual environment. The acquisition script closes its temporary SQLite connection before cleaning the staging directory, avoiding an open-file cleanup problem on Windows. The pipeline and backup behavior are tested with synthetic source fixtures; an actual Windows OSM download remains unverified. The frontend also includes an SVG favicon. React DevTools advice remains an informational development message.
 
-The missing-data update passes 35 backend tests, 14 component tests, and three Chromium browser tests. Browser checks use the real local FastAPI/Vite application with an empty dataset and mocked external map tiles. The runner uses CommonJS configuration/test files to avoid the observed ESM-loader stall and supports either system Chromium or Playwright’s installed browser. These checks do not verify live OSM downloads or routing on an actual Dhaka graph.
+The missing-data update passes 39 backend tests, 14 component tests, and three Chromium browser tests. Browser checks use the real local FastAPI/Vite application with an empty dataset and mocked external map tiles. The runner uses CommonJS configuration/test files to avoid the observed ESM-loader stall and supports either system Chromium or Playwright’s installed browser. These checks do not verify live OSM downloads or routing on an actual Dhaka graph.
+
+
+## 14. Public Overpass capacity handling
+
+Acquisition now divides place queries into a configurable sequential grid (3 by 3 by default), retries temporary network/HTTP 429/500/502/503/504 failures with bounded exponential backoff, and honors server Retry-After instructions. A requests response hook surfaces these temporary statuses before OSMnx's internal retry handling and rejects JSON remarks that may signal incomplete query results. Access-denied responses are not automatically retried.
+
+The graph has a checksum-verified checkpoint, and each completed place tile has a standard JSON/GeoJSON checkpoint. They survive later download failures so the same command can resume. Repeated features across tile boundaries are deduplicated by source identity. Dataset metadata records graph and tile retrieval timestamps, the endpoint, and the grid size. Switching tile sizes retains the graph checkpoint but requires tiles for the selected grid. A private endpoint can be explicitly configured; there is no automatic switching between public servers. Tests cover backoff, attempt limits, Retry-After, incomplete-response rejection, graph reuse, and interrupted-tile resumption. Live public-server availability remains outside the application's control.
