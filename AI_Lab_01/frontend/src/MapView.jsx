@@ -54,7 +54,8 @@ export default function MapView({ready = false, studyBounds, scenario, revision,
       <Focus route={chosen} focusKey={focusKey}/>
       {roads.features.map(road => {
         const c = road.properties.conditions
-        return <Polyline key={road.properties.id} positions={toLeaflet(road.geometry)} pathOptions={{color: c.blocked ? '#d32f43' : c.traffic + c.rain + c.safety > 0 ? '#d59932' : '#517e80', weight: c.blocked ? 5 : 3, opacity: 0.65, dashArray: c.blocked ? '5 7' : undefined, bubblingMouseEvents: false}} eventHandlers={{click: event => {L.DomEvent.stopPropagation(event.originalEvent); selectionMode ? onPoint(event.latlng) : onRoad(road)}}}><Tooltip>{road.properties.name || 'Unnamed road'} · {road.properties.u} → {road.properties.v}</Tooltip></Polyline>
+        const penalized = ['traffic', 'condition', 'rain', 'safety'].some(key => Number(c[key]) > 0)
+        return <Polyline key={road.properties.id} positions={toLeaflet(road.geometry)} pathOptions={{color: c.blocked ? '#d32f43' : penalized ? '#d59932' : '#517e80', weight: c.blocked ? 5 : 3, opacity: 0.65, dashArray: c.blocked ? '5 7' : undefined, bubblingMouseEvents: false}} eventHandlers={{click: event => {L.DomEvent.stopPropagation(event.originalEvent); selectionMode ? onPoint(event.latlng) : onRoad(road)}}}><Tooltip>{road.properties.name || 'Unnamed road'} · {road.properties.u} → {road.properties.v}</Tooltip></Polyline>
       })}
       {places.map(place => <CircleMarker key={place.id} center={[place.lat, place.lon]} radius={4} pathOptions={{color: '#567bb3', fillOpacity: 0.8}}><Tooltip>{place.name} · {place.category}</Tooltip></CircleMarker>)}
       {showTrace && chosen?.trace_points.map(([lon, lat], i) => <CircleMarker key={`trace-${i}`} center={[lat, lon]} radius={3} pathOptions={{color: colors[chosen.algorithm], opacity: 0.4, fillOpacity: 0.3, interactive: false}}/>)}

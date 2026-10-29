@@ -47,7 +47,10 @@ it('opens directed road editor', async () => {
   fireEvent.click(screen.getByText('Inspect road'))
   expect(screen.getByText('Test road')).toBeInTheDocument()
   expect(screen.getByLabelText('Road traffic')).toHaveValue('0')
-  expect(screen.getByRole('button', {name: 'Save override'})).toBeEnabled()
+  expect(screen.getByRole('button', {name: 'Apply conditions to this road'})).toBeDisabled()
+  fireEvent.change(screen.getByLabelText('Road traffic'), {target: {value: '1'}})
+  expect(screen.getByText('These changes are not applied yet. Use the button below.')).toBeInTheDocument()
+  expect(screen.getByRole('button', {name: 'Apply conditions to this road'})).toBeEnabled()
 })
 
 it('recovers after a backend restart when the user checks dataset status', async () => {
