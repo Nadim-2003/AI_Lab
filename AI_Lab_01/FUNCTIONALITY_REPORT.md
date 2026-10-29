@@ -2,11 +2,13 @@
 
 **Project title:** Intelligent Vehicle Routing System for Dhaka City Under Dynamic Multi-Parameter Real-World Constraints
 
-**Report date:** 29 October 2026
+**Report updated:** 30 October 2026
 
 **Project directory:** `AI_Lab_01`
 
 ## 1. Purpose and current status
+
+The current default study area is **Dhaka University and nearby areas**, using bounds `[90.385, 23.718, 90.412, 23.746]` and one place query. Full Dhaka remains an optional preset. The smaller-area policy replaces the previous default full-city download.
 
 Dhaka Route Lab is an AI laboratory application for studying how five search algorithms find routes through a directed road network under simulated traffic, road-condition, weather, safety, and blockage constraints.
 
@@ -154,7 +156,7 @@ The results table displays status, distance in kilometers, generalized cost, rou
 
 ## 9. OpenStreetMap acquisition and persistence
 
-`scripts/acquire_data.py` uses OSMnx to request a directed driving graph and named OSM features within an explicit study rectangle. The default bounds are west 90.30, south 23.65, east 90.50, and north 23.90. This is a configurable study area, not a verified administrative boundary.
+`scripts/acquire_data.py` uses OSMnx to request a directed driving graph and named OSM features within an explicit study rectangle. The default DU-area bounds are west 90.385, south 23.718, east 90.412, and north 23.746. `--area dhaka` selects the previous full-city bounds [90.30, 23.65, 90.50, 23.90]. This is a configurable study area, not a verified administrative boundary.
 
 The pipeline preserves disconnected components, parallel edges, OSM identifiers, directionality, road attributes, and available geometries. Named features are deduplicated by OSM element type and ID. Records include available names, category, coordinates, address/locality, source identity, matched node, and snapping distance. Unresolved road matches are reported rather than inventing connections.
 
@@ -169,7 +171,7 @@ The pipeline preserves disconnected components, parallel edges, OSM identifiers,
 
 Existing dataset files require explicit `--replace`; the script copies them to a timestamped backup before replacement. Acquisition is separate from startup, so normal routing does not download the graph repeatedly. Saved local graph/place data supports operation without live Overpass access, although base-map tiles still require their tile service unless another tile source is configured.
 
-The pipeline aims to collect at least 1,000 valid places where source coverage permits. It reports actual counts and warns if fewer are available. **The 1,000-place target has not been verified, and no real-data counts or category breakdown are available yet.** Data files, databases, caches, dependencies, and build outputs are excluded from Git.
+The DU-area pipeline reports actual valid place counts without requiring 1,000 places. The optional full-Dhaka preset retains the original count warning below 1,000. **Real DU-area counts and category coverage have not yet been verified in the cloud environment.** Data files, databases, caches, dependencies, and build outputs are excluded from Git.
 
 ## 10. Backend API
 
@@ -234,8 +236,8 @@ The last completed verification before this documentation update produced:
 
 | Check | Confirmed result |
 | --- | --- |
-| Backend automated tests | 42 passed, including synthetic acquisition and backup checks |
-| Frontend component tests | 15 passed across three files, including readiness and recovery checks |
+| Backend automated tests | 53 passed, including synthetic acquisition and backup checks |
+| Frontend component tests | 16 passed across three files, including readiness and recovery checks |
 | Production frontend build | Passed, with a large-bundle advisory |
 | Backend startup | Passed during initial runtime validation |
 | Chromium/browser recovery tests | 3 passed: rendered map/setup state, mobile layout, request gating, and favicon response; map tiles mocked |
@@ -253,12 +255,12 @@ The frontend now waits for `/api/metadata` to report a usable dataset before req
 
 `setup_data.bat` provides a Windows entry point using the project's virtual environment. The acquisition script closes its temporary SQLite connection before cleaning the staging directory, avoiding an open-file cleanup problem on Windows. The pipeline and backup behavior are tested with synthetic source fixtures; an actual Windows OSM download remains unverified. The frontend also includes an SVG favicon. React DevTools advice remains an informational development message.
 
-The missing-data update passes 42 backend tests, 15 component tests, and three Chromium browser tests. Browser checks use the real local FastAPI/Vite application with an empty dataset and mocked external map tiles. The runner uses CommonJS configuration/test files to avoid the observed ESM-loader stall and supports either system Chromium or Playwright’s installed browser. These checks do not verify live OSM downloads or routing on an actual Dhaka graph.
+The missing-data update passes 53 backend tests, 16 component tests, and three Chromium browser tests. Browser checks use the real local FastAPI/Vite application with an empty dataset and mocked external map tiles. The runner uses CommonJS configuration/test files to avoid the observed ESM-loader stall and supports either system Chromium or Playwright’s installed browser. These checks do not verify live OSM downloads or routing on an actual Dhaka graph.
 
 
 ## 14. Public Overpass capacity handling
 
-Acquisition now divides place queries into a configurable sequential grid (3 by 3 by default), retries temporary network/HTTP 429/500/502/503/504 failures with bounded exponential backoff, and honors server Retry-After instructions. A requests response hook surfaces these temporary statuses before OSMnx's internal retry handling and rejects JSON remarks that may signal incomplete query results. Access-denied responses are not automatically retried.
+Acquisition now divides place queries into a configurable sequential grid (1 by 1 for the default DU area; 3 by 3 for optional full Dhaka), retries temporary network/HTTP 429/500/502/503/504 failures with bounded exponential backoff, and honors server Retry-After instructions. A requests response hook surfaces these temporary statuses before OSMnx's internal retry handling and rejects JSON remarks that may signal incomplete query results. Access-denied responses are not automatically retried.
 
 The graph has a checksum-verified checkpoint, and each completed place tile has a standard JSON/GeoJSON checkpoint. They survive later download failures so the same command can resume. Repeated features across tile boundaries are deduplicated by source identity. Dataset metadata records graph and tile retrieval timestamps, the endpoint, and the grid size. Switching tile sizes retains the graph checkpoint but requires tiles for the selected grid. A private endpoint can be explicitly configured; there is no automatic switching between public servers. Tests cover backoff, attempt limits, Retry-After, incomplete-response rejection, graph reuse, and interrupted-tile resumption. Live public-server availability remains outside the application's control.
 
@@ -268,3 +270,17 @@ The graph has a checksum-verified checkpoint, and each completed place tile has 
 `setup_data.bat --publish-partial` installs an existing checksum-verified road checkpoint and completed place-tile checkpoints without sending network requests. The command preserves the distinction between a ready road graph and incomplete place coverage. Metadata records `places_complete`, `completed_place_tiles`, `total_place_tiles`, and `missing_place_tiles`. The frontend enables graph-based routing and available place search while displaying a partial-coverage warning. With no downloaded places, map-click selection is available and autocomplete stays disabled.
 
 Recovery requires the same study bounds, endpoint, and grid as the interrupted acquisition. Existing final datasets require explicit `--replace` and are backed up. Normal acquisition with `--replace` subsequently resumes missing place tiles and records complete coverage only when every tile has completed. Tests reproduce interruption before any place tile and after one completed tile, verify that offline recovery makes no network calls, load the installed graph and run a route, and verify later completion, backup preservation, and checksum rejection. A laptop's real OSM files are not accessible to cloud tests; user-reported counts are not substituted for locally measured integration results.
+
+
+## 16. Connectivity diagnostics and specific failure reporting
+
+`setup_data.bat --diagnose` checks the selected Overpass service's status endpoint and query endpoint separately. It submits exactly one tiny node query, records HTTP response and timing information, and validates the returned OSM JSON structure without installing data. A failed status probe is distinguished from a failed query. Both successful and failed diagnostic results leave local data and checkpoints unchanged.
+
+Retry messages now name the observed category, including connect/read timeout, proxy/connection failure, and HTTP status, with the last failure preserved on exhaustion. TLS errors and non-transient HTTP query rejections stop without retrying the acquisition. Error summaries avoid printing raw exception text that might include proxy credentials. Tests cover status 406 with a valid query response, rejected queries, timeout reporting, preservation of local files, and non-retried TLS errors. The cloud tests use deterministic HTTP fixtures; they do not establish the Windows laptop's current service access.
+
+
+## 17. Simplified Dhaka University acquisition policy
+
+The user-selected scope is now Dhaka University and nearby areas. Running `setup_data.bat` uses an explicit approximately 3 km by 3 km rectangle and one place query. `--area dhaka` restores the old full-city bounds and place-grid defaults. Explicit bbox/grid options remain supported. Preset names are not included in checkpoint keys: resolved bounds, endpoint, and existing format version preserve compatible older checkpoints. No existing completed dataset is silently replaced; `--replace` still makes backups.
+
+The map initially centers on the DU vicinity and fits the loaded dataset bounds when they change. Periodic metadata polling does not reset the viewport when the bounds remain the same. The area name is displayed in the map panel and saved in metadata. Automated tests verify the default request boundary, single place query, valid saved data and all five searches on a small source fixture, custom options, and full-Dhaka compatibility. Smaller query size reduces expected workload, but does not guarantee public-server availability or resolve HTTP rejection by itself.

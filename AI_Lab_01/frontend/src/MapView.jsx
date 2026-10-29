@@ -14,7 +14,17 @@ function Focus({route, focusKey}) {
   useEffect(() => {const points = toLeaflet(route?.geometry); if (points.length > 1) map.fitBounds(L.latLngBounds(points), {padding: [40, 40]})}, [focusKey])
   return null
 }
-export default function MapView({ready = false, scenario, revision, results, visible, selected, start, destination, selectionMode, onPoint, onRoad, roadClass, placeCategory, showPlaces, showTrace, focusKey, onError}) {
+function StudyArea({bbox}) {
+  const map = useMap()
+  const [west, south, east, north] = bbox || []
+  useEffect(() => {
+    if ([west, south, east, north].every(Number.isFinite) && west < east && south < north) {
+      map.fitBounds([[south, west], [north, east]], {padding: [20, 20]})
+    }
+  }, [west, south, east, north, map])
+  return null
+}
+export default function MapView({ready = false, studyBounds, scenario, revision, results, visible, selected, start, destination, selectionMode, onPoint, onRoad, roadClass, placeCategory, showPlaces, showTrace, focusKey, onError}) {
   const [bounds, setBounds] = useState(null)
   const [roads, setRoads] = useState({features: []})
   const [places, setPlaces] = useState([])
@@ -37,8 +47,9 @@ export default function MapView({ready = false, scenario, revision, results, vis
   const chosen = results.find(r => r.algorithm === selected)
   const sorted = [...results].sort((a, b) => (a.algorithm === selected) - (b.algorithm === selected))
   return <div className={`map-shell ${selectionMode ? 'selecting' : ''}`}>
-    <MapContainer center={[23.777, 90.399]} zoom={12} scrollWheelZoom className="map">
+    <MapContainer center={[23.732, 90.3985]} zoom={14} scrollWheelZoom className="map">
       <TileLayer url="https://tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'/>
+      <StudyArea bbox={studyBounds}/>
       <Viewport onBounds={setBounds} selectionMode={selectionMode} onPoint={onPoint}/>
       <Focus route={chosen} focusKey={focusKey}/>
       {roads.features.map(road => {

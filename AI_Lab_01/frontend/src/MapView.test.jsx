@@ -1,14 +1,14 @@
 import React from 'react'
 import {act, render, screen} from '@testing-library/react'
 import {beforeEach, afterEach, expect, it, vi} from 'vitest'
-const state = vi.hoisted(() => ({events: null}))
+const state = vi.hoisted(() => ({events: null, map: null}))
 vi.mock('react-leaflet', () => ({
   MapContainer: ({children}) => <div>{children}</div>,
   TileLayer: () => null,
   Polyline: () => <div data-testid="road-layer"/>,
   CircleMarker: () => null,
   Tooltip: () => null,
-  useMap: () => ({fitBounds: vi.fn()}),
+  useMap: () => state.map,
   useMapEvents: events => {
     state.events = events
     return {getBounds: () => ({getWest: () => 90.3, getEast: () => 90.5, getSouth: () => 23.7, getNorth: () => 23.9}), getZoom: () => 14}
@@ -17,6 +17,7 @@ vi.mock('react-leaflet', () => ({
 import MapView from './MapView'
 const props = {scenario: 'normal', revision: 0, results: [], visible: {}, selected: 'A*', showPlaces: true, onError: vi.fn()}
 beforeEach(() => {
+  state.map = {fitBounds: vi.fn()}
   vi.useFakeTimers()
   vi.stubGlobal('fetch', vi.fn(async url => ({ok: true, json: async () => url.includes('/roads') ? {features: [{properties: {id: '1:2:0', conditions: {traffic: 0, rain: 0, safety: 0}}, geometry: {coordinates: [[90.4, 23.7], [90.41, 23.71]]}}]} : []})))
 })
@@ -39,4 +40,14 @@ it('loads real layers when readiness changes and clears them if readiness is los
   await act(async () => {state.events.moveend(); await vi.advanceTimersByTimeAsync(500)})
   expect(screen.queryByTestId('road-layer')).not.toBeInTheDocument()
   expect(fetch).toHaveBeenCalledTimes(calls)
+})
+
+it('fits loaded study bounds once without resetting the map on metadata polls', () => {
+  const {rerender} = render(<MapView {...props} ready studyBounds={[90.385, 23.718, 90.412, 23.746]}/>)
+  expect(state.map.fitBounds).toHaveBeenCalledWith([[23.718, 90.385], [23.746, 90.412]], {padding: [20, 20]})
+  const count = state.map.fitBounds.mock.calls.length
+  rerender(<MapView {...props} ready studyBounds={[90.385, 23.718, 90.412, 23.746]}/>)
+  expect(state.map.fitBounds).toHaveBeenCalledTimes(count)
+  rerender(<MapView {...props} ready studyBounds={[90.3, 23.65, 90.5, 23.9]}/>)
+  expect(state.map.fitBounds).toHaveBeenLastCalledWith([[23.65, 90.3], [23.9, 90.5]], {padding: [20, 20]})
 })

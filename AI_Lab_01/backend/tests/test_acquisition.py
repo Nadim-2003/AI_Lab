@@ -24,7 +24,7 @@ def test_pipeline_saves_loadable_dataset_and_cleans_staging(tmp_path, graph, mon
     graph_download = Mock(return_value=numeric)
     monkeypatch.setattr(acquire_data.ox, 'graph_from_polygon', graph_download)
     monkeypatch.setattr(acquire_data.ox, 'features_from_polygon', lambda *args, **kwargs: features)
-    monkeypatch.setattr(sys, 'argv', ['acquire_data.py', '--output', str(tmp_path)])
+    monkeypatch.setattr(sys, 'argv', ['acquire_data.py', '--area', 'dhaka', '--output', str(tmp_path)])
     acquire_data.main()
     service = Service(tmp_path)
     try:
@@ -34,6 +34,8 @@ def test_pipeline_saves_loadable_dataset_and_cleans_staging(tmp_path, graph, mon
     finally:
         service.store.db.close()
     metadata = json.loads((tmp_path / 'metadata.json').read_text())
+    assert metadata['study_area']['id'] == 'dhaka'
+    assert metadata['study_area']['bbox'] == [90.30, 23.65, 90.50, 23.90]
     assert metadata['unique_places'] == 1
     assert metadata['quality_report']['missing_name'] == 1
     assert metadata['quality_report']['invalid_or_outside_coordinate'] == 1
@@ -42,7 +44,7 @@ def test_pipeline_saves_loadable_dataset_and_cleans_staging(tmp_path, graph, mon
     original = (tmp_path / 'dhaka.graphml').read_bytes()
     with pytest.raises(SystemExit):
         acquire_data.main()
-    monkeypatch.setattr(sys, 'argv', ['acquire_data.py', '--output', str(tmp_path), '--replace'])
+    monkeypatch.setattr(sys, 'argv', ['acquire_data.py', '--area', 'dhaka', '--output', str(tmp_path), '--replace'])
     acquire_data.main()
     backups = list(tmp_path.glob('backup-*'))
     assert len(backups) == 1
@@ -124,7 +126,7 @@ def test_offline_recovery_installs_graph_and_partial_places_then_resumes(tmp_pat
     monkeypatch.setattr(acquire_data.ox, 'graph_from_polygon', graph_request)
     monkeypatch.setattr(acquire_data.ox, 'features_from_polygon', Mock(side_effect=[frame] * completed + [ResponseStatusCodeError('responded: 502 Bad Gateway')]))
     monkeypatch.setattr(acquire_data.time, 'sleep', lambda _: None)
-    command = ['acquire_data.py', '--output', str(tmp_path), '--place-grid', '2', '--attempts', '1']
+    command = ['acquire_data.py', '--area', 'dhaka', '--output', str(tmp_path), '--place-grid', '2', '--attempts', '1']
     monkeypatch.setattr(sys, 'argv', command)
     with pytest.raises(acquire_data.AcquisitionError):
         acquire_data.main()
@@ -177,3 +179,109 @@ def test_offline_recovery_rejects_missing_or_invalid_graph_without_downloading(t
     with pytest.raises(acquire_data.AcquisitionError, match='checksum mismatch'):
         acquire_data.load_graph_checkpoint(boundary, tmp_path, args)
     operation.assert_not_called()
+
+
+def test_diagnosis_separates_rejected_status_probe_from_working_query(monkeypatch, capsys):
+    rejected_status = response(406, {})
+    rejected_status.headers['Content-Type'] = 'text/html'
+    query = response(200, {'elements': []})
+    query.headers['Content-Type'] = 'application/json'
+    request = Mock(side_effect=[rejected_status, query])
+    monkeypatch.setattr(acquire_data.requests, 'request', request)
+    observations = acquire_data.diagnose_overpass('https://overpass-api.de/api')
+    assert observations[0]['status'] == 406
+    assert observations[1]['query_works'] is True
+    assert 'status probe failed separately' in capsys.readouterr().out
+    assert request.call_count == 2
+    first, second = request.call_args_list
+    assert first.args == ('GET', 'https://overpass-api.de/api/status')
+    assert second.args == ('POST', 'https://overpass-api.de/api/interpreter')
+    assert second.kwargs['data'] == {'data': '[out:json][timeout:10];node(1);out ids;'}
+    assert all(call.kwargs.get('verify', True) for call in request.call_args_list)
+    assert all(call.kwargs['timeout'] == (10, 30) for call in request.call_args_list)
+
+
+def test_diagnosis_reports_query_rejection_and_does_not_modify_dataset(tmp_path, monkeypatch, capsys):
+    existing = tmp_path / 'dhaka.graphml'
+    existing.write_text('preserved existing data')
+    request = Mock(side_effect=[requests.ReadTimeout('untrusted details'), response(406, {})])
+    monkeypatch.setattr(acquire_data.requests, 'request', request)
+    monkeypatch.setattr(sys, 'argv', ['acquire_data.py', '--output', str(tmp_path), '--diagnose'])
+    assert acquire_data.main() == 1
+    assert existing.read_text() == 'preserved existing data'
+    assert list(tmp_path.iterdir()) == [existing]
+    output = capsys.readouterr().out
+    assert 'ReadTimeout' in output and 'HTTP 406' in output
+    assert 'untrusted details' not in output
+    assert request.call_count == 2
+
+
+def test_tls_failures_are_not_retried_or_exposed(monkeypatch):
+    sleep = Mock()
+    operation = Mock(side_effect=requests.exceptions.SSLError('secret-value-in-proxy-url'))
+    monkeypatch.setattr(acquire_data.time, 'sleep', sleep)
+    with pytest.raises(acquire_data.AcquisitionError, match='TLS/certificate') as error:
+        acquire_data.retry_download(operation, 'Road graph')
+    operation.assert_called_once()
+    sleep.assert_not_called()
+    assert 'secret-value' not in str(error.value)
+
+
+def test_query_rejection_is_actionable_and_not_retried(monkeypatch):
+    sleep = Mock()
+    monkeypatch.setattr(acquire_data.time, 'sleep', sleep)
+    operation = Mock(side_effect=lambda: acquire_data.check_overpass_response(response(406, {})))
+    with pytest.raises(acquire_data.AcquisitionError, match='HTTP 406 Not Acceptable'):
+        acquire_data.retry_download(operation, 'Road graph')
+    operation.assert_called_once()
+    sleep.assert_not_called()
+
+
+def test_failed_retries_include_specific_last_cause(monkeypatch, capsys):
+    monkeypatch.setattr(acquire_data.time, 'sleep', lambda _: None)
+    operation = Mock(side_effect=requests.ReadTimeout('private network data'))
+    with pytest.raises(acquire_data.AcquisitionError, match='Last failure: ReadTimeout'):
+        acquire_data.retry_download(operation, 'Road graph', attempts=2)
+    assert 'ReadTimeout' in capsys.readouterr().out
+
+
+@pytest.mark.parametrize('status', [301, 302, 307, 308])
+def test_interpreter_redirects_are_left_for_requests_to_follow(status):
+    redirect = response(status, {})
+    redirect.headers['Location'] = 'https://overpass-api.de/api/interpreter/'
+    assert acquire_data.check_overpass_response(redirect) is redirect
+
+
+@pytest.mark.parametrize('arguments, expected_bounds, expected_queries, expected_id', [
+    ([], (90.385, 23.718, 90.412, 23.746), 1, 'du'),
+    (['--bbox', '90.39', '23.72', '90.405', '23.74', '--place-grid', '2'], (90.39, 23.72, 90.405, 23.74), 4, 'custom'),
+])
+def test_small_area_acquisition_and_explicit_overrides(tmp_path, monkeypatch, capsys, arguments, expected_bounds, expected_queries, expected_id):
+    roads = nx.MultiDiGraph(crs='EPSG:4326')
+    roads.add_node(1, x=90.396, y=23.731)
+    roads.add_node(2, x=90.397, y=23.732)
+    roads.add_edge(1, 2, key=0, length=150, osmid=123, highway='residential')
+    places = gpd.GeoDataFrame({'name': ['Source fixture'], 'amenity': ['university'], 'geometry': [Point(90.396, 23.731)]}, index=pd.MultiIndex.from_tuples([('node', 1)]), crs='EPSG:4326')
+    graph_request = Mock(return_value=roads)
+    place_request = Mock(return_value=places)
+    monkeypatch.setattr(acquire_data.ox, 'graph_from_polygon', graph_request)
+    monkeypatch.setattr(acquire_data.ox, 'features_from_polygon', place_request)
+    monkeypatch.setattr(acquire_data.time, 'sleep', lambda _: None)
+    monkeypatch.setattr(sys, 'argv', ['acquire_data.py', '--output', str(tmp_path), *arguments])
+    acquire_data.main()
+    assert graph_request.call_args.args[0].bounds == expected_bounds
+    assert place_request.call_count == expected_queries
+    metadata = json.loads((tmp_path / 'metadata.json').read_text())
+    assert metadata['study_area']['id'] == expected_id
+    assert metadata['study_area']['bbox'] == list(expected_bounds)
+    assert metadata['places_complete'] is True and metadata['unique_places'] == 1
+    assert 'fewer than 1000' not in capsys.readouterr().out
+    service = Service(tmp_path)
+    try:
+        from backend.app.models import RouteQuery
+        result = service.route(RouteQuery(start='1', destination='2', algorithm='all'))
+        assert len(result['results']) == 5
+        assert all(route['found'] for route in result['results'])
+        assert service.stats()['places'] == 1
+    finally:
+        service.store.db.close()

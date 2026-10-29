@@ -3,6 +3,8 @@ from collections import Counter
 from contextlib import closing
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
+from http import HTTPStatus
+from time import perf_counter
 import hashlib
 import json
 import math
@@ -23,6 +25,7 @@ from shapely.geometry import box, mapping
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from backend.app.service import Service
 from backend.app.geo import valid_coordinate
+from backend.app.study_area import DEFAULT_AREA, STUDY_AREAS
 
 
 def clean(value):
@@ -49,7 +52,74 @@ class TemporaryOverpassError(AcquisitionError):
         self.retry_after = retry_after
 
 
+USER_AGENT = 'DhakaRouteLab/1.0 university research; OSMnx'
+
+
+def failure_summary(exc):
+    if isinstance(exc, requests.exceptions.SSLError):
+        return 'SSLError: TLS/certificate verification failed; check certificate trust and the network connection'
+    if isinstance(exc, requests.exceptions.ProxyError):
+        return 'ProxyError: the configured proxy could not complete the request'
+    if isinstance(exc, requests.ConnectTimeout):
+        return 'ConnectTimeout: connection establishment timed out'
+    if isinstance(exc, requests.ReadTimeout):
+        return 'ReadTimeout: no complete HTTP response arrived before the read timeout'
+    if isinstance(exc, requests.Timeout):
+        return 'Timeout: the request exceeded its time limit'
+    if isinstance(exc, requests.ConnectionError):
+        return 'ConnectionError: the connection failed or was interrupted'
+    if isinstance(exc, TemporaryOverpassError):
+        return str(exc)
+    status = re.search(r'(?:responded:|status code|HTTP)\s*(\d{3})\b', str(exc))
+    if status:
+        return f'Overpass returned HTTP {status.group(1)}'
+    return f'{type(exc).__name__}: Overpass did not return a usable response'
+
+
+def diagnose_overpass(base_url):
+    headers = {'User-Agent': USER_AGENT, 'Accept': '*/*', 'Accept-Language': ox.settings.http_accept_language}
+    observations = []
+    for method, endpoint in [('GET', 'status'), ('POST', 'interpreter')]:
+        url = base_url.rstrip('/') + '/' + endpoint
+        began = perf_counter()
+        observation = {'method': method, 'endpoint': endpoint, 'query_works': False}
+        try:
+            kwargs = {'headers': headers, 'timeout': (10, 30)}
+            if method == 'POST':
+                kwargs['data'] = {'data': '[out:json][timeout:10];node(1);out ids;'}
+            with requests.request(method, url, **kwargs) as response:
+                observation['status'] = response.status_code
+                observation['content_type'] = response.headers.get('Content-Type', 'unspecified')
+                if endpoint == 'interpreter':
+                    try:
+                        payload = response.json()
+                    except ValueError:
+                        payload = None
+                    observation['query_works'] = response.status_code == 200 and isinstance(payload, dict) and isinstance(payload.get('elements'), list) and not payload.get('remark')
+                    if observation['query_works']:
+                        observation['elements'] = len(payload['elements'])
+        except requests.RequestException as exc:
+            observation['error'] = failure_summary(exc)
+        observation['seconds'] = round(perf_counter() - began, 2)
+        observations.append(observation)
+        print(f"{method} {url}: {observation.get('error', 'HTTP ' + str(observation.get('status')))} ({observation['seconds']:.2f}s)", flush=True)
+        if 'content_type' in observation:
+            print(f"  Content-Type: {observation['content_type']}", flush=True)
+        if endpoint == 'interpreter':
+            print(f"  Valid OSM JSON response: {observation['query_works']}", flush=True)
+    if observations[1]['query_works']:
+        print('The query endpoint accepted a small OSM request. This does not guarantee that a full graph query will succeed.', flush=True)
+        if observations[0].get('status') != 200:
+            print('The status probe failed separately. OSMnx may wait before querying; a status error alone does not prove query rejection.', flush=True)
+    else:
+        print('The small query did not succeed. Do not repeat the full-city download yet. Compare this check on another network or an authorized Overpass service.', flush=True)
+    print('This check does not install data or change existing checkpoints. TLS verification remains enabled.', flush=True)
+    return observations
+
+
 def check_overpass_response(response, *args, **kwargs):
+    if response.is_redirect or response.is_permanent_redirect:
+        return response
     if not urlsplit(response.url).path.rstrip('/').endswith('/interpreter'):
         return response
     if response.status_code in {429, 500, 502, 503, 504}:
@@ -63,11 +133,17 @@ def check_overpass_response(response, *args, **kwargs):
                 delay = 0
         response.close()
         raise TemporaryOverpassError(f'Overpass returned HTTP {response.status_code}', delay if math.isfinite(delay) else 0)
+    if not response.ok:
+        status = response.status_code
+        reason = HTTPStatus(status).phrase if status in HTTPStatus._value2member_map_ else 'Request rejected'
+        response.close()
+        raise AcquisitionError(f'Overpass /interpreter returned HTTP {status} {reason}. The server rejected this query; repeated retries are not appropriate. Run setup_data.bat --diagnose to check the status and query endpoints separately.')
     if response.ok:
         try:
             payload = response.json()
         except ValueError:
-            return response
+            response.close()
+            raise AcquisitionError('Overpass /interpreter returned a successful HTTP status but invalid JSON. Run setup_data.bat --diagnose to inspect the endpoint response.')
         if isinstance(payload, dict) and payload.get('remark'):
             response.close()
             raise TemporaryOverpassError('Overpass returned a remark indicating potentially incomplete results; this response will not be saved.')
@@ -85,14 +161,16 @@ def retry_download(operation, label, attempts=4, retry_delay=10):
     for attempt in range(1, attempts + 1):
         try:
             return operation()
+        except requests.exceptions.SSLError as exc:
+            raise AcquisitionError(f'{label}: {failure_summary(exc)}. TLS verification has not been disabled.') from exc
         except (requests.ConnectionError, requests.Timeout, ResponseStatusCodeError, TemporaryOverpassError) as exc:
             transient = isinstance(exc, (requests.ConnectionError, requests.Timeout, TemporaryOverpassError)) or re.search(r"\b(?:429|500|502|503|504)\b", str(exc))
             if not transient:
                 raise
             if attempt == attempts:
-                raise AcquisitionError(f'{label} failed after {attempts} attempts. The OSM server may be busy or unreachable. Completed downloads are retained; rerun the same command later to resume.') from exc
+                raise AcquisitionError(f'{label} failed after {attempts} attempts. Last failure: {failure_summary(exc)}. Completed downloads are retained. Run setup_data.bat --diagnose before another full download.') from exc
             delay = max(min(60, retry_delay * 2 ** (attempt - 1)), getattr(exc, 'retry_after', 0))
-            print(f'{label}: temporary server/network failure; retry {attempt + 1}/{attempts} in {delay:g} seconds.', flush=True)
+            print(f'{label}: {failure_summary(exc)}; retry {attempt + 1}/{attempts} in {delay:g} seconds.', flush=True)
             pause_download(delay)
 
 
@@ -170,17 +248,24 @@ def download_place_tiles(boundary, checkpoint, args):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Acquire actual OpenStreetMap driving roads and named features inside an explicit Dhaka study rectangle.')
-    parser.add_argument('--bbox', nargs=4, type=float, default=[90.30, 23.65, 90.50, 23.90], metavar=('WEST', 'SOUTH', 'EAST', 'NORTH'))
+    parser = argparse.ArgumentParser(description='Acquire real driving roads and places around Dhaka University by default. Full Dhaka is available with --area dhaka.')
+    parser.add_argument('--area', choices=STUDY_AREAS, default=DEFAULT_AREA, help='Study area: du (default, small campus vicinity) or dhaka (full-city study rectangle).')
+    parser.add_argument('--bbox', nargs=4, type=float, default=None, metavar=('WEST', 'SOUTH', 'EAST', 'NORTH'))
     parser.add_argument('--output', type=Path, default=Path(__file__).resolve().parents[1] / 'data')
     parser.add_argument('--replace', action='store_true')
+    parser.add_argument('--diagnose', action='store_true', help='Check /status and one tiny /interpreter request separately; do not download the dataset or modify files.')
     parser.add_argument('--publish-partial', action='store_true', help='Install the verified saved graph and available place tiles without any network requests; mark incomplete place coverage explicitly.')
-    parser.add_argument('--place-grid', type=int, default=3, help='Split place acquisition into N by N sequential requests (default: 3).')
+    parser.add_argument('--place-grid', type=int, default=None, help='Split place acquisition into N by N sequential requests (default: 1 for du, 3 for dhaka).')
     parser.add_argument('--attempts', type=int, default=4)
     parser.add_argument('--retry-delay', type=float, default=10)
     parser.add_argument('--request-pause', type=float, default=2)
     parser.add_argument('--overpass-url', default='https://overpass-api.de/api', help='HTTPS Overpass base URL; use only a service you are authorized to access.')
     args = parser.parse_args()
+    area = STUDY_AREAS[args.area]
+    custom_boundary = args.bbox is not None
+    args.bbox = list(area['bbox']) if args.bbox is None else args.bbox
+    args.place_grid = area['place_grid'] if args.place_grid is None else args.place_grid
+    area_name = 'Custom study rectangle' if custom_boundary else area['name']
     west, south, east, north = args.bbox
     if not 89 <= west < east <= 92 or not 22 <= south < north <= 25:
         parser.error('Expected an explicit Dhaka-region bounding box')
@@ -191,6 +276,9 @@ def main():
     endpoint = urlsplit(args.overpass_url)
     if endpoint.scheme != 'https' or not endpoint.hostname or endpoint.username or endpoint.password or endpoint.query or endpoint.fragment:
         parser.error('--overpass-url must be an HTTPS base URL without credentials, query, or fragment')
+    if args.diagnose:
+        results = diagnose_overpass(args.overpass_url)
+        return 0 if results[1]['query_works'] else 1
     args.output.mkdir(parents=True, exist_ok=True)
     existing = [args.output / name for name in ['dhaka.graphml', 'roads.geojson', 'places.json', 'metadata.json'] if (args.output / name).exists()]
     if existing and not args.replace:
@@ -204,11 +292,12 @@ def main():
     ox.settings.use_cache = True
     ox.settings.cache_folder = str(args.output / 'osm-cache')
     ox.settings.requests_timeout = 180
-    ox.settings.http_user_agent = 'DhakaRouteLab/1.0 university research; OSMnx'
+    ox.settings.http_user_agent = USER_AGENT
     boundary = box(west, south, east, north)
     checkpoint_id = hashlib.sha256(json.dumps([args.bbox, ox.settings.overpass_url, 'drive-v1']).encode()).hexdigest()[:16]
     checkpoint = args.output / 'download-checkpoints' / checkpoint_id
     checkpoint.mkdir(parents=True, exist_ok=True)
+    print(f'Study area: {area_name}. Bounds: {args.bbox}. Place queries: {args.place_grid ** 2}.', flush=True)
     graph, road_retrieved_at = load_graph_checkpoint(boundary, checkpoint, args)
     print(f'Retrieved {len(graph)} nodes, {graph.number_of_edges()} directed edges', flush=True)
     with tempfile.TemporaryDirectory(prefix='acquisition-', dir=args.output) as temporary:
@@ -252,7 +341,7 @@ def main():
             snapshot = service.snapshot('normal')
             roads = [service.road(identifier, snapshot) for identifier in service.edges]
             (stage / 'roads.geojson').write_text(json.dumps({'type': 'FeatureCollection', 'features': roads}), encoding='utf-8')
-        metadata = {'source': 'OpenStreetMap contributors', 'license': 'ODbL 1.0', 'retrieved_at': datetime.now(timezone.utc).isoformat(), 'road_retrieved_at': road_retrieved_at, 'place_tile_retrieved_at': tile_timestamps, 'overpass_url': ox.settings.overpass_url, 'place_grid': args.place_grid, 'places_complete': all(stamp is not None for stamp in tile_timestamps), 'completed_place_tiles': sum(stamp is not None for stamp in tile_timestamps), 'total_place_tiles': len(tile_timestamps), 'missing_place_tiles': [i + 1 for i, stamp in enumerate(tile_timestamps) if stamp is None], 'network_type': 'drive', 'study_area': {'description': 'Explicit configurable Dhaka study rectangle; not an administrative boundary', 'bbox': args.bbox, 'geometry': mapping(boundary)}, 'nodes': graph.number_of_nodes(), 'edges': graph.number_of_edges(), 'weak_components': __import__('networkx').number_weakly_connected_components(graph), 'unique_places': len(records), 'categories': dict(Counter(p['category'] for p in records)), 'quality_report': dict(rejected), 'graph_sha256': hashlib.sha256((stage / 'dhaka.graphml').read_bytes()).hexdigest()}
+        metadata = {'source': 'OpenStreetMap contributors', 'license': 'ODbL 1.0', 'retrieved_at': datetime.now(timezone.utc).isoformat(), 'road_retrieved_at': road_retrieved_at, 'place_tile_retrieved_at': tile_timestamps, 'overpass_url': ox.settings.overpass_url, 'place_grid': args.place_grid, 'places_complete': all(stamp is not None for stamp in tile_timestamps), 'completed_place_tiles': sum(stamp is not None for stamp in tile_timestamps), 'total_place_tiles': len(tile_timestamps), 'missing_place_tiles': [i + 1 for i, stamp in enumerate(tile_timestamps) if stamp is None], 'network_type': 'drive', 'study_area': {'id': 'custom' if custom_boundary else args.area, 'name': area_name, 'description': 'Custom explicit study rectangle' if custom_boundary else area['description'], 'bbox': args.bbox, 'geometry': mapping(boundary)}, 'nodes': graph.number_of_nodes(), 'edges': graph.number_of_edges(), 'weak_components': __import__('networkx').number_weakly_connected_components(graph), 'unique_places': len(records), 'categories': dict(Counter(p['category'] for p in records)), 'quality_report': dict(rejected), 'graph_sha256': hashlib.sha256((stage / 'dhaka.graphml').read_bytes()).hexdigest()}
         (stage / 'metadata.json').write_text(json.dumps(metadata, indent=2, ensure_ascii=False), encoding='utf-8')
         if existing:
             backup = args.output / ('backup-' + datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%f'))
@@ -264,16 +353,18 @@ def main():
         print(json.dumps(metadata, indent=2, ensure_ascii=False))
         if not metadata['places_complete']:
             print(f"Road graph installed. Place coverage is INCOMPLETE: {metadata['completed_place_tiles']}/{metadata['total_place_tiles']} tiles and {len(records)} valid places. Use map clicks for locations missing from search. Restart the backend now. Later rerun the normal acquisition command with --replace to resume missing tiles.", flush=True)
-        if len(records) < 1000:
+        print(f'Saved {len(records)} valid places for {area_name}; counts reflect available source coverage.', flush=True)
+        if args.area == 'dhaka' and not custom_boundary and len(records) < 1000:
             print('WARNING: fewer than 1000 valid source records; inspect study area and quality_report. No artificial records were added.')
 
 
 if __name__ == '__main__':
     try:
-        main()
+        sys.exit(main() or 0)
     except (AcquisitionError, requests.RequestException, ResponseStatusCodeError, InsufficientResponseError) as exc:
-        print(f'Data acquisition stopped: {exc}', file=sys.stderr)
-        print('Completed graph and place tiles remain in data/download-checkpoints. Wait before rerunning the same command, or use setup_data.bat --publish-partial to install the saved graph and completed tiles offline. Existing dataset files were not replaced by this failed download.', file=sys.stderr)
+        explanation = failure_summary(exc) if isinstance(exc, requests.RequestException) else str(exc)
+        print(f'Data acquisition stopped: {explanation}', file=sys.stderr)
+        print('Existing dataset files were not replaced. Any completed checkpoints remain in data/download-checkpoints. Offline recovery requires a saved graph checkpoint; it cannot repair a failed graph download.', file=sys.stderr)
         sys.exit(1)
     except KeyboardInterrupt:
         print('Download interrupted. Completed checkpoints are retained for the next run.', file=sys.stderr)

@@ -1,128 +1,120 @@
-# Dhaka Route Lab
+# Dhaka University Route Lab
 
-FastAPI and React/Leaflet vehicle routing application with five manually implemented search algorithms, exact directed-edge geometry, simulated road conditions, persisted overrides, and built-in/custom scenarios.
+A local AI search application for **Dhaka University and nearby areas**, using real OpenStreetMap driving roads, five manually implemented search algorithms, and simulated road conditions. The default dataset is deliberately small to reduce download time and public-server workload.
 
-See the [Functionality Report](FUNCTIONALITY_REPORT.md) for user workflows, algorithms, scenario behavior, API endpoints, verified results, and remaining limitations.
+See the [Functionality Report](FUNCTIONALITY_REPORT.md) for algorithms, road editing, scenarios, API endpoints, and known limitations.
 
-## Setup
+## Quick start on Windows PowerShell
 
-Requires Python 3.12 and Node.js 24. From this directory:
+From `AI_Lab_01`, install dependencies if you have not already done so:
 
-```bash
-python3 -m venv .venv
-.venv/bin/python -m pip install -r requirements.lock
-cd frontend
-npm ci
-npm run build
-```
-
-## Real OpenStreetMap data
-
-From this directory:
-
-```bash
-.venv/bin/python scripts/acquire_data.py
-```
-
-The default explicit study rectangle is west 90.30, south 23.65, east 90.50, north 23.90. It is not an administrative boundary. Override it with `--bbox WEST SOUTH EAST NORTH`. Downloads require HTTPS access to overpass-api.de; map tiles use tile.openstreetmap.org. Existing datasets require explicit `--replace`, which creates a backup.
-
-The acquisition script stores the directed driving graph, actual road geometries, named places, source metadata, counts, category breakdown, and quality report in data/. No synthetic production dataset is supplied. Restart the backend after acquisition. Retain data/ locally; it is excluded from Git. Traffic, weather, road conditions, and safety are simulations, not live measurements. Overrides are separate from the original graph, in data/state.sqlite3.
-
-## Run
-
-In separate terminals, from this directory:
-
-```bash
-.venv/bin/python -m uvicorn backend.app.main:app --host 0.0.0.0 --port 8000
-```
-
-```bash
-cd frontend
-npm run dev -- --port 5173 --strictPort
-```
-
-Vite proxies /api to port 8000. Backend API documentation is at /docs. /api/health reports process liveness; /api/ready returns 503 until valid road data is loaded. A missing dataset is shown explicitly in the interface.
-
-## Windows quick start and 503 troubleshooting
-
-A `503` from `/api/roads` or `/api/places` means the backend has no usable road graph. Check `http://localhost:8000/api/metadata` for the actual loading error. The map tiles alone do not supply routing data.
-
-After installing Python 3.12 and Node.js, use Windows Command Prompt:
-
-```bat
-cd C:\Users\HP\Downloads\AI_Lab\AI_Lab_01
+```powershell
 py -3.12 -m venv .venv
-.venv\Scripts\python.exe -m pip install -r requirements.lock
-setup_data.bat
+.\.venv\Scripts\python.exe -m pip install -r requirements.lock
 ```
 
-Allow the OSM download to finish. It needs access to `overpass-api.de` and can take several minutes. No dataset is bundled in GitHub. If acquisition fails, read the command's error output; repeatedly refreshing the map will not create the missing data. The helper accepts acquisition options, for example `setup_data.bat --replace` to explicitly back up and replace an existing dataset. Avoid replacing a dataset unnecessarily, since saved scenarios refer to its edge IDs.
+Download the small DU-area dataset:
 
-Then start or restart the backend:
-
-```bat
-.venv\Scripts\python.exe -m uvicorn backend.app.main:app --reload --port 8000
+```powershell
+.\setup_data.bat
 ```
 
-In another Command Prompt:
+The default bounds are west **90.385**, south **23.718**, east **90.412**, north **23.746**: an explicit rectangle around the campus and nearby areas, approximately 3 km by 3 km. It is not an official campus or administrative boundary. The downloader requests a driving graph and one area of named places. It reports actual counts; the smaller scope does not require 1,000 places.
 
-```bat
-cd C:\Users\HP\Downloads\AI_Lab\AI_Lab_01\frontend
+Start the backend after acquisition finishes:
+
+```powershell
+.\.venv\Scripts\python.exe -m uvicorn backend.app.main:app --reload --port 8000
+```
+
+In a second terminal, from `AI_Lab_01`:
+
+```powershell
+cd frontend
 npm ci
 npm run dev -- --port 5173
 ```
 
-Open `http://localhost:5173`. If it was already open, click **Check dataset status** after restarting the backend. `http://localhost:8000/api/ready` should return 200 with `ready: true`. If the graph still fails to load, inspect `/api/metadata` before downloading again. If `DATA_DIR` is configured, acquisition must use the same directory via `--output`.
+Open `http://localhost:5173`. Backend API documentation is at `http://localhost:8000/docs`. If the page was already open, click **Check dataset status** after restarting the backend.
 
-While metadata reports that the dataset is unavailable, the frontend disables place search and map endpoint selection and does not request road/place layers. The setup panel displays recovery steps. A bundled SVG favicon replaces the missing icon. React's “Download the React DevTools” console message is an informational development message, not a failure.
+The `200 OK` response from `/api/metadata` reports status; it does not prove routing is ready. `/api/ready` returns 200 only when a usable graph is loaded.
 
-## Overpass 502 / server-at-capacity recovery
+## Existing downloads and alternate areas
 
-A `502 Bad Gateway` or “all query workers are busy” response comes from the public Overpass server. It does not mean React or Python failed to install. Update your local copy to include the resumable downloader, wait a few minutes before retrying, and run:
+Keep your existing `data` directory when updating project files. If a completed dataset is already installed, explicitly replace it with the DU dataset:
 
-```bat
-setup_data.bat
+```powershell
+.\setup_data.bat --replace
 ```
 
-The downloader splits the same study area into a 3-by-3 grid of sequential place queries, retries surfaced temporary server/network failures up to four attempts, and uses exponential delays of 10, 20, and 40 seconds unless the server requests a longer wait. Requests are not parallelized. Incomplete responses with an Overpass remark are not accepted as a successful dataset.
+Existing dataset files are backed up before replacement. Road overrides and scenarios refer to graph edge IDs; review them when changing study areas.
 
-Completed road and place downloads are retained under `data/download-checkpoints/`, keyed by study bounds and server. Rerunning the same command resumes completed tiles. Keep this directory and `data/osm-cache/`; do not delete them to solve a temporary server outage. A failed acquisition does not replace the existing final dataset. The first run after upgrading may still need to reconstruct the graph from the previous OSMnx cache, because older versions did not save a durable graph checkpoint.
+Full Dhaka remains optional:
 
-If individual place queries still time out, use smaller tiles without reducing study-area coverage:
-
-```bat
-setup_data.bat --place-grid 6
+```powershell
+.\setup_data.bat --area dhaka
 ```
 
-Changing the grid changes the tile checkpoints; previously completed tiles from another grid are not reused, but the graph checkpoint is reused. More tiles mean more requests, so use this option for query-size/timeouts rather than repeatedly hammering a server that is at capacity. Run only one acquisition process at a time. If all attempts fail, wait longer and rerun later. No software change can guarantee that a busy public server will accept requests.
+The `dhaka` preset retains the old bounds `[90.30, 23.65, 90.50, 23.90]` and a 3-by-3 place grid. Use `--replace` as well if an installed dataset exists. Old full-Dhaka checkpoints are preserved and reused only for their matching area/server settings.
 
-An authorized private Overpass service can be selected with `--overpass-url https://YOUR-HOST/api`; its hostname must also be allowed by your network settings. Normal startup never downloads data. After acquisition finishes, restart the backend and check dataset status in the frontend. Use `--replace` only when intentionally replacing an existing completed dataset; timestamped backups are retained.
+Advanced options include `--bbox WEST SOUTH EAST NORTH`, `--place-grid N`, and `--overpass-url https://YOUR-HOST/api` for an authorized Overpass service. A custom boundary overrides the area preset. The default place grid is 1 for DU and 3 for full Dhaka.
 
-## Use downloaded roads when place acquisition is interrupted
+## Interrupted downloads
 
-If the log reports a successful road graph download but stops on a place tile, restarting the backend alone does not install the saved checkpoints. Update the project, stop the backend, and run the following from `AI_Lab_01`:
+Requests are sequential, with bounded retries, backoff, and Retry-After handling. Completed roads and place tiles are saved in `data/download-checkpoints/`; OSMnx also retains `data/osm-cache/`. Rerun the same command to resume. Do not run multiple acquisition processes at once.
 
-```bat
-setup_data.bat --publish-partial
+If the graph downloaded successfully but the place query failed, install available data offline:
+
+```powershell
+.\setup_data.bat --publish-partial
 ```
 
-This is an offline recovery operation: it verifies and installs the saved road graph and only the completed place tiles for the same study bounds, server, and grid. It never contacts Overpass. Keep `data/download-checkpoints/` intact. If you previously used nondefault `--bbox`, `--overpass-url`, or `--place-grid` options, supply those same options here.
+This requires a verified graph checkpoint and makes no network requests. It installs the saved graph and available places, marks incomplete place coverage, and enables map-click routing after backend restart. It cannot recover a graph that was never saved.
 
-The installed graph enables routing and map-click endpoint selection. Search includes only the available valid places. Metadata and a frontend warning explicitly show incomplete place coverage and the completed/total tile counts. An incomplete place dataset is not reported as fully downloaded. Recovery also works with zero completed place tiles; use map clicks in that case. If no verified graph checkpoint exists, the command stops instead of generating substitute data.
+For older full-city checkpoints, select their original area explicitly:
 
-Restart the backend after the command completes:
-
-```bat
-.venv\Scripts\python.exe -m uvicorn backend.app.main:app --reload --port 8000
+```powershell
+.\setup_data.bat --area dhaka --publish-partial
 ```
 
-Click **Check dataset status** in the frontend. Later, when Overpass is available, resume full place acquisition with:
+Use the same endpoint and grid options as the original download. Later resume missing places with `--replace` and the same area options. Here, `publish-partial` means installing local dataset files, not uploading data or publishing a cloud environment.
 
-```bat
-setup_data.bat --replace
+## Connection problems
+
+A smaller area reduces query workload but cannot fix an HTTP rejection or a connection that receives no response. Check access without attempting a dataset download:
+
+```powershell
+.\setup_data.bat --diagnose
 ```
 
-Existing dataset files are backed up, completed checkpoints are reused, and missing tiles are requested. Stop/restart the backend after installation. If intentionally replacing an already installed dataset during offline recovery, add `--replace` to the recovery command as well. The term `publish-partial` refers only to installing local data files; it does not upload data or publish the cloud environment.
+The check sends one GET to `/status` and one tiny POST query to `/interpreter`, reporting HTTP status, elapsed time, content type, response validity, and error category. A 406 from `/status` does not establish whether `/interpreter` works. The check leaves files unchanged and keeps TLS verification enabled. Add `--overpass-url` to diagnose another authorized service.
+
+If the tiny query also fails, wait for the service or compare the same check on another network. Repeated backend restarts cannot create a missing graph. React DevTools advice and pip update notices are informational.
+
+## Local data and behavior
+
+- `data/dhaka.graphml`: directed road graph; the filename is retained for compatibility even for the DU area.
+- `data/roads.geojson`: actual road geometries.
+- `data/places.json`: valid named OSM source features and road matches.
+- `data/metadata.json`: area name/bounds, source, timestamps, actual counts, and place completeness.
+- `data/state.sqlite3`: custom scenarios, road overrides, and revision counter.
+
+Data, caches, dependencies, and generated build outputs are excluded from Git. No synthetic production dataset is supplied. Original OSM attributes remain separate from simulated overrides. Normal startup uses saved files and never redownloads the graph. Base-map tiles still require network access.
+
+BFS minimizes hops; DFS/IDS use depth limits; UCS and A* optimize nonnegative generalized cost. Exact selected edges retain direction and parallel-edge identity. Generalized cost is `distance_km × (1 + sum(weight × severity))`, not travel time. Blocked edges are excluded. Scenario conditions apply before saved user overrides. The five algorithms share a snapshot for comparison, and stale routes are hidden.
+
+## macOS / Linux
+
+From `AI_Lab_01`:
+
+```bash
+python3 -m venv .venv
+.venv/bin/python -m pip install -r requirements.lock
+.venv/bin/python scripts/acquire_data.py
+.venv/bin/python -m uvicorn backend.app.main:app --port 8000
+```
+
+Use the same frontend commands as above. `DATA_DIR` can select a different backend dataset directory; use acquisition's `--output` for that same directory.
 
 ## Validation
 
@@ -132,16 +124,12 @@ npm --prefix frontend test
 npm --prefix frontend run build
 ```
 
-With a backend using an empty dataset directory running on port 8000, browser recovery checks can be run as follows. The runner uses system Chromium when available; otherwise install its browser with `npx playwright install chromium` from `frontend`. You can set `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` to a custom browser executable:
+Current checks: **53 backend tests**, **16 frontend tests**, and the production build pass. Tests cover the DU default, explicit boundary overrides, full-Dhaka compatibility, retry/diagnostic handling, offline recovery, routing, geometry, scenarios, and UI state. Public OSM acquisition for the new DU area and routing on the user's laptop remain unverified; tests use synthetic source fixtures where needed.
+
+Browser recovery checks require a backend on port 8000 with an empty dataset directory:
 
 ```bash
 npm --prefix frontend run test:e2e
 ```
 
-Current automated validation passes 42 backend tests and 15 frontend component tests, including dataset-readiness gating, recovery after restart, and acquisition/file-backup behavior with synthetic source fixtures. The frontend production build and three Chromium browser checks also pass. Browser checks cover the missing-data workflow with a real local backend and mocked map tiles, including mobile layout, favicon loading, and suppression of unavailable road/place requests. Live OSM access was denied during initial setup, so actual Dhaka dataset counts, 1,000-place coverage, and routing on the real dataset remain unverified. Synthetic graphs are confined to automated tests.
-
-## Routing behavior
-
-BFS minimizes hops. DFS and IDS have explicit depth limits. UCS optimizes nonnegative generalized cost. A* uses a geographic distance bound scaled by the minimum traversable edge cost per endpoint kilometer; a zero-heuristic comparison is also measured.
-
-Generalized cost = distance_km × (1 + sum(weight × severity)). It is not physical distance or travel time. Blocked directed edges are excluded. Precedence is baseline, scenario class conditions, scenario-specific edge conditions, then saved user override. All algorithms in a comparison use the same cost snapshot. Limits and bounded traces are reported; stale results are hidden from the map.
+The runner uses system Chromium when available. Otherwise run `npx playwright install chromium` in `frontend`, or set `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH`. The three recovery checks use real local FastAPI/Vite processes and mocked map tiles; they do not establish live OSM access.

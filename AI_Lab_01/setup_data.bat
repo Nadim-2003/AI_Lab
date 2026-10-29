@@ -7,11 +7,12 @@ if not exist ".venv\Scripts\python.exe" (
   echo .venv\Scripts\python.exe -m pip install -r requirements.lock
   exit /b 1
 )
-echo Preparing actual OpenStreetMap data. Downloads may take several minutes; --publish-partial uses saved checkpoints offline.
+echo Default area: Dhaka University and nearby roads. Full Dhaka is optional with --area dhaka.
+echo Preparing OpenStreetMap data. --diagnose checks connectivity without downloading the dataset.
 ".venv\Scripts\python.exe" scripts\acquire_data.py %*
 if errorlevel 1 (
-  echo Data acquisition failed. Read the error above; no sample data was substituted.
+  echo Command did not complete successfully. Read the specific error above; no sample data was substituted.
   exit /b 1
 )
-echo Dataset saved. Stop and restart the backend, then click Check dataset status in the frontend.
+echo Command completed. If a dataset was installed, restart the backend and check dataset status in the frontend.
 endlocal
