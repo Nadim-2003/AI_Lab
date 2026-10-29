@@ -14,13 +14,16 @@ function Focus({route, focusKey}) {
   useEffect(() => {const points = toLeaflet(route?.geometry); if (points.length > 1) map.fitBounds(L.latLngBounds(points), {padding: [40, 40]})}, [focusKey])
   return null
 }
-export default function MapView({scenario, revision, results, visible, selected, start, destination, selectionMode, onPoint, onRoad, roadClass, placeCategory, showPlaces, showTrace, focusKey, onError}) {
+export default function MapView({ready = false, scenario, revision, results, visible, selected, start, destination, selectionMode, onPoint, onRoad, roadClass, placeCategory, showPlaces, showTrace, focusKey, onError}) {
   const [bounds, setBounds] = useState(null)
   const [roads, setRoads] = useState({features: []})
   const [places, setPlaces] = useState([])
   const [loading, setLoading] = useState(false)
   useEffect(() => {
-    if (!bounds) return
+    if (!ready || !bounds) {
+      setRoads({features: []}); setPlaces([]); setLoading(false)
+      return
+    }
     const controller = new AbortController()
     const timer = setTimeout(() => {
       setLoading(true)
@@ -30,7 +33,7 @@ export default function MapView({scenario, revision, results, visible, selected,
       else setPlaces([])
     }, 200)
     return () => {clearTimeout(timer); controller.abort()}
-  }, [bounds, scenario, revision, roadClass, placeCategory, showPlaces])
+  }, [ready, bounds, scenario, revision, roadClass, placeCategory, showPlaces])
   const chosen = results.find(r => r.algorithm === selected)
   const sorted = [...results].sort((a, b) => (a.algorithm === selected) - (b.algorithm === selected))
   return <div className={`map-shell ${selectionMode ? 'selecting' : ''}`}>
@@ -47,7 +50,7 @@ export default function MapView({scenario, revision, results, visible, selected,
       {sorted.filter(r => r.found && visible[r.algorithm] && r.geometry).map((route, i) => <Polyline key={route.algorithm} positions={toLeaflet(route.geometry)} pathOptions={{color: colors[route.algorithm], weight: route.algorithm === selected ? 7 : 4, opacity: 0.9, dashArray: route.algorithm === selected ? undefined : `${6 + i * 3} ${3 + i * 2}`, interactive: false}}/>)}
       {[['Start', start, '#0e9e81'], ['Destination', destination, '#e04b65']].map(([label, point, color]) => point && <CircleMarker key={label} center={[point.lat, point.lon]} radius={9} pathOptions={{color: 'white', weight: 3, fillColor: color, fillOpacity: 1}}><Tooltip permanent>{label}: {point.name}</Tooltip></CircleMarker>)}
     </MapContainer>
-    <div className="map-note">{loading ? 'Loading roads…' : selectionMode ? `Click the map to set ${selectionMode}` : 'Click a road to inspect its directed edge'}{roads.truncated && <span> · Showing {roads.features.length} of {roads.matched} edges; zoom in</span>}</div>
+    <div className="map-note">{!ready ? 'Road layers unavailable until the dataset is loaded' : loading ? 'Loading roads…' : selectionMode ? `Click the map to set ${selectionMode}` : 'Click a road to inspect its directed edge'}{roads.truncated && <span> · Showing {roads.features.length} of {roads.matched} edges; zoom in</span>}</div>
     <div className="map-key"><i className="road-dot"/> OSM roads <i className="amber-dot"/> Simulated penalties <i className="red-dot"/> Closed</div>
   </div>
 }

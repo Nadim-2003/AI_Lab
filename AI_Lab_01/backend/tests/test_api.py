@@ -125,3 +125,13 @@ def test_invalid_graph(tmp_path):
     service = Service(tmp_path, nx.Graph())
     assert not service.stats()['ready']
     assert 'directed' in service.error
+
+
+def test_dataset_endpoints_explain_missing_data_without_false_readiness(tmp_path):
+    client = TestClient(create_app(tmp_path))
+    metadata = client.get('/api/metadata')
+    assert metadata.status_code == 200 and not metadata.json()['ready']
+    for path in ['/api/roads', '/api/places?q=dhaka', '/api/ready']:
+        response = client.get(path)
+        assert response.status_code == 503
+        assert 'scripts/acquire_data.py' in response.json()['detail']

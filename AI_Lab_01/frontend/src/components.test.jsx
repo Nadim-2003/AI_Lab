@@ -73,3 +73,17 @@ describe('scenario studio', () => {
     expect(body).not.toHaveProperty('builtin')
   })
 })
+
+describe('unavailable place dataset', () => {
+  it('disables autocomplete and does not issue searches until enabled', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(mockResponse([])))
+    const props = {label: 'Start', value: null, onChange: vi.fn(), onError: vi.fn()}
+    const {rerender} = render(<Autocomplete {...props} disabled/>)
+    expect(screen.getByRole('combobox')).toBeDisabled()
+    fireEvent.change(screen.getByRole('combobox'), {target: {value: 'dhaka'}})
+    expect(fetch).not.toHaveBeenCalled()
+    rerender(<Autocomplete {...props} disabled={false}/>)
+    expect(screen.getByRole('combobox')).toBeEnabled()
+    await waitFor(() => expect(fetch).toHaveBeenCalledTimes(1))
+  })
+})

@@ -1,0 +1,42 @@
+import React from 'react'
+import {act, render, screen} from '@testing-library/react'
+import {beforeEach, afterEach, expect, it, vi} from 'vitest'
+const state = vi.hoisted(() => ({events: null}))
+vi.mock('react-leaflet', () => ({
+  MapContainer: ({children}) => <div>{children}</div>,
+  TileLayer: () => null,
+  Polyline: () => <div data-testid="road-layer"/>,
+  CircleMarker: () => null,
+  Tooltip: () => null,
+  useMap: () => ({fitBounds: vi.fn()}),
+  useMapEvents: events => {
+    state.events = events
+    return {getBounds: () => ({getWest: () => 90.3, getEast: () => 90.5, getSouth: () => 23.7, getNorth: () => 23.9}), getZoom: () => 14}
+  },
+}))
+import MapView from './MapView'
+const props = {scenario: 'normal', revision: 0, results: [], visible: {}, selected: 'A*', showPlaces: true, onError: vi.fn()}
+beforeEach(() => {
+  vi.useFakeTimers()
+  vi.stubGlobal('fetch', vi.fn(async url => ({ok: true, json: async () => url.includes('/roads') ? {features: [{properties: {id: '1:2:0', conditions: {traffic: 0, rain: 0, safety: 0}}, geometry: {coordinates: [[90.4, 23.7], [90.41, 23.71]]}}]} : []})))
+})
+afterEach(() => {vi.useRealTimers(); vi.unstubAllGlobals()})
+it('does not request roads or places while unavailable, even after map movement', async () => {
+  render(<MapView {...props} ready={false}/>)
+  await act(async () => {state.events.moveend(); await vi.advanceTimersByTimeAsync(500)})
+  expect(fetch).not.toHaveBeenCalled()
+  expect(screen.getByText('Road layers unavailable until the dataset is loaded')).toBeInTheDocument()
+})
+it('loads real layers when readiness changes and clears them if readiness is lost', async () => {
+  const {rerender} = render(<MapView {...props} ready={false}/>)
+  rerender(<MapView {...props} ready/>)
+  await act(async () => {await vi.advanceTimersByTimeAsync(250)})
+  expect(fetch.mock.calls.some(([url]) => url.startsWith('/api/roads?'))).toBe(true)
+  expect(fetch.mock.calls.some(([url]) => url.startsWith('/api/places?'))).toBe(true)
+  expect(screen.getByTestId('road-layer')).toBeInTheDocument()
+  const calls = fetch.mock.calls.length
+  rerender(<MapView {...props} ready={false}/>)
+  await act(async () => {state.events.moveend(); await vi.advanceTimersByTimeAsync(500)})
+  expect(screen.queryByTestId('road-layer')).not.toBeInTheDocument()
+  expect(fetch).toHaveBeenCalledTimes(calls)
+})

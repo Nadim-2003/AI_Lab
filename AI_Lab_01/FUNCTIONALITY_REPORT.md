@@ -12,7 +12,7 @@ Dhaka Route Lab is an AI laboratory application for studying how five search alg
 
 The application contains a Python/FastAPI backend, a React map interface, an OpenStreetMap acquisition script, and automated tests. Users can select endpoints, run searches, inspect results, edit directed road conditions, and manage scenarios once a valid local road dataset is available.
 
-**The implementation is not yet verified as a complete real-Dhaka deployment.** At the last confirmed validation, live OpenStreetMap access was denied by the cloud network policy. Consequently, no real road dataset or place dataset had been loaded. Final browser checks were interrupted by an environment disconnection. These limits are separate from the passing automated tests described below.
+**The implementation is not yet verified as a complete real-Dhaka deployment.** At the last confirmed validation, live OpenStreetMap access was denied by the cloud network policy. Consequently, no real road dataset or place dataset had been loaded. Initial browser checks were interrupted by an environment disconnection; three later Chromium checks pass for the missing-data workflow, as recorded below. These limits are separate from the passing automated tests described below.
 
 ## 2. Main user workflow
 
@@ -234,14 +234,23 @@ The last completed verification before this documentation update produced:
 
 | Check | Confirmed result |
 | --- | --- |
-| Backend automated tests | 33 passed |
-| Frontend component tests | 10 passed across two files |
+| Backend automated tests | 35 passed, including synthetic acquisition and backup checks |
+| Frontend component tests | 14 passed across three files, including readiness and recovery checks |
 | Production frontend build | Passed, with a large-bundle advisory |
 | Backend startup | Passed during initial runtime validation |
-| Final Chromium/browser tests | Test definitions added; final execution not completed |
+| Chromium/browser recovery tests | 3 passed: rendered map/setup state, mobile layout, request gating, and favicon response; map tiles mocked |
 | Live OSM service access | Denied by cloud network policy during initial setup |
 | Actual Dhaka routing and place coverage | Not verified; no real dataset loaded at the last confirmed check |
 
 Backend tests exercise algorithm traversal, weighted/parallel edge selection, missing/reversed/curved geometry, directionality, unreachable destinations, identical endpoints, search limits, negative costs, closure/reset behavior, snapshot isolation, scenario API/persistence, condition precedence, coordinate snapping, request validation, and English/Bangla place matching. Frontend tests exercise coordinate conversion, API errors, autocomplete, endpoint clearing, condition controls, scenario duplication, missing-data handling, no-route results, stale results, route-visibility state, and opening the road editor. These tests use deterministic synthetic graphs or mocked responses; they do not establish real-Dhaka integration or visual map correctness.
 
-Outstanding work includes enabling required network access, running and validating actual data acquisition, confirming the real node/edge/place counts and category distribution, exercising routes on the saved Dhaka graph, and completing browser verification. Full-city performance is unmeasured. Place clustering, automatic two-way/group road editing, turn-by-turn navigation, route-direction arrows, search-tree edge visualization, live traffic/weather/safety feeds, travel-time estimates, user accounts, and authentication are not implemented. The current application is a local development and AI-lab prototype, not a verified production navigation service.
+Outstanding work includes enabling required network access, running and validating actual data acquisition, confirming the real node/edge/place counts and category distribution, exercising routes on the saved Dhaka graph, and completing browser verification with an actual loaded Dhaka dataset. Full-city performance is unmeasured. Place clustering, automatic two-way/group road editing, turn-by-turn navigation, route-direction arrows, search-tree edge visualization, live traffic/weather/safety feeds, travel-time estimates, user accounts, and authentication are not implemented. The current application is a local development and AI-lab prototype, not a verified production navigation service.
+
+
+## 13. Missing-dataset recovery update
+
+The frontend now waits for `/api/metadata` to report a usable dataset before requesting viewport roads or place search results. Panning and zooming while the graph is unavailable do not repeatedly call the unavailable endpoints. Place inputs are disabled until graph readiness and available place records allow searching. A setup panel shows the backend's load error, Windows and Unix acquisition commands, restart instructions, and a **Check dataset status** button. After restarting the backend with a saved graph, the readiness transition enables the map and search workflow.
+
+`setup_data.bat` provides a Windows entry point using the project's virtual environment. The acquisition script closes its temporary SQLite connection before cleaning the staging directory, avoiding an open-file cleanup problem on Windows. The pipeline and backup behavior are tested with synthetic source fixtures; an actual Windows OSM download remains unverified. The frontend also includes an SVG favicon. React DevTools advice remains an informational development message.
+
+The missing-data update passes 35 backend tests, 14 component tests, and three Chromium browser tests. Browser checks use the real local FastAPI/Vite application with an empty dataset and mocked external map tiles. The runner uses CommonJS configuration/test files to avoid the observed ESM-loader stall and supports either system Chromium or Playwright’s installed browser. These checks do not verify live OSM downloads or routing on an actual Dhaka graph.

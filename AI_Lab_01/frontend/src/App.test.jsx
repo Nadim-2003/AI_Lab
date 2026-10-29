@@ -49,3 +49,18 @@ it('opens directed road editor', async () => {
   expect(screen.getByLabelText('Road traffic')).toHaveValue('0')
   expect(screen.getByRole('button', {name: 'Save override'})).toBeEnabled()
 })
+
+it('recovers after a backend restart when the user checks dataset status', async () => {
+  let ready = false
+  const original = fetch.getMockImplementation()
+  fetch.mockImplementation(async (url, options) => url.includes('/metadata') ? {ok: true, json: async () => ({...stats, ready, places: ready ? 10 : 0, error: ready ? null : 'Road dataset missing'})} : original(url, options))
+  render(<App/>)
+  await screen.findByText('Real road data has not been loaded.')
+  expect(screen.getByLabelText('Start')).toBeDisabled()
+  expect(screen.getByText('setup_data.bat')).toBeInTheDocument()
+  ready = true
+  fireEvent.click(screen.getByRole('button', {name: 'Check dataset status'}))
+  await screen.findByText('● Dataset ready')
+  expect(screen.queryByText('Real road data has not been loaded.')).not.toBeInTheDocument()
+  expect(screen.getByLabelText('Start')).toBeEnabled()
+})

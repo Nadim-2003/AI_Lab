@@ -1,5 +1,6 @@
 import argparse
 from collections import Counter
+from contextlib import closing
 from datetime import datetime, timezone
 import hashlib
 import json
@@ -55,42 +56,43 @@ def main():
         stage = Path(temporary)
         ox.save_graphml(graph, stage / 'dhaka.graphml')
         service = Service(stage)
-        service.ready()
-        print('Retrieving named OSM features', flush=True)
-        features = ox.features_from_polygon(boundary, tags={'name': True, 'name:en': True, 'name:bn': True})
-        records, seen = [], set()
-        rejected = Counter()
-        for identity, row in features.iterrows():
-            element, osm_id = identity
-            identifier = f'{element}/{osm_id}'
-            if identifier in seen:
-                rejected['duplicates'] += 1
-                continue
-            seen.add(identifier)
-            name = clean(row.get('name')) or clean(row.get('name:en')) or clean(row.get('name:bn'))
-            if not name:
-                rejected['missing_name'] += 1
-                continue
-            geometry = row.geometry
-            if geometry is None or geometry.is_empty:
-                rejected['missing_geometry'] += 1
-                continue
-            point = geometry.representative_point()
-            lon, lat = point.x, point.y
-            if not valid_coordinate([lon, lat]) or not boundary.covers(point):
-                rejected['invalid_or_outside_coordinate'] += 1
-                continue
-            record = {'id': identifier, 'osm_type': element, 'osm_id': int(osm_id), 'name': name, 'name_en': clean(row.get('name:en')), 'name_bn': clean(row.get('name:bn')), 'alt_names': clean(row.get('alt_name')), 'category': category(row), 'lat': lat, 'lon': lon, 'locality': clean(row.get('addr:suburb')) or clean(row.get('addr:city')), 'address': ' '.join(filter(None, [clean(row.get('addr:housenumber')), clean(row.get('addr:street'))])), 'source': 'OpenStreetMap', 'node': None, 'snapping_distance_m': None}
-            try:
-                snapped = service.snap(lat, lon, 500)
-                record['node'], record['snapping_distance_m'] = snapped['node'], snapped['distance_m']
-            except ValueError:
-                rejected['unresolved_road_match'] += 1
-            records.append(record)
-        (stage / 'places.json').write_text(json.dumps(records, ensure_ascii=False), encoding='utf-8')
-        snapshot = service.snapshot('normal')
-        roads = [service.road(identifier, snapshot) for identifier in service.edges]
-        (stage / 'roads.geojson').write_text(json.dumps({'type': 'FeatureCollection', 'features': roads}), encoding='utf-8')
+        with closing(service.store.db):
+            service.ready()
+            print('Retrieving named OSM features', flush=True)
+            features = ox.features_from_polygon(boundary, tags={'name': True, 'name:en': True, 'name:bn': True})
+            records, seen = [], set()
+            rejected = Counter()
+            for identity, row in features.iterrows():
+                element, osm_id = identity
+                identifier = f'{element}/{osm_id}'
+                if identifier in seen:
+                    rejected['duplicates'] += 1
+                    continue
+                seen.add(identifier)
+                name = clean(row.get('name')) or clean(row.get('name:en')) or clean(row.get('name:bn'))
+                if not name:
+                    rejected['missing_name'] += 1
+                    continue
+                geometry = row.geometry
+                if geometry is None or geometry.is_empty:
+                    rejected['missing_geometry'] += 1
+                    continue
+                point = geometry.representative_point()
+                lon, lat = point.x, point.y
+                if not valid_coordinate([lon, lat]) or not boundary.covers(point):
+                    rejected['invalid_or_outside_coordinate'] += 1
+                    continue
+                record = {'id': identifier, 'osm_type': element, 'osm_id': int(osm_id), 'name': name, 'name_en': clean(row.get('name:en')), 'name_bn': clean(row.get('name:bn')), 'alt_names': clean(row.get('alt_name')), 'category': category(row), 'lat': lat, 'lon': lon, 'locality': clean(row.get('addr:suburb')) or clean(row.get('addr:city')), 'address': ' '.join(filter(None, [clean(row.get('addr:housenumber')), clean(row.get('addr:street'))])), 'source': 'OpenStreetMap', 'node': None, 'snapping_distance_m': None}
+                try:
+                    snapped = service.snap(lat, lon, 500)
+                    record['node'], record['snapping_distance_m'] = snapped['node'], snapped['distance_m']
+                except ValueError:
+                    rejected['unresolved_road_match'] += 1
+                records.append(record)
+            (stage / 'places.json').write_text(json.dumps(records, ensure_ascii=False), encoding='utf-8')
+            snapshot = service.snapshot('normal')
+            roads = [service.road(identifier, snapshot) for identifier in service.edges]
+            (stage / 'roads.geojson').write_text(json.dumps({'type': 'FeatureCollection', 'features': roads}), encoding='utf-8')
         metadata = {'source': 'OpenStreetMap contributors', 'license': 'ODbL 1.0', 'retrieved_at': datetime.now(timezone.utc).isoformat(), 'network_type': 'drive', 'study_area': {'description': 'Explicit configurable Dhaka study rectangle; not an administrative boundary', 'bbox': args.bbox, 'geometry': mapping(boundary)}, 'nodes': graph.number_of_nodes(), 'edges': graph.number_of_edges(), 'weak_components': __import__('networkx').number_weakly_connected_components(graph), 'unique_places': len(records), 'categories': dict(Counter(p['category'] for p in records)), 'quality_report': dict(rejected), 'graph_sha256': hashlib.sha256((stage / 'dhaka.graphml').read_bytes()).hexdigest()}
         (stage / 'metadata.json').write_text(json.dumps(metadata, indent=2, ensure_ascii=False), encoding='utf-8')
         if existing:
