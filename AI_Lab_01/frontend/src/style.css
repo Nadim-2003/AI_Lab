@@ -3,3 +3,5 @@
 .dataset-help{display:block}.dataset-help p{color:inherit}.dataset-help>div{margin:10px 0}.dataset-help code{max-width:600px}.dataset-help button{margin:6px 0}.autocomplete input:disabled{cursor:not-allowed;opacity:.6}
 
 .trace-node{font:inherit;padding:3px;border:0;background:transparent;color:#147c64;text-decoration:underline}.trace-node[aria-pressed=true]{background:#ffcf40;color:#17383d;border-radius:3px}.trace-node:focus-visible{outline:2px solid #147c64}
+
+.search-trace .trace{max-height:360px}.search-trace p{overflow-wrap:anywhere}.search-trace .trace-node{display:inline-block}.inspector{min-width:0}
