@@ -107,17 +107,19 @@ class Service:
         costs, conditions = {}, {}
         weights = scenario.weights.model_dump()
         ratio = float('inf')
-        circle_center = GeoPoint(*self.transform.transform(scenario.area.lon, scenario.area.lat)) if scenario.scope == 'circle' else None
+        circles = [(GeoPoint(*self.transform.transform(area.lon, area.lat)), area.radius_m, (area.conditions or scenario.conditions).model_dump()) for area in (scenario.areas or [scenario.area])] if scenario.scope == 'circle' else []
         for identifier, (u, v, k) in self.edges.items():
             attrs = self.graph[u][v][k]
             classes = attrs.get('highway', [])
             classes = classes if isinstance(classes, list) else [classes]
             applies = scenario.scope == 'network' and (not scenario.road_classes or bool(set(classes) & set(scenario.road_classes)))
-            if circle_center is not None:
-                line = LineString([self.transform.transform(lon, lat) for lon, lat in edge_geometry(self.graph, u, v, k)])
-                applies = line.distance(circle_center) <= scenario.area.radius_m
             condition = scenario.conditions.model_dump() if applies else Conditions().model_dump()
-            if scenario.scope != 'circle' and identifier in scenario.edges:
+            if circles:
+                line = LineString([self.transform.transform(lon, lat) for lon, lat in edge_geometry(self.graph, u, v, k)])
+                for center, radius, local_conditions in circles:
+                    if line.distance(center) <= radius:
+                        condition = {name: max(value, local_conditions[name]) for name, value in condition.items()}
+            if identifier in scenario.edges:
                 condition = scenario.edges[identifier].model_dump()
             if identifier in overrides:
                 condition = overrides[identifier]

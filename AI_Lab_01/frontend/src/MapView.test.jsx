@@ -1,13 +1,16 @@
 import React from 'react'
 import {act, render, screen} from '@testing-library/react'
 import {beforeEach, afterEach, expect, it, vi} from 'vitest'
-const state = vi.hoisted(() => ({events: null, map: null, marker: null}))
+const state = vi.hoisted(() => ({events: null, map: null, marker: null, circle: null}))
 vi.mock('react-leaflet', () => ({
   MapContainer: ({children}) => <div>{children}</div>,
   TileLayer: () => null,
   Polyline: () => <div data-testid="road-layer"/>,
   CircleMarker: () => null,
-  Circle: ({center, radius}) => <div data-testid="scenario-circle" data-center={center.join(',')} data-radius={radius}/>,
+  Circle: React.forwardRef(({center, radius}, ref) => {
+    React.useImperativeHandle(ref, () => state.circle)
+    return <div data-testid="scenario-circle" data-center={center.join(',')} data-radius={radius}/>
+  }),
   Marker: props => {state.marker = props; return <div data-testid="circle-handle"/>},
   Tooltip: () => null,
   useMap: () => state.map,
@@ -19,6 +22,7 @@ vi.mock('react-leaflet', () => ({
 import MapView from './MapView'
 const props = {scenario: 'normal', revision: 0, results: [], visible: {}, selected: 'A*', showPlaces: true, onError: vi.fn()}
 beforeEach(() => {
+  state.circle = {setLatLng: vi.fn()}
   state.map = {fitBounds: vi.fn(), setView: vi.fn(), getZoom: () => 14}
   vi.useFakeTimers()
   vi.stubGlobal('fetch', vi.fn(async url => ({ok: true, json: async () => url.includes('/roads') ? {features: [{properties: {id: '1:2:0', conditions: {traffic: 0, rain: 0, safety: 0}}, geometry: {coordinates: [[90.4, 23.7], [90.41, 23.71]]}}]} : []})))
@@ -64,13 +68,19 @@ it('centers the map on the selected trace node, including repeated selection', (
 
 it('moves a draft circle through its draggable center without changing its radius', () => {
   const move = vi.fn()
-  const area = {lat: 23.77, lon: 90.4, radius_m: 1500}
-  const {rerender} = render(<MapView {...props} scenarioArea={area} onAreaMove={move}/>)
+  const area = {lat: 23.77, lon: 90.4, radius_m: 1500, conditions: {rain: 1}}
+  const {rerender} = render(<MapView {...props} scenarioAreas={[area]} onAreaMove={move}/>)
   expect(state.marker.draggable).toBe(true)
   state.marker.eventHandlers.drag({target: {getLatLng: () => ({lat: 23.78, lng: 90.41})}})
-  expect(move).toHaveBeenCalledWith({lat: 23.78, lon: 90.41, radius_m: 1500})
-  rerender(<MapView {...props} scenarioArea={move.mock.calls[0][0]} onAreaMove={move}/>)
+  expect(state.circle.setLatLng).toHaveBeenCalledWith({lat: 23.78, lng: 90.41})
+  expect(move).not.toHaveBeenCalled()
+  for (let i = 0; i < 100; i++) state.marker.eventHandlers.drag({target: {getLatLng: () => ({lat: 23.78, lng: 90.41})}})
+  expect(move).not.toHaveBeenCalled()
+  state.marker.eventHandlers.dragend({target: {getLatLng: () => ({lat: 23.78, lng: 90.41})}})
+  expect(move).toHaveBeenCalledTimes(1)
+  expect(move).toHaveBeenCalledWith(0, {...area, lat: 23.78, lon: 90.41})
+  rerender(<MapView {...props} scenarioAreas={[move.mock.calls[0][1]]} onAreaMove={move}/>)
   expect(screen.getByTestId('scenario-circle')).toHaveAttribute('data-center', '23.78,90.41')
-  rerender(<MapView {...props} scenarioArea={area}/>)
+  rerender(<MapView {...props} scenarioAreas={[area]}/>)
   expect(screen.queryByTestId('circle-handle')).not.toBeInTheDocument()
 })

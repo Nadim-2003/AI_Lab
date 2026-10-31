@@ -150,6 +150,18 @@ Choose **Whole network / road classes** to apply general conditions across the n
 
 ## Apply conditions to a circular area
 
-Choose **Apply conditions to → Circular area on map**, click **Pick circle center on map**, then click the map. A purple circle previews the area. Drag the center handle with the mouse to move the draft circle. To move a saved circle, first select Edit active (or Duplicate active), then save after dragging. Use **Circle radius (metres)** to increase or decrease the radius from 50 m to 20 km, or choose **Move circle center on map** to reposition it. Set the conditions and save the scenario, then recalculate the route. Editing or duplicating the scenario restores its circle for resizing.
+Choose **Apply conditions to → Circular area on map**, click **Add circle on map**, then click the map. A purple circle previews the area. Drag the center handle with the mouse to move the draft circle. To move a saved circle, first select Edit active (or Duplicate active), then save after dragging. Use **Circle radius (metres)** to increase or decrease the radius from 50 m to 20 km, or choose the circle’s **Move circle on map** button to reposition it. Set the conditions and save the scenario, then recalculate the route. Editing or duplicating the scenario restores its circle for resizing.
 
-All loaded directed road segments touching the circle receive the conditions; an intersecting segment is affected along its entire length. Both directions are included when the dataset contains them. Roads outside remain normal except for saved Road Inspector overrides, which retain priority. Road-class filters and individually added scenario roads are ignored in circle mode. The circle does not download or create roads beyond the loaded dataset.
+All loaded directed road segments touching the circle receive the conditions; an intersecting segment is affected along its entire length. Both directions are included when the dataset contains them. Roads outside remain normal except for saved Road Inspector overrides, which retain priority. Road-class filters are ignored in circle mode; individually added roads take priority over circle conditions. The circle does not download or create roads beyond the loaded dataset.
+
+
+### Multiple circles in one scenario
+
+Click **Add circle on map** and place each center to add up to 20 circles. Each circle has its own radius slider, move button, and remove button. You can also drag each center handle; dragging updates only the circle until you release the mouse. Save the scenario to apply your edits. Each circle has its own conditions; weights are shared by the scenario. For overlapping circles, the highest severity for each condition applies, and any blocked circle closes the road. Penalties are not added repeatedly. Existing single-circle scenarios remain supported and load as one circle when edited or duplicated.
+
+
+### Different conditions in one scenario
+
+Each circle has its own Traffic, Road condition, Rain, Safety, and Block controls directly below its radius. For example, set Circle 1 to severe rain and Circle 2 to high traffic. Moving or resizing a circle preserves its conditions. Older circles inherit their original scenario conditions when loaded for editing.
+
+You can also add individual roads to a circle scenario. Set **Conditions for next selected road**, click a road on the map, and add it. Expand any added road in the list to edit its conditions independently. Selected road conditions override circle conditions; saved Road Inspector overrides take highest priority. In **Selected roads only** mode, each added road likewise keeps its own conditions. Save the scenario and recalculate after changes.

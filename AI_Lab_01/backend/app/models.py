@@ -24,6 +24,7 @@ class CircleArea(BaseModel):
     lat: float = Field(ge=22, le=25)
     lon: float = Field(ge=89, le=92)
     radius_m: float = Field(ge=50, le=20000)
+    conditions: Conditions | None = None
 
 
 class Scenario(BaseModel):
@@ -32,6 +33,7 @@ class Scenario(BaseModel):
     description: str = Field('', max_length=500)
     scope: Literal['network', 'selected_roads', 'circle'] = 'network'
     area: CircleArea | None = None
+    areas: list[CircleArea] = Field(default_factory=list, max_length=20)
     road_classes: list[str] = Field(default_factory=list, max_length=30)
     conditions: Conditions = Field(default_factory=Conditions)
     edges: dict[str, Conditions] = Field(default_factory=dict, max_length=10000)
@@ -41,7 +43,7 @@ class Scenario(BaseModel):
     def require_selected_roads(self):
         if self.scope == 'selected_roads' and not self.edges:
             raise ValueError('Add at least one directed road for selected-roads scenarios')
-        if self.scope == 'circle' and self.area is None:
+        if self.scope == 'circle' and not self.areas and self.area is None:
             raise ValueError('Select a circle center and radius')
         return self
 
