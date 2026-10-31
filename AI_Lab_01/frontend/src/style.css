@@ -5,3 +5,5 @@
 .trace-node{font:inherit;padding:3px;border:0;background:transparent;color:#147c64;text-decoration:underline}.trace-node[aria-pressed=true]{background:#ffcf40;color:#17383d;border-radius:3px}.trace-node:focus-visible{outline:2px solid #147c64}
 
 .search-trace .trace{max-height:360px}.search-trace p{overflow-wrap:anywhere}.search-trace .trace-node{display:inline-block}.inspector{min-width:0}
+
+.circle-center-handle{display:grid;place-items:center;background:#7657c8;color:white;border:3px solid white;border-radius:50%;box-shadow:0 1px 6px #0006;cursor:grab;font-size:22px}.circle-center-handle:active{cursor:grabbing}

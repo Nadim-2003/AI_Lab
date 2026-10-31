@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {MapContainer, TileLayer, Polyline, Circle, CircleMarker, Tooltip, useMap, useMapEvents} from 'react-leaflet'
+import {MapContainer, TileLayer, Polyline, Circle, CircleMarker, Marker, Tooltip, useMap, useMapEvents} from 'react-leaflet'
 import L from 'leaflet'
 import {api, colors, toLeaflet} from './api'
 
@@ -29,7 +29,7 @@ function StudyArea({bbox}) {
   }, [west, south, east, north, map])
   return null
 }
-export default function MapView({ready = false, scenarioArea, studyBounds, scenario, revision, results, visible, selected, start, destination, selectionMode, onPoint, onRoad, roadClass, placeCategory, showPlaces, showTrace, traceNode, onTraceNode, focusKey, onError}) {
+export default function MapView({ready = false, scenarioArea, onAreaMove, studyBounds, scenario, revision, results, visible, selected, start, destination, selectionMode, onPoint, onRoad, roadClass, placeCategory, showPlaces, showTrace, traceNode, onTraceNode, focusKey, onError}) {
   const [bounds, setBounds] = useState(null)
   const [roads, setRoads] = useState({features: []})
   const [places, setPlaces] = useState([])
@@ -55,6 +55,7 @@ export default function MapView({ready = false, scenarioArea, studyBounds, scena
     <MapContainer center={[23.732, 90.3985]} zoom={14} scrollWheelZoom className="map">
       <TileLayer url="https://tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'/>
       {scenarioArea && <Circle center={[scenarioArea.lat, scenarioArea.lon]} radius={scenarioArea.radius_m} pathOptions={{color: '#7657c8', fillOpacity: 0.12, interactive: false}}/>}
+      {scenarioArea && onAreaMove && <Marker position={[scenarioArea.lat, scenarioArea.lon]} draggable icon={L.divIcon({className: 'circle-center-handle', html: '<span>✥</span>', iconSize: [32, 32], iconAnchor: [16, 16]})} title="Drag circle center" eventHandlers={{drag: event => {const point = event.target.getLatLng(); onAreaMove({lat: point.lat, lon: point.lng, radius_m: scenarioArea.radius_m})}}}><Tooltip>Drag to move the scenario circle. Save the scenario to apply.</Tooltip></Marker>}
       <StudyArea bbox={studyBounds}/>
       <Viewport onBounds={setBounds} selectionMode={selectionMode} onPoint={onPoint}/>
       <Focus route={chosen} focusKey={focusKey}/>

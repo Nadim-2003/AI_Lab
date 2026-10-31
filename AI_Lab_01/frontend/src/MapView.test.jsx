@@ -1,12 +1,14 @@
 import React from 'react'
 import {act, render, screen} from '@testing-library/react'
 import {beforeEach, afterEach, expect, it, vi} from 'vitest'
-const state = vi.hoisted(() => ({events: null, map: null}))
+const state = vi.hoisted(() => ({events: null, map: null, marker: null}))
 vi.mock('react-leaflet', () => ({
   MapContainer: ({children}) => <div>{children}</div>,
   TileLayer: () => null,
   Polyline: () => <div data-testid="road-layer"/>,
   CircleMarker: () => null,
+  Circle: ({center, radius}) => <div data-testid="scenario-circle" data-center={center.join(',')} data-radius={radius}/>,
+  Marker: props => {state.marker = props; return <div data-testid="circle-handle"/>},
   Tooltip: () => null,
   useMap: () => state.map,
   useMapEvents: events => {
@@ -58,4 +60,17 @@ it('centers the map on the selected trace node, including repeated selection', (
   expect(state.map.setView).toHaveBeenCalledWith([23.77, 90.4], 17)
   rerender(<MapView {...props} traceNode={{...point}}/>)
   expect(state.map.setView).toHaveBeenCalledTimes(2)
+})
+
+it('moves a draft circle through its draggable center without changing its radius', () => {
+  const move = vi.fn()
+  const area = {lat: 23.77, lon: 90.4, radius_m: 1500}
+  const {rerender} = render(<MapView {...props} scenarioArea={area} onAreaMove={move}/>)
+  expect(state.marker.draggable).toBe(true)
+  state.marker.eventHandlers.drag({target: {getLatLng: () => ({lat: 23.78, lng: 90.41})}})
+  expect(move).toHaveBeenCalledWith({lat: 23.78, lon: 90.41, radius_m: 1500})
+  rerender(<MapView {...props} scenarioArea={move.mock.calls[0][0]} onAreaMove={move}/>)
+  expect(screen.getByTestId('scenario-circle')).toHaveAttribute('data-center', '23.78,90.41')
+  rerender(<MapView {...props} scenarioArea={area}/>)
+  expect(screen.queryByTestId('circle-handle')).not.toBeInTheDocument()
 })
