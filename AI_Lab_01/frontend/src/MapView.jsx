@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {MapContainer, TileLayer, Polyline, CircleMarker, Tooltip, useMap, useMapEvents} from 'react-leaflet'
+import {MapContainer, TileLayer, Polyline, Circle, CircleMarker, Tooltip, useMap, useMapEvents} from 'react-leaflet'
 import L from 'leaflet'
 import {api, colors, toLeaflet} from './api'
 
@@ -29,7 +29,7 @@ function StudyArea({bbox}) {
   }, [west, south, east, north, map])
   return null
 }
-export default function MapView({ready = false, studyBounds, scenario, revision, results, visible, selected, start, destination, selectionMode, onPoint, onRoad, roadClass, placeCategory, showPlaces, showTrace, traceNode, onTraceNode, focusKey, onError}) {
+export default function MapView({ready = false, scenarioArea, studyBounds, scenario, revision, results, visible, selected, start, destination, selectionMode, onPoint, onRoad, roadClass, placeCategory, showPlaces, showTrace, traceNode, onTraceNode, focusKey, onError}) {
   const [bounds, setBounds] = useState(null)
   const [roads, setRoads] = useState({features: []})
   const [places, setPlaces] = useState([])
@@ -54,6 +54,7 @@ export default function MapView({ready = false, studyBounds, scenario, revision,
   return <div className={`map-shell ${selectionMode ? 'selecting' : ''}`}>
     <MapContainer center={[23.732, 90.3985]} zoom={14} scrollWheelZoom className="map">
       <TileLayer url="https://tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'/>
+      {scenarioArea && <Circle center={[scenarioArea.lat, scenarioArea.lon]} radius={scenarioArea.radius_m} pathOptions={{color: '#7657c8', fillOpacity: 0.12, interactive: false}}/>}
       <StudyArea bbox={studyBounds}/>
       <Viewport onBounds={setBounds} selectionMode={selectionMode} onPoint={onPoint}/>
       <Focus route={chosen} focusKey={focusKey}/>

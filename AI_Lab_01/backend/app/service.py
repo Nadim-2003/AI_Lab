@@ -8,6 +8,7 @@ import networkx as nx
 from pyproj import Transformer
 from shapely.geometry import Point as GeoPoint
 from shapely.strtree import STRtree
+from shapely.geometry import LineString
 from .algorithms import ALGORITHMS, Limits
 from .geo import edge_geometry, haversine, route_geometry, valid_coordinate
 from .models import Scenario, Conditions
@@ -106,13 +107,17 @@ class Service:
         costs, conditions = {}, {}
         weights = scenario.weights.model_dump()
         ratio = float('inf')
+        circle_center = GeoPoint(*self.transform.transform(scenario.area.lon, scenario.area.lat)) if scenario.scope == 'circle' else None
         for identifier, (u, v, k) in self.edges.items():
             attrs = self.graph[u][v][k]
             classes = attrs.get('highway', [])
             classes = classes if isinstance(classes, list) else [classes]
-            applies = not scenario.road_classes or bool(set(classes) & set(scenario.road_classes))
+            applies = scenario.scope == 'network' and (not scenario.road_classes or bool(set(classes) & set(scenario.road_classes)))
+            if circle_center is not None:
+                line = LineString([self.transform.transform(lon, lat) for lon, lat in edge_geometry(self.graph, u, v, k)])
+                applies = line.distance(circle_center) <= scenario.area.radius_m
             condition = scenario.conditions.model_dump() if applies else Conditions().model_dump()
-            if identifier in scenario.edges:
+            if scenario.scope != 'circle' and identifier in scenario.edges:
                 condition = scenario.edges[identifier].model_dump()
             if identifier in overrides:
                 condition = overrides[identifier]

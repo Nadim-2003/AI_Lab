@@ -1,7 +1,7 @@
 import React from 'react'
 import {it, expect, vi, beforeEach} from 'vitest'
 import {render, screen, fireEvent, waitFor} from '@testing-library/react'
-vi.mock('./MapView', () => ({default: props => <div data-testid="map" data-results={props.results.length} data-trace-node={props.traceNode?.id}><button onClick={() => props.onPoint({lat: 23.77, lng: 90.4})}>Map point</button><button onClick={() => props.onRoad({properties: {id: '1:2:0', name: 'Test road', u: '1', v: '2', key: '0', length_m: 100, cost: 0.1, conditions: {traffic: 0, condition: 0, rain: 0, safety: 0, blocked: false}}})}>Inspect road</button></div>}))
+vi.mock('./MapView', () => ({default: props => <div data-testid="map" data-results={props.results.length} data-trace-node={props.traceNode?.id} data-area-radius={props.scenarioArea?.radius_m}><button onClick={() => props.onPoint({lat: 23.77, lng: 90.4})}>Map point</button><button onClick={() => props.onRoad({properties: {id: '1:2:0', name: 'Test road', u: '1', v: '2', key: '0', length_m: 100, cost: 0.1, conditions: {traffic: 0, condition: 0, rain: 0, safety: 0, blocked: false}}})}>Inspect road</button></div>}))
 vi.mock('recharts', () => ({ResponsiveContainer: () => null, BarChart: () => null, Bar: () => null, XAxis: () => null, YAxis: () => null, Tooltip: () => null, Cell: () => null}))
 import App from './App'
 const stats = {ready: true, nodes: 10, edges: 20, places: 0, categories: {}, metadata: {}, revision: 0}
@@ -84,4 +84,17 @@ it('enables routing with an installed graph while warning about incomplete place
   expect(screen.getByLabelText('Start')).toBeEnabled()
   expect(screen.getByText('Pick start on map')).toBeEnabled()
   expect(screen.getByText(/4 of 9 place tiles installed/)).toBeInTheDocument()
+})
+
+it('places a scenario circle with a map click without resolving a route endpoint', async () => {
+  render(<App/>)
+  await screen.findByText('● Dataset ready')
+  fireEvent.click(screen.getByText('Custom scenario studio'))
+  fireEvent.change(screen.getByLabelText('Apply conditions to'), {target: {value: 'circle'}})
+  fireEvent.click(screen.getByText('Pick circle center on map'))
+  fireEvent.click(screen.getByText('Map point'))
+  expect(screen.getByTestId('map')).toHaveAttribute('data-area-radius', '500')
+  expect(fetch.mock.calls.some(([url]) => url.includes('/resolve'))).toBe(false)
+  fireEvent.change(screen.getByLabelText('Circle radius (metres)'), {target: {value: '1000'}})
+  expect(screen.getByTestId('map')).toHaveAttribute('data-area-radius', '1000')
 })

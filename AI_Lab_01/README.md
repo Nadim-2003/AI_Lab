@@ -141,3 +141,15 @@ After running a search, select an algorithm in the results table and open **Boun
 The API defaults to `trace_limit: 5000` and accepts values from 0 through 5,000. A search that explores fewer nodes returns fewer points; this does not enlarge the OSM dataset. Other search limits still apply. Stale results cannot be selected; recalculate after changing endpoints or conditions.
 
 For clone/pull commands and complete Windows and Linux startup instructions, see the [repository README](../README.md).
+
+## Scenarios for selected roads only
+
+In Custom scenario studio, choose **Apply conditions to → Selected roads only**. Click a road on the map, set its conditions in the studio, and click **Add selected directed road with these conditions**. Repeat for additional roads, then create or update the scenario. Each added road keeps the conditions it had when added; add it again to update them. Roads outside the list retain normal conditions, except for separately saved Road Inspector overrides. Only the selected direction is affected. At least one road must be added before saving.
+
+Choose **Whole network / road classes** to apply general conditions across the network or selected classes. Existing scenarios retain that behavior until their scope is changed.
+
+## Apply conditions to a circular area
+
+Choose **Apply conditions to → Circular area on map**, click **Pick circle center on map**, then click the map. A purple circle previews the area. Use **Circle radius (metres)** to increase or decrease the radius from 50 m to 20 km, or choose **Move circle center on map** to reposition it. Set the conditions and save the scenario, then recalculate the route. Editing or duplicating the scenario restores its circle for resizing.
+
+All loaded directed road segments touching the circle receive the conditions; an intersecting segment is affected along its entire length. Both directions are included when the dataset contains them. Roads outside remain normal except for saved Road Inspector overrides, which retain priority. Road-class filters and individually added scenario roads are ignored in circle mode. The circle does not download or create roads beyond the loaded dataset.
