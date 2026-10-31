@@ -165,3 +165,15 @@ Click **Add circle on map** and place each center to add up to 20 circles. Each 
 Each circle has its own Traffic, Road condition, Rain, Safety, and Block controls directly below its radius. For example, set Circle 1 to severe rain and Circle 2 to high traffic. Moving or resizing a circle preserves its conditions. Older circles inherit their original scenario conditions when loaded for editing.
 
 You can also add individual roads to a circle scenario. Set **Conditions for next selected road**, click a road on the map, and add it. Expand any added road in the list to edit its conditions independently. Selected road conditions override circle conditions; saved Road Inspector overrides take highest priority. In **Selected roads only** mode, each added road likewise keeps its own conditions. Save the scenario and recalculate after changes.
+
+## Add multiple condition groups with one set of weights
+
+New scenarios default to **Multiple condition groups**. Click **Add condition** for each group, then select its target:
+
+- **Circle on map:** pick the center, resize the radius, or drag its handle. The condition applies to each whole directed road segment intersecting the circle.
+- **Selected roads:** click a road on the map, then click **Add selected road to condition N**. Add more roads if they should share that group's conditions; use separate groups for different conditions.
+- **Road classes:** select one or more classes, or leave **All road classes** to affect the entire loaded network.
+
+Each group has its own traffic, road condition, rain, safety, and block settings. All groups share the single set of scenario weights below the list. Up to 20 groups can be combined. Set a name and save with **Create scenario** or **Update scenario**, then recalculate the route.
+
+For example, add severe rain in a circle, poor road condition on one selected directed road, and high traffic on primary roads. On any road matched by multiple groups, each severity is the maximum of the matching values; any matching blocked group closes the road. Repeated matches do not multiply the penalty. Saved Road Inspector overrides still take priority. Roads matched by no group remain normal. Older scope modes and saved scenarios remain supported.

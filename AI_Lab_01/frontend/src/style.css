@@ -7,3 +7,5 @@
 .search-trace .trace{max-height:360px}.search-trace p{overflow-wrap:anywhere}.search-trace .trace-node{display:inline-block}.inspector{min-width:0}
 
 .circle-center-handle{display:grid;place-items:center;background:#7657c8;color:white;border:3px solid white;border-radius:50%;box-shadow:0 1px 6px #0006;cursor:grab;font-size:22px}.circle-center-handle:active{cursor:grabbing}
+
+.condition-group{margin-top:14px;padding:12px;border:1px solid var(--line);border-radius:8px}.condition-group summary{margin-bottom:12px}

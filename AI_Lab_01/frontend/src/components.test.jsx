@@ -111,6 +111,7 @@ it('saves selected-roads scope without requiring global conditions to be reset',
   render(<ScenarioManager road={{properties: {id: 'a:b:0'}}} onSaved={saved} onError={vi.fn()}/>)
   fireEvent.click(screen.getByText('Custom scenario studio'))
   fireEvent.change(screen.getByLabelText('Name'), {target: {value: 'Local rain'}})
+  fireEvent.change(screen.getByLabelText('Apply conditions to'), {target: {value: 'selected_roads'}})
   expect(screen.getByLabelText('Apply conditions to')).toHaveValue('selected_roads')
   expect(screen.getByText('Create scenario')).toBeDisabled()
   fireEvent.change(screen.getByLabelText('Scenario rain'), {target: {value: '1'}})
@@ -173,4 +174,68 @@ it('edits each selected road independently inside one scenario', async () => {
   const body = JSON.parse(fetch.mock.calls[0][1].body)
   expect(body.edges['a:b:0']).toMatchObject({rain: 1, traffic: 0})
   expect(body.edges['b:c:0']).toMatchObject({rain: 0, traffic: 1})
+})
+
+it('saves circle, selected-road, and class groups in one scenario with shared weights', async () => {
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue(mockResponse({id: 'mixed'})))
+  const saved = vi.fn()
+  function Studio() {
+    const [areas, setAreas] = React.useState([])
+    return <ScenarioManager areas={areas} onAreasChange={setAreas} onPickArea={index => setAreas(previous => previous.map((area, i) => i === index ? {lat: 23.77, lon: 90.4, radius_m: 500} : area))} road={{properties: {id: 'a:b:0'}}} onSaved={saved} onError={vi.fn()}/>
+  }
+  render(<Studio/>)
+  fireEvent.click(screen.getByText('Custom scenario studio'))
+  fireEvent.change(screen.getByLabelText('Name'), {target: {value: 'Mixed'}})
+  expect(screen.getByLabelText('Apply conditions to')).toHaveValue('groups')
+  expect(screen.getByText('Create scenario')).toBeDisabled()
+  fireEvent.click(screen.getByText('Add condition'))
+  fireEvent.change(screen.getByLabelText('Condition 1 applies to'), {target: {value: 'classes'}})
+  fireEvent.change(screen.getByLabelText('Condition 1 road classes'), {target: {value: 'primary'}})
+  fireEvent.change(screen.getByLabelText('Condition 1 traffic'), {target: {value: '1'}})
+  fireEvent.click(screen.getByText('Add condition'))
+  fireEvent.change(screen.getByLabelText('Condition 2 applies to'), {target: {value: 'roads'}})
+  expect(screen.getByText('Create scenario')).toBeDisabled()
+  fireEvent.click(screen.getByText('Add selected road to condition 2'))
+  fireEvent.change(screen.getByLabelText('Condition 2 condition'), {target: {value: '1'}})
+  fireEvent.click(screen.getByText('Add condition'))
+  expect(screen.getByText('Create scenario')).toBeDisabled()
+  fireEvent.click(screen.getByText('Pick condition 3 circle'))
+  fireEvent.change(screen.getByLabelText('Condition 3 rain'), {target: {value: '1'}})
+  fireEvent.change(screen.getByLabelText('traffic weight'), {target: {value: '4'}})
+  fireEvent.click(screen.getByText('Create scenario'))
+  await waitFor(() => expect(saved).toHaveBeenCalledWith('mixed'))
+  const body = JSON.parse(fetch.mock.calls[0][1].body)
+  expect(body.scope).toBe('groups')
+  expect(body.weights.traffic).toBe(4)
+  expect(body.groups[0]).toMatchObject({target: 'classes', road_classes: ['primary'], conditions: {traffic: 1}})
+  expect(body.groups[1]).toMatchObject({target: 'roads', road_ids: ['a:b:0'], conditions: {condition: 1}})
+  expect(body.groups[2]).toMatchObject({target: 'circle', area: {lat: 23.77, lon: 90.4, radius_m: 500}, conditions: {rain: 1}})
+  expect(body.edges).toEqual({})
+})
+
+it('restores groups for editing and keeps the correct circle after a group is removed', async () => {
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue(mockResponse({id: 'existing'})))
+  const saved = vi.fn()
+  const normal = {traffic: 0, condition: 0, rain: 0, safety: 0, blocked: false}
+  const current = {id: 'existing', builtin: false, name: 'Existing groups', description: '', scope: 'groups', conditions: normal, road_classes: [], edges: {}, weights: {traffic: 2, condition: 1, rain: 2, safety: 1}, groups: [
+    {target: 'classes', conditions: normal, road_classes: ['primary'], road_ids: []},
+    {target: 'roads', conditions: normal, road_ids: ['a:b:0'], road_classes: []},
+    {target: 'circle', conditions: {...normal, rain: 1}, area: {lat: 23.77, lon: 90.4, radius_m: 800}, road_ids: [], road_classes: []},
+  ]}
+  function Studio() {
+    const [areas, setAreas] = React.useState([])
+    return <ScenarioManager current={current} areas={areas} onAreasChange={setAreas} onSaved={saved} onError={vi.fn()}/>
+  }
+  render(<Studio/>)
+  fireEvent.click(screen.getByText('Custom scenario studio'))
+  fireEvent.click(screen.getByText('Edit active'))
+  expect(screen.getByLabelText('Condition 3 radius (metres)')).toHaveValue('800')
+  fireEvent.click(screen.getByText('Remove condition 2'))
+  expect(screen.getByLabelText('Condition 2 radius (metres)')).toHaveValue('800')
+  expect(screen.getByLabelText('Condition 2 rain')).toHaveValue('1')
+  fireEvent.click(screen.getByText('Update scenario'))
+  await waitFor(() => expect(saved).toHaveBeenCalledWith('existing'))
+  const body = JSON.parse(fetch.mock.calls[0][1].body)
+  expect(body.groups).toHaveLength(2)
+  expect(body.groups[1]).toMatchObject({target: 'circle', area: {radius_m: 800}, conditions: {rain: 1}})
 })

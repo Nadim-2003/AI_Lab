@@ -78,7 +78,7 @@ def create_app(data_dir=None, graph=None):
 
     def validate_scenario(value):
         service.ready()
-        unknown = set(value.edges) - set(service.edges)
+        unknown = (set(value.edges) | {identifier for group in value.groups if group.target == 'roads' for identifier in group.road_ids}) - set(service.edges)
         if unknown:
             raise ValueError(f'Unknown directed edges: {sorted(unknown)[:5]}')
 

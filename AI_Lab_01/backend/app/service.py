@@ -108,6 +108,11 @@ class Service:
         weights = scenario.weights.model_dump()
         ratio = float('inf')
         circles = [(GeoPoint(*self.transform.transform(area.lon, area.lat)), area.radius_m, (area.conditions or scenario.conditions).model_dump()) for area in (scenario.areas or [scenario.area])] if scenario.scope == 'circle' else []
+        group_targets = []
+        if scenario.scope == 'groups':
+            for group in scenario.groups:
+                target = (GeoPoint(*self.transform.transform(group.area.lon, group.area.lat)), group.area.radius_m) if group.target == 'circle' else set(group.road_ids if group.target == 'roads' else group.road_classes)
+                group_targets.append((group, target))
         for identifier, (u, v, k) in self.edges.items():
             attrs = self.graph[u][v][k]
             classes = attrs.get('highway', [])
@@ -119,6 +124,20 @@ class Service:
                 for center, radius, local_conditions in circles:
                     if line.distance(center) <= radius:
                         condition = {name: max(value, local_conditions[name]) for name, value in condition.items()}
+            if group_targets:
+                line = None
+                for group, target in group_targets:
+                    if group.target == 'circle':
+                        if line is None:
+                            line = LineString([self.transform.transform(lon, lat) for lon, lat in edge_geometry(self.graph, u, v, k)])
+                        matches = line.distance(target[0]) <= target[1]
+                    elif group.target == 'roads':
+                        matches = identifier in target
+                    else:
+                        matches = not target or bool(set(classes) & target)
+                    if matches:
+                        local = group.conditions.model_dump()
+                        condition = {name: max(value, local[name]) for name, value in condition.items()}
             if identifier in scenario.edges:
                 condition = scenario.edges[identifier].model_dump()
             if identifier in overrides:

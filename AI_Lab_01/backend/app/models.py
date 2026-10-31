@@ -27,11 +27,29 @@ class CircleArea(BaseModel):
     conditions: Conditions | None = None
 
 
+class ConditionGroup(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    target: Literal['circle', 'roads', 'classes']
+    conditions: Conditions = Field(default_factory=Conditions)
+    area: CircleArea | None = None
+    road_ids: list[str] = Field(default_factory=list, max_length=10000)
+    road_classes: list[str] = Field(default_factory=list, max_length=30)
+
+    @model_validator(mode='after')
+    def validate_target(self):
+        if self.target == 'circle' and self.area is None:
+            raise ValueError('Place a circle for this condition group')
+        if self.target == 'roads' and not self.road_ids:
+            raise ValueError('Select at least one road for this condition group')
+        return self
+
+
 class Scenario(BaseModel):
     model_config = ConfigDict(extra='forbid', allow_inf_nan=False)
     name: str = Field(min_length=1, max_length=80)
     description: str = Field('', max_length=500)
-    scope: Literal['network', 'selected_roads', 'circle'] = 'network'
+    scope: Literal['network', 'selected_roads', 'circle', 'groups'] = 'network'
+    groups: list[ConditionGroup] = Field(default_factory=list, max_length=20)
     area: CircleArea | None = None
     areas: list[CircleArea] = Field(default_factory=list, max_length=20)
     road_classes: list[str] = Field(default_factory=list, max_length=30)
@@ -41,6 +59,8 @@ class Scenario(BaseModel):
 
     @model_validator(mode='after')
     def require_selected_roads(self):
+        if self.scope == 'groups' and not self.groups:
+            raise ValueError('Add at least one condition group')
         if self.scope == 'selected_roads' and not self.edges:
             raise ValueError('Add at least one directed road for selected-roads scenarios')
         if self.scope == 'circle' and not self.areas and self.area is None:

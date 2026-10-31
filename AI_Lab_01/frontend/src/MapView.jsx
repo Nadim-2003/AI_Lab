@@ -70,7 +70,7 @@ export default function MapView({ready = false, scenarioAreas = [], onAreaMove, 
   return <div className={`map-shell ${selectionMode ? 'selecting' : ''}`}>
     <MapContainer center={[23.732, 90.3985]} zoom={14} scrollWheelZoom className="map">
       <TileLayer url="https://tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'/>
-      {scenarioAreas.map((area, index) => <ScenarioCircle key={index} area={area} onMove={onAreaMove ? point => onAreaMove(index, point) : undefined}/>)}
+      {scenarioAreas.map((area, index) => area && <ScenarioCircle key={index} area={area} onMove={onAreaMove ? point => onAreaMove(index, point) : undefined}/>)}
       <StudyArea bbox={studyBounds}/>
       <Viewport onBounds={setBounds} selectionMode={selectionMode} onPoint={onPoint}/>
       <Focus route={chosen} focusKey={focusKey}/>
