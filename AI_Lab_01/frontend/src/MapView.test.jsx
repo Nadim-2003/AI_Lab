@@ -17,7 +17,7 @@ vi.mock('react-leaflet', () => ({
 import MapView from './MapView'
 const props = {scenario: 'normal', revision: 0, results: [], visible: {}, selected: 'A*', showPlaces: true, onError: vi.fn()}
 beforeEach(() => {
-  state.map = {fitBounds: vi.fn()}
+  state.map = {fitBounds: vi.fn(), setView: vi.fn(), getZoom: () => 14}
   vi.useFakeTimers()
   vi.stubGlobal('fetch', vi.fn(async url => ({ok: true, json: async () => url.includes('/roads') ? {features: [{properties: {id: '1:2:0', conditions: {traffic: 0, rain: 0, safety: 0}}, geometry: {coordinates: [[90.4, 23.7], [90.41, 23.71]]}}]} : []})))
 })
@@ -50,4 +50,12 @@ it('fits loaded study bounds once without resetting the map on metadata polls', 
   expect(state.map.fitBounds).toHaveBeenCalledTimes(count)
   rerender(<MapView {...props} ready studyBounds={[90.3, 23.65, 90.5, 23.9]}/>)
   expect(state.map.fitBounds).toHaveBeenLastCalledWith([[23.65, 90.3], [23.9, 90.5]], {padding: [20, 20]})
+})
+
+it('centers the map on the selected trace node, including repeated selection', () => {
+  const point = {id: '123', lat: 23.77, lon: 90.4}
+  const {rerender} = render(<MapView {...props} traceNode={point}/>)
+  expect(state.map.setView).toHaveBeenCalledWith([23.77, 90.4], 17)
+  rerender(<MapView {...props} traceNode={{...point}}/>)
+  expect(state.map.setView).toHaveBeenCalledTimes(2)
 })

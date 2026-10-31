@@ -1,7 +1,7 @@
 import React from 'react'
 import {it, expect, vi, beforeEach} from 'vitest'
 import {render, screen, fireEvent, waitFor} from '@testing-library/react'
-vi.mock('./MapView', () => ({default: props => <div data-testid="map" data-results={props.results.length}><button onClick={() => props.onPoint({lat: 23.77, lng: 90.4})}>Map point</button><button onClick={() => props.onRoad({properties: {id: '1:2:0', name: 'Test road', u: '1', v: '2', key: '0', length_m: 100, cost: 0.1, conditions: {traffic: 0, condition: 0, rain: 0, safety: 0, blocked: false}}})}>Inspect road</button></div>}))
+vi.mock('./MapView', () => ({default: props => <div data-testid="map" data-results={props.results.length} data-trace-node={props.traceNode?.id}><button onClick={() => props.onPoint({lat: 23.77, lng: 90.4})}>Map point</button><button onClick={() => props.onRoad({properties: {id: '1:2:0', name: 'Test road', u: '1', v: '2', key: '0', length_m: 100, cost: 0.1, conditions: {traffic: 0, condition: 0, rain: 0, safety: 0, blocked: false}}})}>Inspect road</button></div>}))
 vi.mock('recharts', () => ({ResponsiveContainer: () => null, BarChart: () => null, Bar: () => null, XAxis: () => null, YAxis: () => null, Tooltip: () => null, Cell: () => null}))
 import App from './App'
 const stats = {ready: true, nodes: 10, edges: 20, places: 0, categories: {}, metadata: {}, revision: 0}
@@ -11,7 +11,7 @@ beforeEach(() => {
     if (url.includes('/metadata')) data = stats
     else if (url.includes('/scenarios')) data = [{id: 'normal', name: 'Normal Day', builtin: true, conditions: {traffic: 0, condition: 0, rain: 0, safety: 0, blocked: false}}]
     else if (url.includes('/resolve')) data = {node: '1', lat: 23.77, lon: 90.4, distance_m: 5}
-    else if (url.includes('/routes')) data = {scenario: 'normal', scenario_name: 'Normal Day', revision: 0, snapshot: 'v1', heuristic_cost_per_km: 1, results: [{algorithm: 'A*', found: false, status: 'unreachable', nodes: [], edges: [], geometry: null, expanded: 1, generated: 1, execution_ms: .1, trace: []}]}
+    else if (url.includes('/routes')) data = {scenario: 'normal', scenario_name: 'Normal Day', revision: 0, snapshot: 'v1', heuristic_cost_per_km: 1, results: [{algorithm: 'A*', found: false, status: 'unreachable', nodes: [], edges: [], geometry: null, expanded: 1, generated: 1, execution_ms: .1, trace: ['123'], trace_points: [[90.4, 23.77]]}]}
     else data = {}
     return {ok: true, json: async () => data}
   }))
@@ -35,8 +35,15 @@ it('selects map endpoints, runs search, reports no route and marks changed endpo
   fireEvent.click(screen.getByRole('button', {name: 'Run A* →'}))
   await screen.findByText('unreachable')
   expect(screen.getByTestId('map')).toHaveAttribute('data-results', '1')
+  const request = fetch.mock.calls.find(([url]) => url.includes('/routes'))
+  expect(JSON.parse(request[1].body).trace_limit).toBe(5000)
+  fireEvent.click(screen.getByRole('button', {name: '123'}))
+  expect(screen.getByTestId('map')).toHaveAttribute('data-trace-node', '123')
+  expect(screen.getByText('Node 123: latitude 23.770000, longitude 90.400000')).toBeInTheDocument()
   fireEvent.click(screen.getByLabelText('Clear Start'))
   await screen.findByText(/Results are stale/)
+  expect(screen.getByRole('button', {name: '123'})).toBeDisabled()
+  expect(screen.getByTestId('map')).not.toHaveAttribute('data-trace-node')
   expect(screen.getByTestId('map')).toHaveAttribute('data-results', '0')
   fireEvent.click(screen.getByRole('checkbox', {name: 'BFS'}))
   expect(screen.getByRole('checkbox', {name: 'BFS'})).not.toBeChecked()

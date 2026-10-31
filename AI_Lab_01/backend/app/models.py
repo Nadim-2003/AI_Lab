@@ -38,7 +38,7 @@ class RouteQuery(BaseModel):
     max_expansions: int = Field(100000, ge=1, le=300000)
     max_depth: int = Field(100, ge=0, le=500)
     timeout_seconds: float = Field(3, ge=0.01, le=10, allow_inf_nan=False)
-    trace_limit: int = Field(300, ge=0, le=2000)
+    trace_limit: int = Field(5000, ge=0, le=5000)
     zero_heuristic_comparison: bool = True
 
 

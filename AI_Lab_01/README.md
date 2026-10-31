@@ -133,3 +133,11 @@ npm --prefix frontend run test:e2e
 ```
 
 The runner uses system Chromium when available. Otherwise run `npx playwright install chromium` in `frontend`, or set `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH`. The three recovery checks use real local FastAPI/Vite processes and mocked map tiles; they do not establish live OSM access.
+
+## Clickable explored nodes (up to 5,000)
+
+After running a search, select an algorithm in the results table and open **Bounded search trace**. Click a node ID to center the map on its real coordinates and show a yellow marker with its ID, latitude, and longitude. Enable **Show explored nodes for selected algorithm** to display the complete captured trace; its markers can also be clicked. Selecting an individual node works even when the complete trace is hidden.
+
+The API defaults to `trace_limit: 5000` and accepts values from 0 through 5,000. A search that explores fewer nodes returns fewer points; this does not enlarge the OSM dataset. Other search limits still apply. Stale results cannot be selected; recalculate after changing endpoints or conditions.
+
+For clone/pull commands and complete Windows and Linux startup instructions, see the [repository README](../README.md).

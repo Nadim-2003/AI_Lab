@@ -14,6 +14,11 @@ function Focus({route, focusKey}) {
   useEffect(() => {const points = toLeaflet(route?.geometry); if (points.length > 1) map.fitBounds(L.latLngBounds(points), {padding: [40, 40]})}, [focusKey])
   return null
 }
+function TraceFocus({point}) {
+  const map = useMap()
+  useEffect(() => {if (point) map.setView([point.lat, point.lon], Math.max(map.getZoom(), 17))}, [point, map])
+  return null
+}
 function StudyArea({bbox}) {
   const map = useMap()
   const [west, south, east, north] = bbox || []
@@ -24,7 +29,7 @@ function StudyArea({bbox}) {
   }, [west, south, east, north, map])
   return null
 }
-export default function MapView({ready = false, studyBounds, scenario, revision, results, visible, selected, start, destination, selectionMode, onPoint, onRoad, roadClass, placeCategory, showPlaces, showTrace, focusKey, onError}) {
+export default function MapView({ready = false, studyBounds, scenario, revision, results, visible, selected, start, destination, selectionMode, onPoint, onRoad, roadClass, placeCategory, showPlaces, showTrace, traceNode, onTraceNode, focusKey, onError}) {
   const [bounds, setBounds] = useState(null)
   const [roads, setRoads] = useState({features: []})
   const [places, setPlaces] = useState([])
@@ -52,15 +57,17 @@ export default function MapView({ready = false, studyBounds, scenario, revision,
       <StudyArea bbox={studyBounds}/>
       <Viewport onBounds={setBounds} selectionMode={selectionMode} onPoint={onPoint}/>
       <Focus route={chosen} focusKey={focusKey}/>
+      <TraceFocus point={traceNode}/>
       {roads.features.map(road => {
         const c = road.properties.conditions
         const penalized = ['traffic', 'condition', 'rain', 'safety'].some(key => Number(c[key]) > 0)
         return <Polyline key={road.properties.id} positions={toLeaflet(road.geometry)} pathOptions={{color: c.blocked ? '#d32f43' : penalized ? '#d59932' : '#517e80', weight: c.blocked ? 5 : 3, opacity: 0.65, dashArray: c.blocked ? '5 7' : undefined, bubblingMouseEvents: false}} eventHandlers={{click: event => {L.DomEvent.stopPropagation(event.originalEvent); selectionMode ? onPoint(event.latlng) : onRoad(road)}}}><Tooltip>{road.properties.name || 'Unnamed road'} · {road.properties.u} → {road.properties.v}</Tooltip></Polyline>
       })}
       {places.map(place => <CircleMarker key={place.id} center={[place.lat, place.lon]} radius={4} pathOptions={{color: '#567bb3', fillOpacity: 0.8}}><Tooltip>{place.name} · {place.category}</Tooltip></CircleMarker>)}
-      {showTrace && chosen?.trace_points.map(([lon, lat], i) => <CircleMarker key={`trace-${i}`} center={[lat, lon]} radius={3} pathOptions={{color: colors[chosen.algorithm], opacity: 0.4, fillOpacity: 0.3, interactive: false}}/>)}
+      {showTrace && chosen?.trace_points?.map(([lon, lat], i) => <CircleMarker key={`trace-${i}`} center={[lat, lon]} radius={3} pathOptions={{color: colors[chosen.algorithm], opacity: 0.4, fillOpacity: 0.3, bubblingMouseEvents: false}} eventHandlers={{click: () => onTraceNode?.(i)}}><Tooltip>Node {chosen.trace[i]} · {lat.toFixed(6)}, {lon.toFixed(6)}</Tooltip></CircleMarker>)}
       {sorted.filter(r => r.found && visible[r.algorithm] && r.geometry).map((route, i) => <Polyline key={route.algorithm} positions={toLeaflet(route.geometry)} pathOptions={{color: colors[route.algorithm], weight: route.algorithm === selected ? 7 : 4, opacity: 0.9, dashArray: route.algorithm === selected ? undefined : `${6 + i * 3} ${3 + i * 2}`, interactive: false}}/>)}
       {[['Start', start, '#0e9e81'], ['Destination', destination, '#e04b65']].map(([label, point, color]) => point && <CircleMarker key={label} center={[point.lat, point.lon]} radius={9} pathOptions={{color: 'white', weight: 3, fillColor: color, fillOpacity: 1}}><Tooltip permanent>{label}: {point.name}</Tooltip></CircleMarker>)}
+      {traceNode && <CircleMarker center={[traceNode.lat, traceNode.lon]} radius={10} pathOptions={{color: '#17383d', fillColor: '#ffcf40', fillOpacity: 1, weight: 3, interactive: false}}><Tooltip permanent>Node {traceNode.id} · {traceNode.lat.toFixed(6)}, {traceNode.lon.toFixed(6)}</Tooltip></CircleMarker>}
     </MapContainer>
     <div className="map-note">{!ready ? 'Road layers unavailable until the dataset is loaded' : loading ? 'Loading roads…' : selectionMode ? `Click the map to set ${selectionMode}` : 'Click a road to inspect its directed edge'}{roads.truncated && <span> · Showing {roads.features.length} of {roads.matched} edges; zoom in</span>}</div>
     <div className="map-key"><i className="road-dot"/> OSM roads <i className="amber-dot"/> Simulated penalties <i className="red-dot"/> Closed</div>
