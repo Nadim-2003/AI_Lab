@@ -1,0 +1,187 @@
+{
+  "name": "CBJ witness: on-scene medical care, no patient transport",
+  "seed": 42,
+  "nodes": {
+    "a": [
+      90.39,
+      23.73
+    ],
+    "b": [
+      90.4,
+      23.73
+    ],
+    "c": [
+      90.41,
+      23.73
+    ]
+  },
+  "roads": [
+    {
+      "id": "a>b",
+      "u": "a",
+      "v": "b",
+      "distance_km": 1.0,
+      "speed_kph": 30.0,
+      "traffic": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "b>a",
+      "u": "b",
+      "v": "a",
+      "distance_km": 1.0,
+      "speed_kph": 30.0,
+      "traffic": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "b>c",
+      "u": "b",
+      "v": "c",
+      "distance_km": 1.0,
+      "speed_kph": 30.0,
+      "traffic": 1.0,
+      "blocked": false
+    },
+    {
+      "id": "c>b",
+      "u": "c",
+      "v": "b",
+      "distance_km": 1.0,
+      "speed_kph": 30.0,
+      "traffic": 1.0,
+      "blocked": false
+    }
+  ],
+  "stations": [
+    {
+      "id": "S1",
+      "name": "West simulated center",
+      "node": "a"
+    },
+    {
+      "id": "S2",
+      "name": "East simulated center",
+      "node": "c"
+    }
+  ],
+  "hospitals": [],
+  "resources": [
+    {
+      "id": "AM1",
+      "role": "ambulance",
+      "station": "S1",
+      "home_node": "a",
+      "node": "a",
+      "available": true,
+      "release_at": 0.0,
+      "capabilities": [],
+      "capacity": 4,
+      "dispatch_cost": 500.0,
+      "cost_per_km": 30.0
+    },
+    {
+      "id": "AM2",
+      "role": "ambulance",
+      "station": "S2",
+      "home_node": "c",
+      "node": "c",
+      "available": true,
+      "release_at": 0.0,
+      "capabilities": [],
+      "capacity": 4,
+      "dispatch_cost": 500.0,
+      "cost_per_km": 30.0
+    },
+    {
+      "id": "RT1",
+      "role": "rescue",
+      "station": "S1",
+      "home_node": "a",
+      "node": "a",
+      "available": true,
+      "release_at": 0.0,
+      "capabilities": [],
+      "capacity": 4,
+      "dispatch_cost": 500.0,
+      "cost_per_km": 30.0
+    },
+    {
+      "id": "RT2",
+      "role": "rescue",
+      "station": "S2",
+      "home_node": "c",
+      "node": "c",
+      "available": true,
+      "release_at": 0.0,
+      "capabilities": [],
+      "capacity": 4,
+      "dispatch_cost": 500.0,
+      "cost_per_km": 30.0
+    }
+  ],
+  "incidents": [
+    {
+      "id": "A",
+      "category": "medical",
+      "node": "b",
+      "severity": 3,
+      "requirements": [
+        {
+          "role": "ambulance",
+          "quantity": 1,
+          "capacity": 1,
+          "capabilities": [],
+          "patients": 0,
+          "hospital_capability": "emergency"
+        }
+      ],
+      "requested_at": 0.0,
+      "deadline": 60.0,
+      "service_minutes": 15.0,
+      "status": "pending"
+    },
+    {
+      "id": "B",
+      "category": "flood",
+      "node": "b",
+      "severity": 3,
+      "requirements": [
+        {
+          "role": "rescue",
+          "quantity": 1,
+          "capacity": 1,
+          "capabilities": [],
+          "patients": 0,
+          "hospital_capability": "emergency"
+        }
+      ],
+      "requested_at": 0.0,
+      "deadline": 60.0,
+      "service_minutes": 15.0,
+      "status": "pending"
+    },
+    {
+      "id": "C",
+      "category": "medical",
+      "node": "a",
+      "severity": 3,
+      "requirements": [
+        {
+          "role": "ambulance",
+          "quantity": 1,
+          "capacity": 1,
+          "capabilities": [],
+          "patients": 0,
+          "hospital_capability": "emergency"
+        }
+      ],
+      "requested_at": 0.0,
+      "deadline": 1.0,
+      "service_minutes": 15.0,
+      "status": "pending"
+    }
+  ],
+  "budget": 10000.0,
+  "source": "Simulated Dhaka geography, roads, traffic, stations, hospitals and operations; not real dispatch data."
+}

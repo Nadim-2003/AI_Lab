@@ -1,0 +1,6666 @@
+{
+  "kind": "scale",
+  "generation_ms": 52.248471000211794,
+  "generation": {
+    "count": 20,
+    "seed": 42,
+    "deadline": 60,
+    "severity_deadlines": false,
+    "supply": 1.05,
+    "ambulance_factor": 1,
+    "rescue_factor": 1,
+    "fire_busy_fraction": 0,
+    "hospital_factor": 1.1,
+    "budget_factor": 1.3,
+    "block_fraction": 0.04,
+    "demo": "custom",
+    "rules": null
+  },
+  "rows": [
+    {
+      "variant": "10",
+      "shared_preparation_ms": 3.0152310000630678,
+      "incident_count": 10,
+      "repeat": 0,
+      "scenario_hash": "9d15676b633452c6",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": false,
+        "degree": false,
+        "lcv": false,
+        "severity_order": false,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 10,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 15,
+        "required_slots": 15
+      },
+      "metrics": {
+        "search_steps": 125,
+        "assignments_attempted": 125,
+        "constraint_checks": 125,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 0.49614700014899427
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 18097.8
+      },
+      "domain_rejections": {
+        "C1_type": 124,
+        "C4_deadline": 9
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 103,
+        "C10_hospital_beds": 46
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "10",
+      "shared_preparation_ms": 3.0152310000630678,
+      "incident_count": 10,
+      "repeat": 0,
+      "scenario_hash": "9d15676b633452c6",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": true,
+        "degree": false,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 10,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 15,
+        "required_slots": 15
+      },
+      "metrics": {
+        "search_steps": 134,
+        "assignments_attempted": 134,
+        "constraint_checks": 2696,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 3.4124299997984053
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 17267.63
+      },
+      "domain_rejections": {
+        "C1_type": 124,
+        "C4_deadline": 9
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 483,
+        "C10_hospital_beds": 214
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "10",
+      "shared_preparation_ms": 3.0152310000630678,
+      "incident_count": 10,
+      "repeat": 0,
+      "scenario_hash": "9d15676b633452c6",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": true,
+        "degree": true,
+        "lcv": true,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 10,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 15,
+        "required_slots": 15
+      },
+      "metrics": {
+        "search_steps": 107,
+        "assignments_attempted": 107,
+        "constraint_checks": 23997,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 7.2442999999111635
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 16657.01
+      },
+      "domain_rejections": {
+        "C1_type": 124,
+        "C4_deadline": 9
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 447,
+        "C10_hospital_beds": 206
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "10",
+      "shared_preparation_ms": 3.0152310000630678,
+      "incident_count": 10,
+      "repeat": 0,
+      "scenario_hash": "9d15676b633452c6",
+      "options": {
+        "algorithm": "backjumping",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 10,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 15,
+        "required_slots": 15
+      },
+      "metrics": {
+        "search_steps": 134,
+        "assignments_attempted": 134,
+        "constraint_checks": 2696,
+        "backtracks": 0,
+        "backjumps": 0,
+        "skipped_levels": 0,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": 0,
+        "max_conflict_set": 0,
+        "restarts": null,
+        "runtime_ms": 3.712821999897642
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 17267.63
+      },
+      "domain_rejections": {
+        "C1_type": 124,
+        "C4_deadline": 9
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 483,
+        "C10_hospital_beds": 214
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "10",
+      "shared_preparation_ms": 3.0152310000630678,
+      "incident_count": 10,
+      "repeat": 0,
+      "scenario_hash": "9d15676b633452c6",
+      "options": {
+        "algorithm": "forward_checking",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 10,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 15,
+        "required_slots": 15
+      },
+      "metrics": {
+        "search_steps": 15,
+        "assignments_attempted": 15,
+        "constraint_checks": 4172,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": 133,
+        "arc_revisions": null,
+        "domain_wipeouts": 0,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 4.631694999943647
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 17267.63
+      },
+      "domain_rejections": {
+        "C1_type": 124,
+        "C4_deadline": 9
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 104,
+        "C10_hospital_beds": 36
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "10",
+      "shared_preparation_ms": 3.0152310000630678,
+      "incident_count": 10,
+      "repeat": 0,
+      "scenario_hash": "9d15676b633452c6",
+      "options": {
+        "algorithm": "arc_consistency",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 10,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 15,
+        "required_slots": 15
+      },
+      "metrics": {
+        "search_steps": 134,
+        "assignments_attempted": 134,
+        "constraint_checks": 5159,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": 0,
+        "arc_revisions": 0,
+        "domain_wipeouts": 0,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 4.106064000097831
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 17267.63
+      },
+      "domain_rejections": {
+        "C1_type": 124,
+        "C4_deadline": 9
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 483,
+        "C10_hospital_beds": 214
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "10",
+      "shared_preparation_ms": 3.0152310000630678,
+      "incident_count": 10,
+      "repeat": 0,
+      "scenario_hash": "9d15676b633452c6",
+      "options": {
+        "algorithm": "local_search",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 10,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 15,
+        "required_slots": 15
+      },
+      "metrics": {
+        "search_steps": 6,
+        "assignments_attempted": 64,
+        "constraint_checks": 229,
+        "backtracks": null,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": 0,
+        "runtime_ms": 1.0227699999632023
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 16738.55
+      },
+      "domain_rejections": {
+        "C1_type": 124,
+        "C4_deadline": 9
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 92,
+        "C10_hospital_beds": 18
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "10",
+      "shared_preparation_ms": 3.0152310000630678,
+      "incident_count": 10,
+      "repeat": 1,
+      "scenario_hash": "9d15676b633452c6",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": false,
+        "degree": false,
+        "lcv": false,
+        "severity_order": false,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 10,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 15,
+        "required_slots": 15
+      },
+      "metrics": {
+        "search_steps": 125,
+        "assignments_attempted": 125,
+        "constraint_checks": 125,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 0.3241990000333317
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 18097.8
+      },
+      "domain_rejections": {
+        "C1_type": 124,
+        "C4_deadline": 9
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 103,
+        "C10_hospital_beds": 46
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "10",
+      "shared_preparation_ms": 3.0152310000630678,
+      "incident_count": 10,
+      "repeat": 1,
+      "scenario_hash": "9d15676b633452c6",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": true,
+        "degree": false,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 10,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 15,
+        "required_slots": 15
+      },
+      "metrics": {
+        "search_steps": 134,
+        "assignments_attempted": 134,
+        "constraint_checks": 2696,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 3.6420349999843893
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 17267.63
+      },
+      "domain_rejections": {
+        "C1_type": 124,
+        "C4_deadline": 9
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 483,
+        "C10_hospital_beds": 214
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "10",
+      "shared_preparation_ms": 3.0152310000630678,
+      "incident_count": 10,
+      "repeat": 1,
+      "scenario_hash": "9d15676b633452c6",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": true,
+        "degree": true,
+        "lcv": true,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 10,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 15,
+        "required_slots": 15
+      },
+      "metrics": {
+        "search_steps": 107,
+        "assignments_attempted": 107,
+        "constraint_checks": 23997,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 7.455688999925769
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 16657.01
+      },
+      "domain_rejections": {
+        "C1_type": 124,
+        "C4_deadline": 9
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 447,
+        "C10_hospital_beds": 206
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "10",
+      "shared_preparation_ms": 3.0152310000630678,
+      "incident_count": 10,
+      "repeat": 1,
+      "scenario_hash": "9d15676b633452c6",
+      "options": {
+        "algorithm": "backjumping",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 10,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 15,
+        "required_slots": 15
+      },
+      "metrics": {
+        "search_steps": 134,
+        "assignments_attempted": 134,
+        "constraint_checks": 2696,
+        "backtracks": 0,
+        "backjumps": 0,
+        "skipped_levels": 0,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": 0,
+        "max_conflict_set": 0,
+        "restarts": null,
+        "runtime_ms": 3.6646189998919
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 17267.63
+      },
+      "domain_rejections": {
+        "C1_type": 124,
+        "C4_deadline": 9
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 483,
+        "C10_hospital_beds": 214
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "10",
+      "shared_preparation_ms": 3.0152310000630678,
+      "incident_count": 10,
+      "repeat": 1,
+      "scenario_hash": "9d15676b633452c6",
+      "options": {
+        "algorithm": "forward_checking",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 10,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 15,
+        "required_slots": 15
+      },
+      "metrics": {
+        "search_steps": 15,
+        "assignments_attempted": 15,
+        "constraint_checks": 4172,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": 133,
+        "arc_revisions": null,
+        "domain_wipeouts": 0,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 4.743233999988661
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 17267.63
+      },
+      "domain_rejections": {
+        "C1_type": 124,
+        "C4_deadline": 9
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 104,
+        "C10_hospital_beds": 36
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "10",
+      "shared_preparation_ms": 3.0152310000630678,
+      "incident_count": 10,
+      "repeat": 1,
+      "scenario_hash": "9d15676b633452c6",
+      "options": {
+        "algorithm": "arc_consistency",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 10,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 15,
+        "required_slots": 15
+      },
+      "metrics": {
+        "search_steps": 134,
+        "assignments_attempted": 134,
+        "constraint_checks": 5159,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": 0,
+        "arc_revisions": 0,
+        "domain_wipeouts": 0,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 3.9437899999938963
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 17267.63
+      },
+      "domain_rejections": {
+        "C1_type": 124,
+        "C4_deadline": 9
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 483,
+        "C10_hospital_beds": 214
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "10",
+      "shared_preparation_ms": 3.0152310000630678,
+      "incident_count": 10,
+      "repeat": 1,
+      "scenario_hash": "9d15676b633452c6",
+      "options": {
+        "algorithm": "local_search",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 10,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 15,
+        "required_slots": 15
+      },
+      "metrics": {
+        "search_steps": 4,
+        "assignments_attempted": 57,
+        "constraint_checks": 162,
+        "backtracks": null,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": 0,
+        "runtime_ms": 0.836009000067861
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 18912.9
+      },
+      "domain_rejections": {
+        "C1_type": 124,
+        "C4_deadline": 9
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 65,
+        "C10_hospital_beds": 27
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "20",
+      "shared_preparation_ms": 5.607896000128676,
+      "incident_count": 20,
+      "repeat": 0,
+      "scenario_hash": "e0201c76c11d9cd9",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": false,
+        "degree": false,
+        "lcv": false,
+        "severity_order": false,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 20,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 32,
+        "required_slots": 32
+      },
+      "metrics": {
+        "search_steps": 459,
+        "assignments_attempted": 459,
+        "constraint_checks": 459,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 1.3765830001375434
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 35390.79
+      },
+      "domain_rejections": {
+        "C1_type": 659,
+        "C4_deadline": 16
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 413,
+        "C10_hospital_beds": 171
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "20",
+      "shared_preparation_ms": 5.607896000128676,
+      "incident_count": 20,
+      "repeat": 0,
+      "scenario_hash": "e0201c76c11d9cd9",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": true,
+        "degree": false,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 20,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 32,
+        "required_slots": 32
+      },
+      "metrics": {
+        "search_steps": 468,
+        "assignments_attempted": 468,
+        "constraint_checks": 21284,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 25.607977999925424
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 35202.06
+      },
+      "domain_rejections": {
+        "C1_type": 659,
+        "C4_deadline": 16
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 2702,
+        "C10_hospital_beds": 1278
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "20",
+      "shared_preparation_ms": 5.607896000128676,
+      "incident_count": 20,
+      "repeat": 0,
+      "scenario_hash": "e0201c76c11d9cd9",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": true,
+        "degree": true,
+        "lcv": true,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 20,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 32,
+        "required_slots": 32
+      },
+      "metrics": {
+        "search_steps": 441,
+        "assignments_attempted": 441,
+        "constraint_checks": 311911,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 79.55129100014346
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 34302.85
+      },
+      "domain_rejections": {
+        "C1_type": 659,
+        "C4_deadline": 16
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 2666,
+        "C10_hospital_beds": 1275
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "20",
+      "shared_preparation_ms": 5.607896000128676,
+      "incident_count": 20,
+      "repeat": 0,
+      "scenario_hash": "e0201c76c11d9cd9",
+      "options": {
+        "algorithm": "backjumping",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 20,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 32,
+        "required_slots": 32
+      },
+      "metrics": {
+        "search_steps": 468,
+        "assignments_attempted": 468,
+        "constraint_checks": 21284,
+        "backtracks": 0,
+        "backjumps": 0,
+        "skipped_levels": 0,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": 0,
+        "max_conflict_set": 0,
+        "restarts": null,
+        "runtime_ms": 25.70068800014269
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 35202.06
+      },
+      "domain_rejections": {
+        "C1_type": 659,
+        "C4_deadline": 16
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 2702,
+        "C10_hospital_beds": 1278
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "20",
+      "shared_preparation_ms": 5.607896000128676,
+      "incident_count": 20,
+      "repeat": 0,
+      "scenario_hash": "e0201c76c11d9cd9",
+      "options": {
+        "algorithm": "forward_checking",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 20,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 32,
+        "required_slots": 32
+      },
+      "metrics": {
+        "search_steps": 32,
+        "assignments_attempted": 32,
+        "constraint_checks": 35717,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": 504,
+        "arc_revisions": null,
+        "domain_wipeouts": 0,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 39.47360999995908
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 35202.06
+      },
+      "domain_rejections": {
+        "C1_type": 659,
+        "C4_deadline": 16
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 374,
+        "C10_hospital_beds": 144
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "20",
+      "shared_preparation_ms": 5.607896000128676,
+      "incident_count": 20,
+      "repeat": 0,
+      "scenario_hash": "e0201c76c11d9cd9",
+      "options": {
+        "algorithm": "arc_consistency",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 20,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 32,
+        "required_slots": 32
+      },
+      "metrics": {
+        "search_steps": 468,
+        "assignments_attempted": 468,
+        "constraint_checks": 36625,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": 0,
+        "arc_revisions": 0,
+        "domain_wipeouts": 0,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 29.125425000074756
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 35202.06
+      },
+      "domain_rejections": {
+        "C1_type": 659,
+        "C4_deadline": 16
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 2702,
+        "C10_hospital_beds": 1278
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "20",
+      "shared_preparation_ms": 5.607896000128676,
+      "incident_count": 20,
+      "repeat": 0,
+      "scenario_hash": "e0201c76c11d9cd9",
+      "options": {
+        "algorithm": "local_search",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 20,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 32,
+        "required_slots": 32
+      },
+      "metrics": {
+        "search_steps": 14,
+        "assignments_attempted": 406,
+        "constraint_checks": 1270,
+        "backtracks": null,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": 0,
+        "runtime_ms": 7.162158000028285
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 34501.99
+      },
+      "domain_rejections": {
+        "C1_type": 659,
+        "C4_deadline": 16
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 516,
+        "C10_hospital_beds": 214
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "20",
+      "shared_preparation_ms": 5.607896000128676,
+      "incident_count": 20,
+      "repeat": 1,
+      "scenario_hash": "e0201c76c11d9cd9",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": false,
+        "degree": false,
+        "lcv": false,
+        "severity_order": false,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 20,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 32,
+        "required_slots": 32
+      },
+      "metrics": {
+        "search_steps": 459,
+        "assignments_attempted": 459,
+        "constraint_checks": 459,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 1.272286000130407
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 35390.79
+      },
+      "domain_rejections": {
+        "C1_type": 659,
+        "C4_deadline": 16
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 413,
+        "C10_hospital_beds": 171
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "20",
+      "shared_preparation_ms": 5.607896000128676,
+      "incident_count": 20,
+      "repeat": 1,
+      "scenario_hash": "e0201c76c11d9cd9",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": true,
+        "degree": false,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 20,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 32,
+        "required_slots": 32
+      },
+      "metrics": {
+        "search_steps": 468,
+        "assignments_attempted": 468,
+        "constraint_checks": 21284,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 25.288947000035478
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 35202.06
+      },
+      "domain_rejections": {
+        "C1_type": 659,
+        "C4_deadline": 16
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 2702,
+        "C10_hospital_beds": 1278
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "20",
+      "shared_preparation_ms": 5.607896000128676,
+      "incident_count": 20,
+      "repeat": 1,
+      "scenario_hash": "e0201c76c11d9cd9",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": true,
+        "degree": true,
+        "lcv": true,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 20,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 32,
+        "required_slots": 32
+      },
+      "metrics": {
+        "search_steps": 441,
+        "assignments_attempted": 441,
+        "constraint_checks": 311911,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 78.17417799992654
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 34302.85
+      },
+      "domain_rejections": {
+        "C1_type": 659,
+        "C4_deadline": 16
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 2666,
+        "C10_hospital_beds": 1275
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "20",
+      "shared_preparation_ms": 5.607896000128676,
+      "incident_count": 20,
+      "repeat": 1,
+      "scenario_hash": "e0201c76c11d9cd9",
+      "options": {
+        "algorithm": "backjumping",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 20,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 32,
+        "required_slots": 32
+      },
+      "metrics": {
+        "search_steps": 468,
+        "assignments_attempted": 468,
+        "constraint_checks": 21284,
+        "backtracks": 0,
+        "backjumps": 0,
+        "skipped_levels": 0,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": 0,
+        "max_conflict_set": 0,
+        "restarts": null,
+        "runtime_ms": 26.074620000144932
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 35202.06
+      },
+      "domain_rejections": {
+        "C1_type": 659,
+        "C4_deadline": 16
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 2702,
+        "C10_hospital_beds": 1278
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "20",
+      "shared_preparation_ms": 5.607896000128676,
+      "incident_count": 20,
+      "repeat": 1,
+      "scenario_hash": "e0201c76c11d9cd9",
+      "options": {
+        "algorithm": "forward_checking",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 20,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 32,
+        "required_slots": 32
+      },
+      "metrics": {
+        "search_steps": 32,
+        "assignments_attempted": 32,
+        "constraint_checks": 35717,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": 504,
+        "arc_revisions": null,
+        "domain_wipeouts": 0,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 38.5381910000433
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 35202.06
+      },
+      "domain_rejections": {
+        "C1_type": 659,
+        "C4_deadline": 16
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 374,
+        "C10_hospital_beds": 144
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "20",
+      "shared_preparation_ms": 5.607896000128676,
+      "incident_count": 20,
+      "repeat": 1,
+      "scenario_hash": "e0201c76c11d9cd9",
+      "options": {
+        "algorithm": "arc_consistency",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 20,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 32,
+        "required_slots": 32
+      },
+      "metrics": {
+        "search_steps": 468,
+        "assignments_attempted": 468,
+        "constraint_checks": 36625,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": 0,
+        "arc_revisions": 0,
+        "domain_wipeouts": 0,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 28.672072000063054
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 35202.06
+      },
+      "domain_rejections": {
+        "C1_type": 659,
+        "C4_deadline": 16
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 2702,
+        "C10_hospital_beds": 1278
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "20",
+      "shared_preparation_ms": 5.607896000128676,
+      "incident_count": 20,
+      "repeat": 1,
+      "scenario_hash": "e0201c76c11d9cd9",
+      "options": {
+        "algorithm": "local_search",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 20,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 32,
+        "required_slots": 32
+      },
+      "metrics": {
+        "search_steps": 16,
+        "assignments_attempted": 371,
+        "constraint_checks": 1363,
+        "backtracks": null,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": 0,
+        "runtime_ms": 9.151889000122537
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 35042.47
+      },
+      "domain_rejections": {
+        "C1_type": 659,
+        "C4_deadline": 16
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 601,
+        "C10_hospital_beds": 68
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "30",
+      "shared_preparation_ms": 9.07099100004416,
+      "incident_count": 30,
+      "repeat": 0,
+      "scenario_hash": "7a1f1c156826fbc2",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": false,
+        "degree": false,
+        "lcv": false,
+        "severity_order": false,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 30,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 47,
+        "required_slots": 47
+      },
+      "metrics": {
+        "search_steps": 956,
+        "assignments_attempted": 956,
+        "constraint_checks": 956,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 3.0035540000881156
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 51615.74
+      },
+      "domain_rejections": {
+        "C1_type": 1382,
+        "C4_deadline": 52
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 888,
+        "C10_hospital_beds": 340
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "30",
+      "shared_preparation_ms": 9.07099100004416,
+      "incident_count": 30,
+      "repeat": 0,
+      "scenario_hash": "7a1f1c156826fbc2",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": true,
+        "degree": false,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 30,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 47,
+        "required_slots": 47
+      },
+      "metrics": {
+        "search_steps": 1022,
+        "assignments_attempted": 1022,
+        "constraint_checks": 65772,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 88.664086000108
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 51707.83
+      },
+      "domain_rejections": {
+        "C1_type": 1382,
+        "C4_deadline": 52
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 8578,
+        "C10_hospital_beds": 3909
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "30",
+      "shared_preparation_ms": 9.07099100004416,
+      "incident_count": 30,
+      "repeat": 0,
+      "scenario_hash": "7a1f1c156826fbc2",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": true,
+        "degree": true,
+        "lcv": true,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 16,
+        "partially_served": 8,
+        "unserved": 6,
+        "allocated_units": 33,
+        "required_slots": 47
+      },
+      "metrics": {
+        "search_steps": 239,
+        "assignments_attempted": 239,
+        "constraint_checks": 961152,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 250.37659899999198
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 36368.47
+      },
+      "domain_rejections": {
+        "C1_type": 1382,
+        "C4_deadline": 52
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 3700,
+        "C10_hospital_beds": 731
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "30",
+      "shared_preparation_ms": 9.07099100004416,
+      "incident_count": 30,
+      "repeat": 0,
+      "scenario_hash": "7a1f1c156826fbc2",
+      "options": {
+        "algorithm": "backjumping",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 30,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 47,
+        "required_slots": 47
+      },
+      "metrics": {
+        "search_steps": 1022,
+        "assignments_attempted": 1022,
+        "constraint_checks": 65772,
+        "backtracks": 0,
+        "backjumps": 0,
+        "skipped_levels": 0,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": 0,
+        "max_conflict_set": 0,
+        "restarts": null,
+        "runtime_ms": 88.16423300004317
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 51707.83
+      },
+      "domain_rejections": {
+        "C1_type": 1382,
+        "C4_deadline": 52
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 8578,
+        "C10_hospital_beds": 3909
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "30",
+      "shared_preparation_ms": 9.07099100004416,
+      "incident_count": 30,
+      "repeat": 0,
+      "scenario_hash": "7a1f1c156826fbc2",
+      "options": {
+        "algorithm": "forward_checking",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 30,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 47,
+        "required_slots": 47
+      },
+      "metrics": {
+        "search_steps": 47,
+        "assignments_attempted": 47,
+        "constraint_checks": 110504,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": 1128,
+        "arc_revisions": null,
+        "domain_wipeouts": 0,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 120.50213599991366
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 51707.83
+      },
+      "domain_rejections": {
+        "C1_type": 1382,
+        "C4_deadline": 52
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 846,
+        "C10_hospital_beds": 303
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "30",
+      "shared_preparation_ms": 9.07099100004416,
+      "incident_count": 30,
+      "repeat": 0,
+      "scenario_hash": "7a1f1c156826fbc2",
+      "options": {
+        "algorithm": "arc_consistency",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 30,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 47,
+        "required_slots": 47
+      },
+      "metrics": {
+        "search_steps": 1022,
+        "assignments_attempted": 1022,
+        "constraint_checks": 113595,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": 0,
+        "arc_revisions": 0,
+        "domain_wipeouts": 0,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 95.91263300012542
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 51707.83
+      },
+      "domain_rejections": {
+        "C1_type": 1382,
+        "C4_deadline": 52
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 8578,
+        "C10_hospital_beds": 3909
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "30",
+      "shared_preparation_ms": 9.07099100004416,
+      "incident_count": 30,
+      "repeat": 0,
+      "scenario_hash": "7a1f1c156826fbc2",
+      "options": {
+        "algorithm": "local_search",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 30,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 47,
+        "required_slots": 47
+      },
+      "metrics": {
+        "search_steps": 16,
+        "assignments_attempted": 792,
+        "constraint_checks": 2249,
+        "backtracks": null,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": 0,
+        "runtime_ms": 17.98259399993185
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 52652.39
+      },
+      "domain_rejections": {
+        "C1_type": 1382,
+        "C4_deadline": 52
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 918,
+        "C10_hospital_beds": 272
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "30",
+      "shared_preparation_ms": 9.07099100004416,
+      "incident_count": 30,
+      "repeat": 1,
+      "scenario_hash": "7a1f1c156826fbc2",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": false,
+        "degree": false,
+        "lcv": false,
+        "severity_order": false,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 30,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 47,
+        "required_slots": 47
+      },
+      "metrics": {
+        "search_steps": 956,
+        "assignments_attempted": 956,
+        "constraint_checks": 956,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 3.2249870000669034
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 51615.74
+      },
+      "domain_rejections": {
+        "C1_type": 1382,
+        "C4_deadline": 52
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 888,
+        "C10_hospital_beds": 340
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "30",
+      "shared_preparation_ms": 9.07099100004416,
+      "incident_count": 30,
+      "repeat": 1,
+      "scenario_hash": "7a1f1c156826fbc2",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": true,
+        "degree": false,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 30,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 47,
+        "required_slots": 47
+      },
+      "metrics": {
+        "search_steps": 1022,
+        "assignments_attempted": 1022,
+        "constraint_checks": 65772,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 134.64235900005406
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 51707.83
+      },
+      "domain_rejections": {
+        "C1_type": 1382,
+        "C4_deadline": 52
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 8578,
+        "C10_hospital_beds": 3909
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "30",
+      "shared_preparation_ms": 9.07099100004416,
+      "incident_count": 30,
+      "repeat": 1,
+      "scenario_hash": "7a1f1c156826fbc2",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": true,
+        "degree": true,
+        "lcv": true,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 17,
+        "partially_served": 7,
+        "unserved": 6,
+        "allocated_units": 34,
+        "required_slots": 47
+      },
+      "metrics": {
+        "search_steps": 259,
+        "assignments_attempted": 259,
+        "constraint_checks": 1000576,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 250.0479150000956
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 37223.62
+      },
+      "domain_rejections": {
+        "C1_type": 1382,
+        "C4_deadline": 52
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 4147,
+        "C10_hospital_beds": 1063
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "30",
+      "shared_preparation_ms": 9.07099100004416,
+      "incident_count": 30,
+      "repeat": 1,
+      "scenario_hash": "7a1f1c156826fbc2",
+      "options": {
+        "algorithm": "backjumping",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 30,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 47,
+        "required_slots": 47
+      },
+      "metrics": {
+        "search_steps": 1022,
+        "assignments_attempted": 1022,
+        "constraint_checks": 65772,
+        "backtracks": 0,
+        "backjumps": 0,
+        "skipped_levels": 0,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": 0,
+        "max_conflict_set": 0,
+        "restarts": null,
+        "runtime_ms": 87.51477700002397
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 51707.83
+      },
+      "domain_rejections": {
+        "C1_type": 1382,
+        "C4_deadline": 52
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 8578,
+        "C10_hospital_beds": 3909
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "30",
+      "shared_preparation_ms": 9.07099100004416,
+      "incident_count": 30,
+      "repeat": 1,
+      "scenario_hash": "7a1f1c156826fbc2",
+      "options": {
+        "algorithm": "forward_checking",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 30,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 47,
+        "required_slots": 47
+      },
+      "metrics": {
+        "search_steps": 47,
+        "assignments_attempted": 47,
+        "constraint_checks": 110504,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": 1128,
+        "arc_revisions": null,
+        "domain_wipeouts": 0,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 134.51048700017054
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 51707.83
+      },
+      "domain_rejections": {
+        "C1_type": 1382,
+        "C4_deadline": 52
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 846,
+        "C10_hospital_beds": 303
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "30",
+      "shared_preparation_ms": 9.07099100004416,
+      "incident_count": 30,
+      "repeat": 1,
+      "scenario_hash": "7a1f1c156826fbc2",
+      "options": {
+        "algorithm": "arc_consistency",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 30,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 47,
+        "required_slots": 47
+      },
+      "metrics": {
+        "search_steps": 1022,
+        "assignments_attempted": 1022,
+        "constraint_checks": 113595,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": 0,
+        "arc_revisions": 0,
+        "domain_wipeouts": 0,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 135.60274500014202
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 51707.83
+      },
+      "domain_rejections": {
+        "C1_type": 1382,
+        "C4_deadline": 52
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 8578,
+        "C10_hospital_beds": 3909
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "30",
+      "shared_preparation_ms": 9.07099100004416,
+      "incident_count": 30,
+      "repeat": 1,
+      "scenario_hash": "7a1f1c156826fbc2",
+      "options": {
+        "algorithm": "local_search",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 30,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 47,
+        "required_slots": 47
+      },
+      "metrics": {
+        "search_steps": 19,
+        "assignments_attempted": 836,
+        "constraint_checks": 2575,
+        "backtracks": null,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": 0,
+        "runtime_ms": 18.492679000019052
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 50835.42
+      },
+      "domain_rejections": {
+        "C1_type": 1382,
+        "C4_deadline": 52
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 1095,
+        "C10_hospital_beds": 225
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "50",
+      "shared_preparation_ms": 17.110505999880843,
+      "incident_count": 50,
+      "repeat": 0,
+      "scenario_hash": "b37d0f521c36d21f",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": false,
+        "degree": false,
+        "lcv": false,
+        "severity_order": false,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 50,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 83,
+        "required_slots": 83
+      },
+      "metrics": {
+        "search_steps": 2444,
+        "assignments_attempted": 2444,
+        "constraint_checks": 2444,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 9.983641999951942
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 92302.0
+      },
+      "domain_rejections": {
+        "C1_type": 4482,
+        "C4_deadline": 369
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 2326,
+        "C10_hospital_beds": 840
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "50",
+      "shared_preparation_ms": 17.110505999880843,
+      "incident_count": 50,
+      "repeat": 0,
+      "scenario_hash": "b37d0f521c36d21f",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": true,
+        "degree": false,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 12,
+        "partially_served": 26,
+        "unserved": 12,
+        "allocated_units": 45,
+        "required_slots": 83
+      },
+      "metrics": {
+        "search_steps": 535,
+        "assignments_attempted": 535,
+        "constraint_checks": 227072,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 250.1663489999828
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 51101.15
+      },
+      "domain_rejections": {
+        "C1_type": 4482,
+        "C4_deadline": 369
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 5553
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "50",
+      "shared_preparation_ms": 17.110505999880843,
+      "incident_count": 50,
+      "repeat": 0,
+      "scenario_hash": "b37d0f521c36d21f",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": true,
+        "degree": true,
+        "lcv": true,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 5,
+        "partially_served": 25,
+        "unserved": 20,
+        "allocated_units": 35,
+        "required_slots": 83
+      },
+      "metrics": {
+        "search_steps": 306,
+        "assignments_attempted": 306,
+        "constraint_checks": 507904,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 250.23531400006505
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 41545.85
+      },
+      "domain_rejections": {
+        "C1_type": 4482,
+        "C4_deadline": 369
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 4042
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "50",
+      "shared_preparation_ms": 17.110505999880843,
+      "incident_count": 50,
+      "repeat": 0,
+      "scenario_hash": "b37d0f521c36d21f",
+      "options": {
+        "algorithm": "backjumping",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 6,
+        "partially_served": 25,
+        "unserved": 19,
+        "allocated_units": 36,
+        "required_slots": 83
+      },
+      "metrics": {
+        "search_steps": 341,
+        "assignments_attempted": 341,
+        "constraint_checks": 184832,
+        "backtracks": 0,
+        "backjumps": 0,
+        "skipped_levels": 0,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": 0,
+        "max_conflict_set": 0,
+        "restarts": null,
+        "runtime_ms": 250.1787080000213
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 41221.25
+      },
+      "domain_rejections": {
+        "C1_type": 4482,
+        "C4_deadline": 369
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 4447
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "50",
+      "shared_preparation_ms": 17.110505999880843,
+      "incident_count": 50,
+      "repeat": 0,
+      "scenario_hash": "b37d0f521c36d21f",
+      "options": {
+        "algorithm": "forward_checking",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 2,
+        "partially_served": 17,
+        "unserved": 31,
+        "allocated_units": 22,
+        "required_slots": 83
+      },
+      "metrics": {
+        "search_steps": 22,
+        "assignments_attempted": 22,
+        "constraint_checks": 228096,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": 289,
+        "arc_revisions": null,
+        "domain_wipeouts": 0,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 250.1275810000152
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 27431.37
+      },
+      "domain_rejections": {
+        "C1_type": 4482,
+        "C4_deadline": 369
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 289
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "50",
+      "shared_preparation_ms": 17.110505999880843,
+      "incident_count": 50,
+      "repeat": 0,
+      "scenario_hash": "b37d0f521c36d21f",
+      "options": {
+        "algorithm": "arc_consistency",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 6,
+        "partially_served": 23,
+        "unserved": 21,
+        "allocated_units": 34,
+        "required_slots": 83
+      },
+      "metrics": {
+        "search_steps": 296,
+        "assignments_attempted": 296,
+        "constraint_checks": 385920,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": 0,
+        "arc_revisions": 0,
+        "domain_wipeouts": 0,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 250.10260299995934
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 39181.25
+      },
+      "domain_rejections": {
+        "C1_type": 4482,
+        "C4_deadline": 369
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 4077
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "50",
+      "shared_preparation_ms": 17.110505999880843,
+      "incident_count": 50,
+      "repeat": 0,
+      "scenario_hash": "b37d0f521c36d21f",
+      "options": {
+        "algorithm": "local_search",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 50,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 83,
+        "required_slots": 83
+      },
+      "metrics": {
+        "search_steps": 36,
+        "assignments_attempted": 1779,
+        "constraint_checks": 7672,
+        "backtracks": null,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": 0,
+        "runtime_ms": 68.7501570000677
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 92652.15
+      },
+      "domain_rejections": {
+        "C1_type": 4482,
+        "C4_deadline": 369
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 2664,
+        "C10_hospital_beds": 303
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "50",
+      "shared_preparation_ms": 17.110505999880843,
+      "incident_count": 50,
+      "repeat": 1,
+      "scenario_hash": "b37d0f521c36d21f",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": false,
+        "degree": false,
+        "lcv": false,
+        "severity_order": false,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 50,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 83,
+        "required_slots": 83
+      },
+      "metrics": {
+        "search_steps": 2444,
+        "assignments_attempted": 2444,
+        "constraint_checks": 2444,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 9.587063000026319
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 92302.0
+      },
+      "domain_rejections": {
+        "C1_type": 4482,
+        "C4_deadline": 369
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 2326,
+        "C10_hospital_beds": 840
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "50",
+      "shared_preparation_ms": 17.110505999880843,
+      "incident_count": 50,
+      "repeat": 1,
+      "scenario_hash": "b37d0f521c36d21f",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": true,
+        "degree": false,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 13,
+        "partially_served": 25,
+        "unserved": 12,
+        "allocated_units": 46,
+        "required_slots": 83
+      },
+      "metrics": {
+        "search_steps": 542,
+        "assignments_attempted": 542,
+        "constraint_checks": 228224,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 250.14421699984268
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 52231.14
+      },
+      "domain_rejections": {
+        "C1_type": 4482,
+        "C4_deadline": 369
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 5634
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "50",
+      "shared_preparation_ms": 17.110505999880843,
+      "incident_count": 50,
+      "repeat": 1,
+      "scenario_hash": "b37d0f521c36d21f",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": true,
+        "degree": true,
+        "lcv": true,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 5,
+        "partially_served": 24,
+        "unserved": 21,
+        "allocated_units": 34,
+        "required_slots": 83
+      },
+      "metrics": {
+        "search_steps": 284,
+        "assignments_attempted": 284,
+        "constraint_checks": 498048,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 250.1066400000127
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 40490.67
+      },
+      "domain_rejections": {
+        "C1_type": 4482,
+        "C4_deadline": 369
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 3943
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "50",
+      "shared_preparation_ms": 17.110505999880843,
+      "incident_count": 50,
+      "repeat": 1,
+      "scenario_hash": "b37d0f521c36d21f",
+      "options": {
+        "algorithm": "backjumping",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 11,
+        "partially_served": 27,
+        "unserved": 12,
+        "allocated_units": 44,
+        "required_slots": 83
+      },
+      "metrics": {
+        "search_steps": 531,
+        "assignments_attempted": 531,
+        "constraint_checks": 219264,
+        "backtracks": 0,
+        "backjumps": 0,
+        "skipped_levels": 0,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": 0,
+        "max_conflict_set": 0,
+        "restarts": null,
+        "runtime_ms": 250.22335600010592
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 50146.22
+      },
+      "domain_rejections": {
+        "C1_type": 4482,
+        "C4_deadline": 369
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 5289
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "50",
+      "shared_preparation_ms": 17.110505999880843,
+      "incident_count": 50,
+      "repeat": 1,
+      "scenario_hash": "b37d0f521c36d21f",
+      "options": {
+        "algorithm": "forward_checking",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 2,
+        "partially_served": 17,
+        "unserved": 31,
+        "allocated_units": 22,
+        "required_slots": 83
+      },
+      "metrics": {
+        "search_steps": 22,
+        "assignments_attempted": 22,
+        "constraint_checks": 228992,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": 289,
+        "arc_revisions": null,
+        "domain_wipeouts": 0,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 250.26372100001026
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 27431.37
+      },
+      "domain_rejections": {
+        "C1_type": 4482,
+        "C4_deadline": 369
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 289
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "50",
+      "shared_preparation_ms": 17.110505999880843,
+      "incident_count": 50,
+      "repeat": 1,
+      "scenario_hash": "b37d0f521c36d21f",
+      "options": {
+        "algorithm": "arc_consistency",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 5,
+        "partially_served": 23,
+        "unserved": 22,
+        "allocated_units": 33,
+        "required_slots": 83
+      },
+      "metrics": {
+        "search_steps": 275,
+        "assignments_attempted": 275,
+        "constraint_checks": 381440,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": 0,
+        "arc_revisions": 0,
+        "domain_wipeouts": 0,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 250.04015600006824
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 38196.34
+      },
+      "domain_rejections": {
+        "C1_type": 4482,
+        "C4_deadline": 369
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 3893
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "50",
+      "shared_preparation_ms": 17.110505999880843,
+      "incident_count": 50,
+      "repeat": 1,
+      "scenario_hash": "b37d0f521c36d21f",
+      "options": {
+        "algorithm": "local_search",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "feasible",
+      "summary": {
+        "fully_served": 50,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 83,
+        "required_slots": 83
+      },
+      "metrics": {
+        "search_steps": 27,
+        "assignments_attempted": 1578,
+        "constraint_checks": 5977,
+        "backtracks": null,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": 0,
+        "runtime_ms": 62.12287100015601
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 91472.18
+      },
+      "domain_rejections": {
+        "C1_type": 4482,
+        "C4_deadline": 369
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 2202,
+        "C10_hospital_beds": 475
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "100",
+      "shared_preparation_ms": 62.35611199986124,
+      "incident_count": 100,
+      "repeat": 0,
+      "scenario_hash": "cefb293106d11c27",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": false,
+        "degree": false,
+        "lcv": false,
+        "severity_order": false,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "step_limit",
+      "summary": {
+        "fully_served": 55,
+        "partially_served": 1,
+        "unserved": 44,
+        "allocated_units": 92,
+        "required_slots": 166
+      },
+      "metrics": {
+        "search_steps": 3000,
+        "assignments_attempted": 3000,
+        "constraint_checks": 3000,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 14.68795300002057
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 102573.02
+      },
+      "domain_rejections": {
+        "C1_type": 17682,
+        "C4_deadline": 1321
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 2894,
+        "C10_hospital_beds": 441
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "100",
+      "shared_preparation_ms": 62.35611199986124,
+      "incident_count": 100,
+      "repeat": 0,
+      "scenario_hash": "cefb293106d11c27",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": true,
+        "degree": false,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 0,
+        "partially_served": 10,
+        "unserved": 90,
+        "allocated_units": 10,
+        "required_slots": 166
+      },
+      "metrics": {
+        "search_steps": 44,
+        "assignments_attempted": 44,
+        "constraint_checks": 228992,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 250.07098299988684
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 14185.12
+      },
+      "domain_rejections": {
+        "C1_type": 17682,
+        "C4_deadline": 1321
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 975
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "100",
+      "shared_preparation_ms": 62.35611199986124,
+      "incident_count": 100,
+      "repeat": 0,
+      "scenario_hash": "cefb293106d11c27",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": true,
+        "degree": true,
+        "lcv": true,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 0,
+        "partially_served": 8,
+        "unserved": 92,
+        "allocated_units": 8,
+        "required_slots": 166
+      },
+      "metrics": {
+        "search_steps": 16,
+        "assignments_attempted": 16,
+        "constraint_checks": 268672,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 250.19131899989588
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 11690.07
+      },
+      "domain_rejections": {
+        "C1_type": 17682,
+        "C4_deadline": 1321
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 654
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "100",
+      "shared_preparation_ms": 62.35611199986124,
+      "incident_count": 100,
+      "repeat": 0,
+      "scenario_hash": "cefb293106d11c27",
+      "options": {
+        "algorithm": "backjumping",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 0,
+        "partially_served": 9,
+        "unserved": 91,
+        "allocated_units": 9,
+        "required_slots": 166
+      },
+      "metrics": {
+        "search_steps": 34,
+        "assignments_attempted": 34,
+        "constraint_checks": 214016,
+        "backtracks": 0,
+        "backjumps": 0,
+        "skipped_levels": 0,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": 0,
+        "max_conflict_set": 0,
+        "restarts": null,
+        "runtime_ms": 250.05293499998515
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 12565.16
+      },
+      "domain_rejections": {
+        "C1_type": 17682,
+        "C4_deadline": 1321
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 859
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "100",
+      "shared_preparation_ms": 62.35611199986124,
+      "incident_count": 100,
+      "repeat": 0,
+      "scenario_hash": "cefb293106d11c27",
+      "options": {
+        "algorithm": "forward_checking",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 0,
+        "partially_served": 4,
+        "unserved": 96,
+        "allocated_units": 4,
+        "required_slots": 166
+      },
+      "metrics": {
+        "search_steps": 4,
+        "assignments_attempted": 4,
+        "constraint_checks": 192384,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": 89,
+        "arc_revisions": null,
+        "domain_wipeouts": 0,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 250.08729699993637
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 5680.22
+      },
+      "domain_rejections": {
+        "C1_type": 17682,
+        "C4_deadline": 1321
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 89
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "100",
+      "shared_preparation_ms": 62.35611199986124,
+      "incident_count": 100,
+      "repeat": 0,
+      "scenario_hash": "cefb293106d11c27",
+      "options": {
+        "algorithm": "arc_consistency",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 0,
+        "partially_served": 0,
+        "unserved": 100,
+        "allocated_units": 0,
+        "required_slots": 166
+      },
+      "metrics": {
+        "search_steps": 0,
+        "assignments_attempted": 0,
+        "constraint_checks": 1120186,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": 0,
+        "arc_revisions": 0,
+        "domain_wipeouts": 0,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 250.23324700009653
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 0
+      },
+      "domain_rejections": {
+        "C1_type": 17682,
+        "C4_deadline": 1321
+      },
+      "constraint_failures": {},
+      "empty_domains": 0
+    },
+    {
+      "variant": "100",
+      "shared_preparation_ms": 62.35611199986124,
+      "incident_count": 100,
+      "repeat": 0,
+      "scenario_hash": "cefb293106d11c27",
+      "options": {
+        "algorithm": "local_search",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 68,
+        "partially_served": 18,
+        "unserved": 14,
+        "allocated_units": 133,
+        "required_slots": 166
+      },
+      "metrics": {
+        "search_steps": 30,
+        "assignments_attempted": 4504,
+        "constraint_checks": 14464,
+        "backtracks": null,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": 0,
+        "runtime_ms": 251.34649400001763
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 145642.88
+      },
+      "domain_rejections": {
+        "C1_type": 17682,
+        "C4_deadline": 1321
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 6822,
+        "C10_hospital_beds": 511
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "100",
+      "shared_preparation_ms": 62.35611199986124,
+      "incident_count": 100,
+      "repeat": 1,
+      "scenario_hash": "cefb293106d11c27",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": false,
+        "degree": false,
+        "lcv": false,
+        "severity_order": false,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "step_limit",
+      "summary": {
+        "fully_served": 55,
+        "partially_served": 1,
+        "unserved": 44,
+        "allocated_units": 92,
+        "required_slots": 166
+      },
+      "metrics": {
+        "search_steps": 3000,
+        "assignments_attempted": 3000,
+        "constraint_checks": 3000,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 11.584128999857057
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 102573.02
+      },
+      "domain_rejections": {
+        "C1_type": 17682,
+        "C4_deadline": 1321
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 2894,
+        "C10_hospital_beds": 441
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "100",
+      "shared_preparation_ms": 62.35611199986124,
+      "incident_count": 100,
+      "repeat": 1,
+      "scenario_hash": "cefb293106d11c27",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": true,
+        "degree": false,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 0,
+        "partially_served": 10,
+        "unserved": 90,
+        "allocated_units": 10,
+        "required_slots": 166
+      },
+      "metrics": {
+        "search_steps": 44,
+        "assignments_attempted": 44,
+        "constraint_checks": 230400,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 250.13057199998912
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 14185.12
+      },
+      "domain_rejections": {
+        "C1_type": 17682,
+        "C4_deadline": 1321
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 995
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "100",
+      "shared_preparation_ms": 62.35611199986124,
+      "incident_count": 100,
+      "repeat": 1,
+      "scenario_hash": "cefb293106d11c27",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": true,
+        "degree": true,
+        "lcv": true,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 0,
+        "partially_served": 9,
+        "unserved": 91,
+        "allocated_units": 9,
+        "required_slots": 166
+      },
+      "metrics": {
+        "search_steps": 21,
+        "assignments_attempted": 21,
+        "constraint_checks": 309632,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 250.02915999994002
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 13135.03
+      },
+      "domain_rejections": {
+        "C1_type": 17682,
+        "C4_deadline": 1321
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 843
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "100",
+      "shared_preparation_ms": 62.35611199986124,
+      "incident_count": 100,
+      "repeat": 1,
+      "scenario_hash": "cefb293106d11c27",
+      "options": {
+        "algorithm": "backjumping",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 0,
+        "partially_served": 10,
+        "unserved": 90,
+        "allocated_units": 10,
+        "required_slots": 166
+      },
+      "metrics": {
+        "search_steps": 44,
+        "assignments_attempted": 44,
+        "constraint_checks": 219136,
+        "backtracks": 0,
+        "backjumps": 0,
+        "skipped_levels": 0,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": 0,
+        "max_conflict_set": 0,
+        "restarts": null,
+        "runtime_ms": 250.11196500008737
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 14185.12
+      },
+      "domain_rejections": {
+        "C1_type": 17682,
+        "C4_deadline": 1321
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 895
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "100",
+      "shared_preparation_ms": 62.35611199986124,
+      "incident_count": 100,
+      "repeat": 1,
+      "scenario_hash": "cefb293106d11c27",
+      "options": {
+        "algorithm": "forward_checking",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 0,
+        "partially_served": 5,
+        "unserved": 95,
+        "allocated_units": 5,
+        "required_slots": 166
+      },
+      "metrics": {
+        "search_steps": 5,
+        "assignments_attempted": 5,
+        "constraint_checks": 235008,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": 110,
+        "arc_revisions": null,
+        "domain_wipeouts": 0,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 250.1443629998903
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 7135.38
+      },
+      "domain_rejections": {
+        "C1_type": 17682,
+        "C4_deadline": 1321
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 110
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "100",
+      "shared_preparation_ms": 62.35611199986124,
+      "incident_count": 100,
+      "repeat": 1,
+      "scenario_hash": "cefb293106d11c27",
+      "options": {
+        "algorithm": "arc_consistency",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 0,
+        "partially_served": 0,
+        "unserved": 100,
+        "allocated_units": 0,
+        "required_slots": 166
+      },
+      "metrics": {
+        "search_steps": 0,
+        "assignments_attempted": 0,
+        "constraint_checks": 1061632,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": 0,
+        "arc_revisions": 0,
+        "domain_wipeouts": 0,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 250.19369799997548
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 0
+      },
+      "domain_rejections": {
+        "C1_type": 17682,
+        "C4_deadline": 1321
+      },
+      "constraint_failures": {},
+      "empty_domains": 0
+    },
+    {
+      "variant": "100",
+      "shared_preparation_ms": 62.35611199986124,
+      "incident_count": 100,
+      "repeat": 1,
+      "scenario_hash": "cefb293106d11c27",
+      "options": {
+        "algorithm": "local_search",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 75,
+        "partially_served": 14,
+        "unserved": 11,
+        "allocated_units": 139,
+        "required_slots": 166
+      },
+      "metrics": {
+        "search_steps": 30,
+        "assignments_attempted": 4376,
+        "constraint_checks": 14336,
+        "backtracks": null,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": 0,
+        "runtime_ms": 250.89308099995833
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 152291.69
+      },
+      "domain_rejections": {
+        "C1_type": 17682,
+        "C4_deadline": 1321
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 6577,
+        "C10_hospital_beds": 704
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "150",
+      "shared_preparation_ms": 177.46319899993068,
+      "incident_count": 150,
+      "repeat": 0,
+      "scenario_hash": "32f572acebcb2b6f",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": false,
+        "degree": false,
+        "lcv": false,
+        "severity_order": false,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "step_limit",
+      "summary": {
+        "fully_served": 55,
+        "partially_served": 1,
+        "unserved": 94,
+        "allocated_units": 92,
+        "required_slots": 253
+      },
+      "metrics": {
+        "search_steps": 3000,
+        "assignments_attempted": 3000,
+        "constraint_checks": 3000,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 16.39735800017661
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 100411.8
+      },
+      "domain_rejections": {
+        "C1_type": 40933,
+        "C4_deadline": 3345
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 2908
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "150",
+      "shared_preparation_ms": 177.46319899993068,
+      "incident_count": 150,
+      "repeat": 0,
+      "scenario_hash": "32f572acebcb2b6f",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": true,
+        "degree": false,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 0,
+        "partially_served": 3,
+        "unserved": 147,
+        "allocated_units": 3,
+        "required_slots": 253
+      },
+      "metrics": {
+        "search_steps": 6,
+        "assignments_attempted": 6,
+        "constraint_checks": 178176,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 250.03981000008935
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 4105.01
+      },
+      "domain_rejections": {
+        "C1_type": 40933,
+        "C4_deadline": 3345
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 151
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "150",
+      "shared_preparation_ms": 177.46319899993068,
+      "incident_count": 150,
+      "repeat": 0,
+      "scenario_hash": "32f572acebcb2b6f",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": true,
+        "degree": true,
+        "lcv": true,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 0,
+        "partially_served": 4,
+        "unserved": 146,
+        "allocated_units": 4,
+        "required_slots": 253
+      },
+      "metrics": {
+        "search_steps": 10,
+        "assignments_attempted": 10,
+        "constraint_checks": 320768,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 250.10820900001818
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 5755.51
+      },
+      "domain_rejections": {
+        "C1_type": 40933,
+        "C4_deadline": 3345
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 194
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "150",
+      "shared_preparation_ms": 177.46319899993068,
+      "incident_count": 150,
+      "repeat": 0,
+      "scenario_hash": "32f572acebcb2b6f",
+      "options": {
+        "algorithm": "backjumping",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 0,
+        "partially_served": 4,
+        "unserved": 146,
+        "allocated_units": 4,
+        "required_slots": 253
+      },
+      "metrics": {
+        "search_steps": 10,
+        "assignments_attempted": 10,
+        "constraint_checks": 232320,
+        "backtracks": 0,
+        "backjumps": 0,
+        "skipped_levels": 0,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": 0,
+        "max_conflict_set": 0,
+        "restarts": null,
+        "runtime_ms": 250.20413300012478
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 5440.08
+      },
+      "domain_rejections": {
+        "C1_type": 40933,
+        "C4_deadline": 3345
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 271
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "150",
+      "shared_preparation_ms": 177.46319899993068,
+      "incident_count": 150,
+      "repeat": 0,
+      "scenario_hash": "32f572acebcb2b6f",
+      "options": {
+        "algorithm": "forward_checking",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 0,
+        "partially_served": 2,
+        "unserved": 148,
+        "allocated_units": 2,
+        "required_slots": 253
+      },
+      "metrics": {
+        "search_steps": 2,
+        "assignments_attempted": 2,
+        "constraint_checks": 192384,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": 58,
+        "arc_revisions": null,
+        "domain_wipeouts": 0,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 250.21030000016253
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 2730.21
+      },
+      "domain_rejections": {
+        "C1_type": 40933,
+        "C4_deadline": 3345
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 58
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "150",
+      "shared_preparation_ms": 177.46319899993068,
+      "incident_count": 150,
+      "repeat": 0,
+      "scenario_hash": "32f572acebcb2b6f",
+      "options": {
+        "algorithm": "arc_consistency",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 0,
+        "partially_served": 0,
+        "unserved": 150,
+        "allocated_units": 0,
+        "required_slots": 253
+      },
+      "metrics": {
+        "search_steps": 0,
+        "assignments_attempted": 0,
+        "constraint_checks": 996224,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": 0,
+        "arc_revisions": 0,
+        "domain_wipeouts": 0,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 251.36966800005212
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 0
+      },
+      "domain_rejections": {
+        "C1_type": 40933,
+        "C4_deadline": 3345
+      },
+      "constraint_failures": {},
+      "empty_domains": 0
+    },
+    {
+      "variant": "150",
+      "shared_preparation_ms": 177.46319899993068,
+      "incident_count": 150,
+      "repeat": 0,
+      "scenario_hash": "32f572acebcb2b6f",
+      "options": {
+        "algorithm": "local_search",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 79,
+        "partially_served": 36,
+        "unserved": 35,
+        "allocated_units": 173,
+        "required_slots": 253
+      },
+      "metrics": {
+        "search_steps": 11,
+        "assignments_attempted": 2587,
+        "constraint_checks": 8153,
+        "backtracks": null,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": 0,
+        "runtime_ms": 260.09888899989164
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 187096.38
+      },
+      "domain_rejections": {
+        "C1_type": 40933,
+        "C4_deadline": 3345
+      },
+      "constraint_failures": {
+        "C10_hospital_beds": 1328,
+        "C3_exclusivity": 4157
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "150",
+      "shared_preparation_ms": 177.46319899993068,
+      "incident_count": 150,
+      "repeat": 1,
+      "scenario_hash": "32f572acebcb2b6f",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": false,
+        "degree": false,
+        "lcv": false,
+        "severity_order": false,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "step_limit",
+      "summary": {
+        "fully_served": 55,
+        "partially_served": 1,
+        "unserved": 94,
+        "allocated_units": 92,
+        "required_slots": 253
+      },
+      "metrics": {
+        "search_steps": 3000,
+        "assignments_attempted": 3000,
+        "constraint_checks": 3000,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 13.708770999983244
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 100411.8
+      },
+      "domain_rejections": {
+        "C1_type": 40933,
+        "C4_deadline": 3345
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 2908
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "150",
+      "shared_preparation_ms": 177.46319899993068,
+      "incident_count": 150,
+      "repeat": 1,
+      "scenario_hash": "32f572acebcb2b6f",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": true,
+        "degree": false,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 0,
+        "partially_served": 4,
+        "unserved": 146,
+        "allocated_units": 4,
+        "required_slots": 253
+      },
+      "metrics": {
+        "search_steps": 10,
+        "assignments_attempted": 10,
+        "constraint_checks": 221696,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 250.03699099988808
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 5440.08
+      },
+      "domain_rejections": {
+        "C1_type": 40933,
+        "C4_deadline": 3345
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 248
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "150",
+      "shared_preparation_ms": 177.46319899993068,
+      "incident_count": 150,
+      "repeat": 1,
+      "scenario_hash": "32f572acebcb2b6f",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": true,
+        "degree": true,
+        "lcv": true,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 0,
+        "partially_served": 3,
+        "unserved": 147,
+        "allocated_units": 3,
+        "required_slots": 253
+      },
+      "metrics": {
+        "search_steps": 6,
+        "assignments_attempted": 6,
+        "constraint_checks": 240640,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 251.1942349999572
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 4420.44
+      },
+      "domain_rejections": {
+        "C1_type": 40933,
+        "C4_deadline": 3345
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 97
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "150",
+      "shared_preparation_ms": 177.46319899993068,
+      "incident_count": 150,
+      "repeat": 1,
+      "scenario_hash": "32f572acebcb2b6f",
+      "options": {
+        "algorithm": "backjumping",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 0,
+        "partially_served": 3,
+        "unserved": 147,
+        "allocated_units": 3,
+        "required_slots": 253
+      },
+      "metrics": {
+        "search_steps": 6,
+        "assignments_attempted": 6,
+        "constraint_checks": 159616,
+        "backtracks": 0,
+        "backjumps": 0,
+        "skipped_levels": 0,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": 0,
+        "max_conflict_set": 0,
+        "restarts": null,
+        "runtime_ms": 250.13988500018058
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 4105.01
+      },
+      "domain_rejections": {
+        "C1_type": 40933,
+        "C4_deadline": 3345
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 112
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "150",
+      "shared_preparation_ms": 177.46319899993068,
+      "incident_count": 150,
+      "repeat": 1,
+      "scenario_hash": "32f572acebcb2b6f",
+      "options": {
+        "algorithm": "forward_checking",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 0,
+        "partially_served": 2,
+        "unserved": 148,
+        "allocated_units": 2,
+        "required_slots": 253
+      },
+      "metrics": {
+        "search_steps": 2,
+        "assignments_attempted": 2,
+        "constraint_checks": 231168,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": 63,
+        "arc_revisions": null,
+        "domain_wipeouts": 0,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 250.05760099998042
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 2730.21
+      },
+      "domain_rejections": {
+        "C1_type": 40933,
+        "C4_deadline": 3345
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 63
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "150",
+      "shared_preparation_ms": 177.46319899993068,
+      "incident_count": 150,
+      "repeat": 1,
+      "scenario_hash": "32f572acebcb2b6f",
+      "options": {
+        "algorithm": "arc_consistency",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 0,
+        "partially_served": 0,
+        "unserved": 150,
+        "allocated_units": 0,
+        "required_slots": 253
+      },
+      "metrics": {
+        "search_steps": 0,
+        "assignments_attempted": 0,
+        "constraint_checks": 942592,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": 0,
+        "arc_revisions": 0,
+        "domain_wipeouts": 0,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 251.0811580000336
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 0
+      },
+      "domain_rejections": {
+        "C1_type": 40933,
+        "C4_deadline": 3345
+      },
+      "constraint_failures": {},
+      "empty_domains": 0
+    },
+    {
+      "variant": "150",
+      "shared_preparation_ms": 177.46319899993068,
+      "incident_count": 150,
+      "repeat": 1,
+      "scenario_hash": "32f572acebcb2b6f",
+      "options": {
+        "algorithm": "local_search",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 87,
+        "partially_served": 32,
+        "unserved": 31,
+        "allocated_units": 182,
+        "required_slots": 253
+      },
+      "metrics": {
+        "search_steps": 15,
+        "assignments_attempted": 2203,
+        "constraint_checks": 9728,
+        "backtracks": null,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": 0,
+        "runtime_ms": 253.8984679999885
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 199202.62
+      },
+      "domain_rejections": {
+        "C1_type": 40933,
+        "C4_deadline": 3345
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 4612,
+        "C10_hospital_beds": 470
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "250",
+      "shared_preparation_ms": 568.9005529998212,
+      "incident_count": 250,
+      "repeat": 0,
+      "scenario_hash": "09b27189b37c57ba",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": false,
+        "degree": false,
+        "lcv": false,
+        "severity_order": false,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "step_limit",
+      "summary": {
+        "fully_served": 55,
+        "partially_served": 1,
+        "unserved": 194,
+        "allocated_units": 92,
+        "required_slots": 415
+      },
+      "metrics": {
+        "search_steps": 3000,
+        "assignments_attempted": 3000,
+        "constraint_checks": 3000,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 24.624795000136146
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 100411.8
+      },
+      "domain_rejections": {
+        "C1_type": 109376,
+        "C4_deadline": 8855
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 2908
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "250",
+      "shared_preparation_ms": 568.9005529998212,
+      "incident_count": 250,
+      "repeat": 0,
+      "scenario_hash": "09b27189b37c57ba",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": true,
+        "degree": false,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 0,
+        "partially_served": 1,
+        "unserved": 249,
+        "allocated_units": 1,
+        "required_slots": 415
+      },
+      "metrics": {
+        "search_steps": 1,
+        "assignments_attempted": 1,
+        "constraint_checks": 181376,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 250.12615500008906
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 1510.12
+      },
+      "domain_rejections": {
+        "C1_type": 109376,
+        "C4_deadline": 8855
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 17
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "250",
+      "shared_preparation_ms": 568.9005529998212,
+      "incident_count": 250,
+      "repeat": 0,
+      "scenario_hash": "09b27189b37c57ba",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": true,
+        "degree": true,
+        "lcv": true,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 0,
+        "partially_served": 1,
+        "unserved": 249,
+        "allocated_units": 1,
+        "required_slots": 415
+      },
+      "metrics": {
+        "search_steps": 1,
+        "assignments_attempted": 1,
+        "constraint_checks": 315264,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 250.25844500009953
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 1510.12
+      },
+      "domain_rejections": {
+        "C1_type": 109376,
+        "C4_deadline": 8855
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 27
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "250",
+      "shared_preparation_ms": 568.9005529998212,
+      "incident_count": 250,
+      "repeat": 0,
+      "scenario_hash": "09b27189b37c57ba",
+      "options": {
+        "algorithm": "backjumping",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 0,
+        "partially_served": 1,
+        "unserved": 249,
+        "allocated_units": 1,
+        "required_slots": 415
+      },
+      "metrics": {
+        "search_steps": 1,
+        "assignments_attempted": 1,
+        "constraint_checks": 166656,
+        "backtracks": 0,
+        "backjumps": 0,
+        "skipped_levels": 0,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": 0,
+        "max_conflict_set": 0,
+        "restarts": null,
+        "runtime_ms": 250.10228899986942
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 1510.12
+      },
+      "domain_rejections": {
+        "C1_type": 109376,
+        "C4_deadline": 8855
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 12
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "250",
+      "shared_preparation_ms": 568.9005529998212,
+      "incident_count": 250,
+      "repeat": 0,
+      "scenario_hash": "09b27189b37c57ba",
+      "options": {
+        "algorithm": "forward_checking",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 0,
+        "partially_served": 1,
+        "unserved": 249,
+        "allocated_units": 1,
+        "required_slots": 415
+      },
+      "metrics": {
+        "search_steps": 1,
+        "assignments_attempted": 1,
+        "constraint_checks": 214400,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": 28,
+        "arc_revisions": null,
+        "domain_wipeouts": 0,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 250.03761100015254
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 1510.12
+      },
+      "domain_rejections": {
+        "C1_type": 109376,
+        "C4_deadline": 8855
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 28
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "250",
+      "shared_preparation_ms": 568.9005529998212,
+      "incident_count": 250,
+      "repeat": 0,
+      "scenario_hash": "09b27189b37c57ba",
+      "options": {
+        "algorithm": "arc_consistency",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 0,
+        "partially_served": 0,
+        "unserved": 250,
+        "allocated_units": 0,
+        "required_slots": 415
+      },
+      "metrics": {
+        "search_steps": 0,
+        "assignments_attempted": 0,
+        "constraint_checks": 555477,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": 0,
+        "arc_revisions": 0,
+        "domain_wipeouts": 0,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 257.56255100009184
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 0
+      },
+      "domain_rejections": {
+        "C1_type": 109376,
+        "C4_deadline": 8855
+      },
+      "constraint_failures": {},
+      "empty_domains": 0
+    },
+    {
+      "variant": "250",
+      "shared_preparation_ms": 568.9005529998212,
+      "incident_count": 250,
+      "repeat": 0,
+      "scenario_hash": "09b27189b37c57ba",
+      "options": {
+        "algorithm": "local_search",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 134,
+        "partially_served": 47,
+        "unserved": 69,
+        "allocated_units": 270,
+        "required_slots": 415
+      },
+      "metrics": {
+        "search_steps": 5,
+        "assignments_attempted": 930,
+        "constraint_checks": 4992,
+        "backtracks": null,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": 0,
+        "runtime_ms": 251.26316699993367
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 298637.93
+      },
+      "domain_rejections": {
+        "C1_type": 109376,
+        "C4_deadline": 8855
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 2513
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "250",
+      "shared_preparation_ms": 568.9005529998212,
+      "incident_count": 250,
+      "repeat": 1,
+      "scenario_hash": "09b27189b37c57ba",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": false,
+        "degree": false,
+        "lcv": false,
+        "severity_order": false,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "step_limit",
+      "summary": {
+        "fully_served": 55,
+        "partially_served": 1,
+        "unserved": 194,
+        "allocated_units": 92,
+        "required_slots": 415
+      },
+      "metrics": {
+        "search_steps": 3000,
+        "assignments_attempted": 3000,
+        "constraint_checks": 3000,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 29.535592999991422
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 100411.8
+      },
+      "domain_rejections": {
+        "C1_type": 109376,
+        "C4_deadline": 8855
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 2908
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "250",
+      "shared_preparation_ms": 568.9005529998212,
+      "incident_count": 250,
+      "repeat": 1,
+      "scenario_hash": "09b27189b37c57ba",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": true,
+        "degree": false,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 0,
+        "partially_served": 1,
+        "unserved": 249,
+        "allocated_units": 1,
+        "required_slots": 415
+      },
+      "metrics": {
+        "search_steps": 1,
+        "assignments_attempted": 1,
+        "constraint_checks": 238080,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 250.07306500015147
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 1510.12
+      },
+      "domain_rejections": {
+        "C1_type": 109376,
+        "C4_deadline": 8855
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 37
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "250",
+      "shared_preparation_ms": 568.9005529998212,
+      "incident_count": 250,
+      "repeat": 1,
+      "scenario_hash": "09b27189b37c57ba",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": true,
+        "degree": true,
+        "lcv": true,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 0,
+        "partially_served": 1,
+        "unserved": 249,
+        "allocated_units": 1,
+        "required_slots": 415
+      },
+      "metrics": {
+        "search_steps": 1,
+        "assignments_attempted": 1,
+        "constraint_checks": 274176,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 250.1368010000533
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 1510.12
+      },
+      "domain_rejections": {
+        "C1_type": 109376,
+        "C4_deadline": 8855
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 12
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "250",
+      "shared_preparation_ms": 568.9005529998212,
+      "incident_count": 250,
+      "repeat": 1,
+      "scenario_hash": "09b27189b37c57ba",
+      "options": {
+        "algorithm": "backjumping",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 0,
+        "partially_served": 1,
+        "unserved": 249,
+        "allocated_units": 1,
+        "required_slots": 415
+      },
+      "metrics": {
+        "search_steps": 1,
+        "assignments_attempted": 1,
+        "constraint_checks": 204672,
+        "backtracks": 0,
+        "backjumps": 0,
+        "skipped_levels": 0,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": 0,
+        "max_conflict_set": 0,
+        "restarts": null,
+        "runtime_ms": 250.0701010001194
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 1510.12
+      },
+      "domain_rejections": {
+        "C1_type": 109376,
+        "C4_deadline": 8855
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 25
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "250",
+      "shared_preparation_ms": 568.9005529998212,
+      "incident_count": 250,
+      "repeat": 1,
+      "scenario_hash": "09b27189b37c57ba",
+      "options": {
+        "algorithm": "forward_checking",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 0,
+        "partially_served": 1,
+        "unserved": 249,
+        "allocated_units": 1,
+        "required_slots": 415
+      },
+      "metrics": {
+        "search_steps": 1,
+        "assignments_attempted": 1,
+        "constraint_checks": 238720,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": 37,
+        "arc_revisions": null,
+        "domain_wipeouts": 0,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 250.09795300002224
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 1510.12
+      },
+      "domain_rejections": {
+        "C1_type": 109376,
+        "C4_deadline": 8855
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 37
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "250",
+      "shared_preparation_ms": 568.9005529998212,
+      "incident_count": 250,
+      "repeat": 1,
+      "scenario_hash": "09b27189b37c57ba",
+      "options": {
+        "algorithm": "arc_consistency",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 0,
+        "partially_served": 0,
+        "unserved": 250,
+        "allocated_units": 0,
+        "required_slots": 415
+      },
+      "metrics": {
+        "search_steps": 0,
+        "assignments_attempted": 0,
+        "constraint_checks": 827776,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": 0,
+        "arc_revisions": 0,
+        "domain_wipeouts": 0,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 253.50889600008486
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 0
+      },
+      "domain_rejections": {
+        "C1_type": 109376,
+        "C4_deadline": 8855
+      },
+      "constraint_failures": {},
+      "empty_domains": 0
+    },
+    {
+      "variant": "250",
+      "shared_preparation_ms": 568.9005529998212,
+      "incident_count": 250,
+      "repeat": 1,
+      "scenario_hash": "09b27189b37c57ba",
+      "options": {
+        "algorithm": "local_search",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 136,
+        "partially_served": 62,
+        "unserved": 52,
+        "allocated_units": 283,
+        "required_slots": 415
+      },
+      "metrics": {
+        "search_steps": 5,
+        "assignments_attempted": 1729,
+        "constraint_checks": 5632,
+        "backtracks": null,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": 0,
+        "runtime_ms": 250.79298599985123
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 310843.56
+      },
+      "domain_rejections": {
+        "C1_type": 109376,
+        "C4_deadline": 8855
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 2854
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "300",
+      "shared_preparation_ms": 801.8310200000087,
+      "incident_count": 300,
+      "repeat": 0,
+      "scenario_hash": "1b8d5eb75cd1a6e5",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": false,
+        "degree": false,
+        "lcv": false,
+        "severity_order": false,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "step_limit",
+      "summary": {
+        "fully_served": 55,
+        "partially_served": 1,
+        "unserved": 244,
+        "allocated_units": 92,
+        "required_slots": 497
+      },
+      "metrics": {
+        "search_steps": 3000,
+        "assignments_attempted": 3000,
+        "constraint_checks": 3000,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 21.961307999845303
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 100411.8
+      },
+      "domain_rejections": {
+        "C1_type": 156966,
+        "C4_deadline": 12228
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 2908
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "300",
+      "shared_preparation_ms": 801.8310200000087,
+      "incident_count": 300,
+      "repeat": 0,
+      "scenario_hash": "1b8d5eb75cd1a6e5",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": true,
+        "degree": false,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 0,
+        "partially_served": 1,
+        "unserved": 299,
+        "allocated_units": 1,
+        "required_slots": 497
+      },
+      "metrics": {
+        "search_steps": 1,
+        "assignments_attempted": 1,
+        "constraint_checks": 232576,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 250.06655299989689
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 1510.12
+      },
+      "domain_rejections": {
+        "C1_type": 156966,
+        "C4_deadline": 12228
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 13
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "300",
+      "shared_preparation_ms": 801.8310200000087,
+      "incident_count": 300,
+      "repeat": 0,
+      "scenario_hash": "1b8d5eb75cd1a6e5",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": true,
+        "degree": true,
+        "lcv": true,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 0,
+        "partially_served": 0,
+        "unserved": 300,
+        "allocated_units": 0,
+        "required_slots": 497
+      },
+      "metrics": {
+        "search_steps": 0,
+        "assignments_attempted": 0,
+        "constraint_checks": 376576,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 250.018892000071
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 0
+      },
+      "domain_rejections": {
+        "C1_type": 156966,
+        "C4_deadline": 12228
+      },
+      "constraint_failures": {},
+      "empty_domains": 0
+    },
+    {
+      "variant": "300",
+      "shared_preparation_ms": 801.8310200000087,
+      "incident_count": 300,
+      "repeat": 0,
+      "scenario_hash": "1b8d5eb75cd1a6e5",
+      "options": {
+        "algorithm": "backjumping",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 0,
+        "partially_served": 1,
+        "unserved": 299,
+        "allocated_units": 1,
+        "required_slots": 497
+      },
+      "metrics": {
+        "search_steps": 1,
+        "assignments_attempted": 1,
+        "constraint_checks": 241792,
+        "backtracks": 0,
+        "backjumps": 0,
+        "skipped_levels": 0,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": 0,
+        "max_conflict_set": 0,
+        "restarts": null,
+        "runtime_ms": 250.07103200005076
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 1510.12
+      },
+      "domain_rejections": {
+        "C1_type": 156966,
+        "C4_deadline": 12228
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 16
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "300",
+      "shared_preparation_ms": 801.8310200000087,
+      "incident_count": 300,
+      "repeat": 0,
+      "scenario_hash": "1b8d5eb75cd1a6e5",
+      "options": {
+        "algorithm": "forward_checking",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 0,
+        "partially_served": 0,
+        "unserved": 300,
+        "allocated_units": 0,
+        "required_slots": 497
+      },
+      "metrics": {
+        "search_steps": 0,
+        "assignments_attempted": 0,
+        "constraint_checks": 188160,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": 0,
+        "arc_revisions": null,
+        "domain_wipeouts": 0,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 250.17108099996221
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 0
+      },
+      "domain_rejections": {
+        "C1_type": 156966,
+        "C4_deadline": 12228
+      },
+      "constraint_failures": {},
+      "empty_domains": 0
+    },
+    {
+      "variant": "300",
+      "shared_preparation_ms": 801.8310200000087,
+      "incident_count": 300,
+      "repeat": 0,
+      "scenario_hash": "1b8d5eb75cd1a6e5",
+      "options": {
+        "algorithm": "arc_consistency",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 0,
+        "partially_served": 0,
+        "unserved": 300,
+        "allocated_units": 0,
+        "required_slots": 497
+      },
+      "metrics": {
+        "search_steps": 0,
+        "assignments_attempted": 0,
+        "constraint_checks": 947712,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": 0,
+        "arc_revisions": 0,
+        "domain_wipeouts": 0,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 259.9053159999585
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 0
+      },
+      "domain_rejections": {
+        "C1_type": 156966,
+        "C4_deadline": 12228
+      },
+      "constraint_failures": {},
+      "empty_domains": 0
+    },
+    {
+      "variant": "300",
+      "shared_preparation_ms": 801.8310200000087,
+      "incident_count": 300,
+      "repeat": 0,
+      "scenario_hash": "1b8d5eb75cd1a6e5",
+      "options": {
+        "algorithm": "local_search",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 42,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 147,
+        "partially_served": 75,
+        "unserved": 78,
+        "allocated_units": 318,
+        "required_slots": 497
+      },
+      "metrics": {
+        "search_steps": 3,
+        "assignments_attempted": 1498,
+        "constraint_checks": 4480,
+        "backtracks": null,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": 0,
+        "runtime_ms": 270.06948999996894
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 341374.88
+      },
+      "domain_rejections": {
+        "C1_type": 156966,
+        "C4_deadline": 12228
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 2386,
+        "C10_hospital_beds": 776
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "300",
+      "shared_preparation_ms": 801.8310200000087,
+      "incident_count": 300,
+      "repeat": 1,
+      "scenario_hash": "1b8d5eb75cd1a6e5",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": false,
+        "degree": false,
+        "lcv": false,
+        "severity_order": false,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "step_limit",
+      "summary": {
+        "fully_served": 55,
+        "partially_served": 1,
+        "unserved": 244,
+        "allocated_units": 92,
+        "required_slots": 497
+      },
+      "metrics": {
+        "search_steps": 3000,
+        "assignments_attempted": 3000,
+        "constraint_checks": 3000,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 22.130492999849594
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 100411.8
+      },
+      "domain_rejections": {
+        "C1_type": 156966,
+        "C4_deadline": 12228
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 2908
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "300",
+      "shared_preparation_ms": 801.8310200000087,
+      "incident_count": 300,
+      "repeat": 1,
+      "scenario_hash": "1b8d5eb75cd1a6e5",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": true,
+        "degree": false,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 0,
+        "partially_served": 1,
+        "unserved": 299,
+        "allocated_units": 1,
+        "required_slots": 497
+      },
+      "metrics": {
+        "search_steps": 1,
+        "assignments_attempted": 1,
+        "constraint_checks": 229376,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 250.14778600007048
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 1510.12
+      },
+      "domain_rejections": {
+        "C1_type": 156966,
+        "C4_deadline": 12228
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 11
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "300",
+      "shared_preparation_ms": 801.8310200000087,
+      "incident_count": 300,
+      "repeat": 1,
+      "scenario_hash": "1b8d5eb75cd1a6e5",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": true,
+        "degree": true,
+        "lcv": true,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 0,
+        "partially_served": 1,
+        "unserved": 299,
+        "allocated_units": 1,
+        "required_slots": 497
+      },
+      "metrics": {
+        "search_steps": 1,
+        "assignments_attempted": 1,
+        "constraint_checks": 379136,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 250.08213699993576
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 1510.12
+      },
+      "domain_rejections": {
+        "C1_type": 156966,
+        "C4_deadline": 12228
+      },
+      "constraint_failures": {},
+      "empty_domains": 0
+    },
+    {
+      "variant": "300",
+      "shared_preparation_ms": 801.8310200000087,
+      "incident_count": 300,
+      "repeat": 1,
+      "scenario_hash": "1b8d5eb75cd1a6e5",
+      "options": {
+        "algorithm": "backjumping",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 0,
+        "partially_served": 1,
+        "unserved": 299,
+        "allocated_units": 1,
+        "required_slots": 497
+      },
+      "metrics": {
+        "search_steps": 1,
+        "assignments_attempted": 1,
+        "constraint_checks": 232960,
+        "backtracks": 0,
+        "backjumps": 0,
+        "skipped_levels": 0,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": 0,
+        "max_conflict_set": 0,
+        "restarts": null,
+        "runtime_ms": 250.08098599982986
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 1510.12
+      },
+      "domain_rejections": {
+        "C1_type": 156966,
+        "C4_deadline": 12228
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 13
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "300",
+      "shared_preparation_ms": 801.8310200000087,
+      "incident_count": 300,
+      "repeat": 1,
+      "scenario_hash": "1b8d5eb75cd1a6e5",
+      "options": {
+        "algorithm": "forward_checking",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 0,
+        "partially_served": 1,
+        "unserved": 299,
+        "allocated_units": 1,
+        "required_slots": 497
+      },
+      "metrics": {
+        "search_steps": 1,
+        "assignments_attempted": 1,
+        "constraint_checks": 238208,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": 15,
+        "arc_revisions": null,
+        "domain_wipeouts": 0,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 250.07329400000344
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 1510.12
+      },
+      "domain_rejections": {
+        "C1_type": 156966,
+        "C4_deadline": 12228
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 15
+      },
+      "empty_domains": 0
+    },
+    {
+      "variant": "300",
+      "shared_preparation_ms": 801.8310200000087,
+      "incident_count": 300,
+      "repeat": 1,
+      "scenario_hash": "1b8d5eb75cd1a6e5",
+      "options": {
+        "algorithm": "arc_consistency",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 0,
+        "partially_served": 0,
+        "unserved": 300,
+        "allocated_units": 0,
+        "required_slots": 497
+      },
+      "metrics": {
+        "search_steps": 0,
+        "assignments_attempted": 0,
+        "constraint_checks": 1021184,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": 0,
+        "arc_revisions": 0,
+        "domain_wipeouts": 0,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 255.0960359999408
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 0
+      },
+      "domain_rejections": {
+        "C1_type": 156966,
+        "C4_deadline": 12228
+      },
+      "constraint_failures": {},
+      "empty_domains": 0
+    },
+    {
+      "variant": "300",
+      "shared_preparation_ms": 801.8310200000087,
+      "incident_count": 300,
+      "repeat": 1,
+      "scenario_hash": "1b8d5eb75cd1a6e5",
+      "options": {
+        "algorithm": "local_search",
+        "mrv": true,
+        "degree": true,
+        "lcv": false,
+        "severity_order": true,
+        "mac": false,
+        "max_steps": 3000,
+        "timeout": 0.25,
+        "seed": 43,
+        "restarts": 2
+      },
+      "status": "timeout",
+      "summary": {
+        "fully_served": 148,
+        "partially_served": 63,
+        "unserved": 89,
+        "allocated_units": 319,
+        "required_slots": 497
+      },
+      "metrics": {
+        "search_steps": 4,
+        "assignments_attempted": 1144,
+        "constraint_checks": 5120,
+        "backtracks": null,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": 0,
+        "runtime_ms": 250.68596799997067
+      },
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 347826.7
+      },
+      "domain_rejections": {
+        "C1_type": 156966,
+        "C4_deadline": 12228
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 2646
+      },
+      "empty_domains": 0
+    }
+  ],
+  "notes": "Runtime measures solver only, excluding routing/domain preparation, final validation and rendering. Partial results are valid subsets, not maximum allocations. Same scenario hash identifies identical input.",
+  "limits": {
+    "timeout_seconds": 0.25,
+    "steps": 3000
+  },
+  "measurement_note": "Actual current-instance measurements. Runtime excludes scenario/routing/domain preparation, serialization, final validation and UI."
+}
