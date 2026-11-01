@@ -1,0 +1,15 @@
+{
+  "count": 10,
+  "seed": 42,
+  "deadline": 60.0,
+  "severity_deadlines": false,
+  "supply": 1.05,
+  "ambulance_factor": 1.0,
+  "rescue_factor": 1.0,
+  "fire_busy_fraction": 0.0,
+  "hospital_factor": 1.1,
+  "budget_factor": 1.3,
+  "block_fraction": 0.04,
+  "demo": "custom",
+  "rules": null
+}

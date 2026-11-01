@@ -1,0 +1,1077 @@
+{
+  "scenario_hash": "a1d071739f78bae5",
+  "preparation_ms": 0.34904600011032016,
+  "results": [
+    {
+      "status": "feasible",
+      "algorithm": "backtracking",
+      "options": {
+        "algorithm": "backtracking",
+        "mrv": false,
+        "degree": false,
+        "lcv": false,
+        "severity_order": false,
+        "mac": false,
+        "max_steps": 10000,
+        "timeout": 3,
+        "seed": 42,
+        "restarts": 2
+      },
+      "optimal": false,
+      "summary": {
+        "fully_served": 3,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 3,
+        "required_slots": 3
+      },
+      "assignments": [
+        {
+          "slot": "A/0/0",
+          "incident": "A",
+          "role": "ambulance",
+          "resource": "AM2",
+          "station": "S2",
+          "hospital": null,
+          "patients": 0,
+          "response": {
+            "origin": "c",
+            "destination": "b",
+            "edges": [
+              "c>b"
+            ],
+            "nodes": [
+              "c",
+              "b"
+            ],
+            "geometry": [
+              [
+                90.41,
+                23.73
+              ],
+              [
+                90.4,
+                23.73
+              ]
+            ],
+            "minutes": 2.0,
+            "distance_km": 1.0
+          },
+          "transport": null,
+          "eta_minutes": 2.0,
+          "arrival_at": 2.0,
+          "release_at": 17.0,
+          "transport_minutes": 0,
+          "cost": 530.0
+        },
+        {
+          "slot": "B/0/0",
+          "incident": "B",
+          "role": "rescue",
+          "resource": "RT1",
+          "station": "S1",
+          "hospital": null,
+          "patients": 0,
+          "response": {
+            "origin": "a",
+            "destination": "b",
+            "edges": [
+              "a>b"
+            ],
+            "nodes": [
+              "a",
+              "b"
+            ],
+            "geometry": [
+              [
+                90.39,
+                23.73
+              ],
+              [
+                90.4,
+                23.73
+              ]
+            ],
+            "minutes": 2.0,
+            "distance_km": 1.0
+          },
+          "transport": null,
+          "eta_minutes": 2.0,
+          "arrival_at": 2.0,
+          "release_at": 17.0,
+          "transport_minutes": 0,
+          "cost": 530.0
+        },
+        {
+          "slot": "C/0/0",
+          "incident": "C",
+          "role": "ambulance",
+          "resource": "AM1",
+          "station": "S1",
+          "hospital": null,
+          "patients": 0,
+          "response": {
+            "origin": "a",
+            "destination": "a",
+            "edges": [],
+            "nodes": [
+              "a"
+            ],
+            "geometry": [
+              [
+                90.39,
+                23.73
+              ]
+            ],
+            "minutes": 0.0,
+            "distance_km": 0
+          },
+          "transport": null,
+          "eta_minutes": 0.0,
+          "arrival_at": 0.0,
+          "release_at": 15.0,
+          "transport_minutes": 0,
+          "cost": 500
+        }
+      ],
+      "incidents": [
+        {
+          "id": "A",
+          "status": "fully_served",
+          "assigned": 1,
+          "required": 1,
+          "unmet": {}
+        },
+        {
+          "id": "B",
+          "status": "fully_served",
+          "assigned": 1,
+          "required": 1,
+          "unmet": {}
+        },
+        {
+          "id": "C",
+          "status": "fully_served",
+          "assigned": 1,
+          "required": 1,
+          "unmet": {}
+        }
+      ],
+      "metrics": {
+        "search_steps": 8,
+        "assignments_attempted": 8,
+        "constraint_checks": 8,
+        "backtracks": 3,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 0.154723000150625
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 1560.0
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 2
+      },
+      "domain_rejections": {
+        "C1_type": 6,
+        "C4_deadline": 1
+      },
+      "empty_domains": [],
+      "trace": [
+        {
+          "event": "assign",
+          "variable": "A/0/0",
+          "resource": "AM1"
+        },
+        {
+          "event": "assign",
+          "variable": "B/0/0",
+          "resource": "RT1"
+        },
+        {
+          "event": "assign",
+          "variable": "B/0/0",
+          "resource": "RT2"
+        },
+        {
+          "event": "assign",
+          "variable": "A/0/0",
+          "resource": "AM2"
+        },
+        {
+          "event": "assign",
+          "variable": "B/0/0",
+          "resource": "RT1"
+        },
+        {
+          "event": "assign",
+          "variable": "C/0/0",
+          "resource": "AM1"
+        }
+      ],
+      "local_unresolved": {},
+      "preparation_ms": 0.00010999997357430402
+    },
+    {
+      "status": "feasible",
+      "algorithm": "backjumping",
+      "options": {
+        "algorithm": "backjumping",
+        "mrv": false,
+        "degree": false,
+        "lcv": false,
+        "severity_order": false,
+        "mac": false,
+        "max_steps": 10000,
+        "timeout": 3,
+        "seed": 42,
+        "restarts": 2
+      },
+      "optimal": false,
+      "summary": {
+        "fully_served": 3,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 3,
+        "required_slots": 3
+      },
+      "assignments": [
+        {
+          "slot": "A/0/0",
+          "incident": "A",
+          "role": "ambulance",
+          "resource": "AM2",
+          "station": "S2",
+          "hospital": null,
+          "patients": 0,
+          "response": {
+            "origin": "c",
+            "destination": "b",
+            "edges": [
+              "c>b"
+            ],
+            "nodes": [
+              "c",
+              "b"
+            ],
+            "geometry": [
+              [
+                90.41,
+                23.73
+              ],
+              [
+                90.4,
+                23.73
+              ]
+            ],
+            "minutes": 2.0,
+            "distance_km": 1.0
+          },
+          "transport": null,
+          "eta_minutes": 2.0,
+          "arrival_at": 2.0,
+          "release_at": 17.0,
+          "transport_minutes": 0,
+          "cost": 530.0
+        },
+        {
+          "slot": "B/0/0",
+          "incident": "B",
+          "role": "rescue",
+          "resource": "RT1",
+          "station": "S1",
+          "hospital": null,
+          "patients": 0,
+          "response": {
+            "origin": "a",
+            "destination": "b",
+            "edges": [
+              "a>b"
+            ],
+            "nodes": [
+              "a",
+              "b"
+            ],
+            "geometry": [
+              [
+                90.39,
+                23.73
+              ],
+              [
+                90.4,
+                23.73
+              ]
+            ],
+            "minutes": 2.0,
+            "distance_km": 1.0
+          },
+          "transport": null,
+          "eta_minutes": 2.0,
+          "arrival_at": 2.0,
+          "release_at": 17.0,
+          "transport_minutes": 0,
+          "cost": 530.0
+        },
+        {
+          "slot": "C/0/0",
+          "incident": "C",
+          "role": "ambulance",
+          "resource": "AM1",
+          "station": "S1",
+          "hospital": null,
+          "patients": 0,
+          "response": {
+            "origin": "a",
+            "destination": "a",
+            "edges": [],
+            "nodes": [
+              "a"
+            ],
+            "geometry": [
+              [
+                90.39,
+                23.73
+              ]
+            ],
+            "minutes": 0.0,
+            "distance_km": 0
+          },
+          "transport": null,
+          "eta_minutes": 0.0,
+          "arrival_at": 0.0,
+          "release_at": 15.0,
+          "transport_minutes": 0,
+          "cost": 500
+        }
+      ],
+      "incidents": [
+        {
+          "id": "A",
+          "status": "fully_served",
+          "assigned": 1,
+          "required": 1,
+          "unmet": {}
+        },
+        {
+          "id": "B",
+          "status": "fully_served",
+          "assigned": 1,
+          "required": 1,
+          "unmet": {}
+        },
+        {
+          "id": "C",
+          "status": "fully_served",
+          "assigned": 1,
+          "required": 1,
+          "unmet": {}
+        }
+      ],
+      "metrics": {
+        "search_steps": 6,
+        "assignments_attempted": 6,
+        "constraint_checks": 6,
+        "backtracks": 1,
+        "backjumps": 1,
+        "skipped_levels": 1,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": 1,
+        "max_conflict_set": 1,
+        "restarts": null,
+        "runtime_ms": 0.11115699999209028
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 1560.0
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 1
+      },
+      "domain_rejections": {
+        "C1_type": 6,
+        "C4_deadline": 1
+      },
+      "empty_domains": [],
+      "trace": [
+        {
+          "event": "assign",
+          "variable": "A/0/0",
+          "resource": "AM1"
+        },
+        {
+          "event": "assign",
+          "variable": "B/0/0",
+          "resource": "RT1"
+        },
+        {
+          "event": "backjump",
+          "variable": "C/0/0",
+          "target": "A/0/0",
+          "conflict": [
+            "A/0/0"
+          ]
+        },
+        {
+          "event": "skip_unrelated",
+          "variable": "B/0/0",
+          "conflict": [
+            "A/0/0"
+          ]
+        },
+        {
+          "event": "assign",
+          "variable": "A/0/0",
+          "resource": "AM2"
+        },
+        {
+          "event": "assign",
+          "variable": "B/0/0",
+          "resource": "RT1"
+        },
+        {
+          "event": "assign",
+          "variable": "C/0/0",
+          "resource": "AM1"
+        }
+      ],
+      "local_unresolved": {},
+      "preparation_ms": 0.00012100008461857215
+    },
+    {
+      "status": "feasible",
+      "algorithm": "forward_checking",
+      "options": {
+        "algorithm": "forward_checking",
+        "mrv": false,
+        "degree": false,
+        "lcv": false,
+        "severity_order": false,
+        "mac": false,
+        "max_steps": 10000,
+        "timeout": 3,
+        "seed": 42,
+        "restarts": 2
+      },
+      "optimal": false,
+      "summary": {
+        "fully_served": 3,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 3,
+        "required_slots": 3
+      },
+      "assignments": [
+        {
+          "slot": "A/0/0",
+          "incident": "A",
+          "role": "ambulance",
+          "resource": "AM2",
+          "station": "S2",
+          "hospital": null,
+          "patients": 0,
+          "response": {
+            "origin": "c",
+            "destination": "b",
+            "edges": [
+              "c>b"
+            ],
+            "nodes": [
+              "c",
+              "b"
+            ],
+            "geometry": [
+              [
+                90.41,
+                23.73
+              ],
+              [
+                90.4,
+                23.73
+              ]
+            ],
+            "minutes": 2.0,
+            "distance_km": 1.0
+          },
+          "transport": null,
+          "eta_minutes": 2.0,
+          "arrival_at": 2.0,
+          "release_at": 17.0,
+          "transport_minutes": 0,
+          "cost": 530.0
+        },
+        {
+          "slot": "B/0/0",
+          "incident": "B",
+          "role": "rescue",
+          "resource": "RT1",
+          "station": "S1",
+          "hospital": null,
+          "patients": 0,
+          "response": {
+            "origin": "a",
+            "destination": "b",
+            "edges": [
+              "a>b"
+            ],
+            "nodes": [
+              "a",
+              "b"
+            ],
+            "geometry": [
+              [
+                90.39,
+                23.73
+              ],
+              [
+                90.4,
+                23.73
+              ]
+            ],
+            "minutes": 2.0,
+            "distance_km": 1.0
+          },
+          "transport": null,
+          "eta_minutes": 2.0,
+          "arrival_at": 2.0,
+          "release_at": 17.0,
+          "transport_minutes": 0,
+          "cost": 530.0
+        },
+        {
+          "slot": "C/0/0",
+          "incident": "C",
+          "role": "ambulance",
+          "resource": "AM1",
+          "station": "S1",
+          "hospital": null,
+          "patients": 0,
+          "response": {
+            "origin": "a",
+            "destination": "a",
+            "edges": [],
+            "nodes": [
+              "a"
+            ],
+            "geometry": [
+              [
+                90.39,
+                23.73
+              ]
+            ],
+            "minutes": 0.0,
+            "distance_km": 0
+          },
+          "transport": null,
+          "eta_minutes": 0.0,
+          "arrival_at": 0.0,
+          "release_at": 15.0,
+          "transport_minutes": 0,
+          "cost": 500
+        }
+      ],
+      "incidents": [
+        {
+          "id": "A",
+          "status": "fully_served",
+          "assigned": 1,
+          "required": 1,
+          "unmet": {}
+        },
+        {
+          "id": "B",
+          "status": "fully_served",
+          "assigned": 1,
+          "required": 1,
+          "unmet": {}
+        },
+        {
+          "id": "C",
+          "status": "fully_served",
+          "assigned": 1,
+          "required": 1,
+          "unmet": {}
+        }
+      ],
+      "metrics": {
+        "search_steps": 4,
+        "assignments_attempted": 4,
+        "constraint_checks": 11,
+        "backtracks": 1,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": 1,
+        "arc_revisions": null,
+        "domain_wipeouts": 1,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 0.0416020000102435
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 1560.0
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 1
+      },
+      "domain_rejections": {
+        "C1_type": 6,
+        "C4_deadline": 1
+      },
+      "empty_domains": [],
+      "trace": [
+        {
+          "event": "assign",
+          "variable": "A/0/0",
+          "resource": "AM1"
+        },
+        {
+          "event": "forward_wipeout",
+          "variable": "C/0/0"
+        },
+        {
+          "event": "assign",
+          "variable": "A/0/0",
+          "resource": "AM2"
+        },
+        {
+          "event": "assign",
+          "variable": "B/0/0",
+          "resource": "RT1"
+        },
+        {
+          "event": "assign",
+          "variable": "C/0/0",
+          "resource": "AM1"
+        }
+      ],
+      "local_unresolved": {},
+      "preparation_ms": 8.999995770864189e-05
+    },
+    {
+      "status": "feasible",
+      "algorithm": "arc_consistency",
+      "options": {
+        "algorithm": "arc_consistency",
+        "mrv": false,
+        "degree": false,
+        "lcv": false,
+        "severity_order": false,
+        "mac": false,
+        "max_steps": 10000,
+        "timeout": 3,
+        "seed": 42,
+        "restarts": 2
+      },
+      "optimal": false,
+      "summary": {
+        "fully_served": 3,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 3,
+        "required_slots": 3
+      },
+      "assignments": [
+        {
+          "slot": "A/0/0",
+          "incident": "A",
+          "role": "ambulance",
+          "resource": "AM2",
+          "station": "S2",
+          "hospital": null,
+          "patients": 0,
+          "response": {
+            "origin": "c",
+            "destination": "b",
+            "edges": [
+              "c>b"
+            ],
+            "nodes": [
+              "c",
+              "b"
+            ],
+            "geometry": [
+              [
+                90.41,
+                23.73
+              ],
+              [
+                90.4,
+                23.73
+              ]
+            ],
+            "minutes": 2.0,
+            "distance_km": 1.0
+          },
+          "transport": null,
+          "eta_minutes": 2.0,
+          "arrival_at": 2.0,
+          "release_at": 17.0,
+          "transport_minutes": 0,
+          "cost": 530.0
+        },
+        {
+          "slot": "B/0/0",
+          "incident": "B",
+          "role": "rescue",
+          "resource": "RT1",
+          "station": "S1",
+          "hospital": null,
+          "patients": 0,
+          "response": {
+            "origin": "a",
+            "destination": "b",
+            "edges": [
+              "a>b"
+            ],
+            "nodes": [
+              "a",
+              "b"
+            ],
+            "geometry": [
+              [
+                90.39,
+                23.73
+              ],
+              [
+                90.4,
+                23.73
+              ]
+            ],
+            "minutes": 2.0,
+            "distance_km": 1.0
+          },
+          "transport": null,
+          "eta_minutes": 2.0,
+          "arrival_at": 2.0,
+          "release_at": 17.0,
+          "transport_minutes": 0,
+          "cost": 530.0
+        },
+        {
+          "slot": "C/0/0",
+          "incident": "C",
+          "role": "ambulance",
+          "resource": "AM1",
+          "station": "S1",
+          "hospital": null,
+          "patients": 0,
+          "response": {
+            "origin": "a",
+            "destination": "a",
+            "edges": [],
+            "nodes": [
+              "a"
+            ],
+            "geometry": [
+              [
+                90.39,
+                23.73
+              ]
+            ],
+            "minutes": 0.0,
+            "distance_km": 0
+          },
+          "transport": null,
+          "eta_minutes": 0.0,
+          "arrival_at": 0.0,
+          "release_at": 15.0,
+          "transport_minutes": 0,
+          "cost": 500
+        }
+      ],
+      "incidents": [
+        {
+          "id": "A",
+          "status": "fully_served",
+          "assigned": 1,
+          "required": 1,
+          "unmet": {}
+        },
+        {
+          "id": "B",
+          "status": "fully_served",
+          "assigned": 1,
+          "required": 1,
+          "unmet": {}
+        },
+        {
+          "id": "C",
+          "status": "fully_served",
+          "assigned": 1,
+          "required": 1,
+          "unmet": {}
+        }
+      ],
+      "metrics": {
+        "search_steps": 3,
+        "assignments_attempted": 3,
+        "constraint_checks": 6,
+        "backtracks": 0,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": 1,
+        "arc_revisions": 1,
+        "domain_wipeouts": 0,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": null,
+        "runtime_ms": 0.04146200012655754
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 1560.0
+      },
+      "constraint_failures": {},
+      "domain_rejections": {
+        "C1_type": 6,
+        "C4_deadline": 1
+      },
+      "empty_domains": [],
+      "trace": [
+        {
+          "event": "assign",
+          "variable": "A/0/0",
+          "resource": "AM2"
+        },
+        {
+          "event": "assign",
+          "variable": "B/0/0",
+          "resource": "RT1"
+        },
+        {
+          "event": "assign",
+          "variable": "C/0/0",
+          "resource": "AM1"
+        }
+      ],
+      "local_unresolved": {},
+      "preparation_ms": 0.00010000007932831068
+    },
+    {
+      "status": "feasible",
+      "algorithm": "local_search",
+      "options": {
+        "algorithm": "local_search",
+        "mrv": false,
+        "degree": false,
+        "lcv": false,
+        "severity_order": false,
+        "mac": false,
+        "max_steps": 10000,
+        "timeout": 3,
+        "seed": 42,
+        "restarts": 2
+      },
+      "optimal": false,
+      "summary": {
+        "fully_served": 3,
+        "partially_served": 0,
+        "unserved": 0,
+        "allocated_units": 3,
+        "required_slots": 3
+      },
+      "assignments": [
+        {
+          "slot": "A/0/0",
+          "incident": "A",
+          "role": "ambulance",
+          "resource": "AM2",
+          "station": "S2",
+          "hospital": null,
+          "patients": 0,
+          "response": {
+            "origin": "c",
+            "destination": "b",
+            "edges": [
+              "c>b"
+            ],
+            "nodes": [
+              "c",
+              "b"
+            ],
+            "geometry": [
+              [
+                90.41,
+                23.73
+              ],
+              [
+                90.4,
+                23.73
+              ]
+            ],
+            "minutes": 2.0,
+            "distance_km": 1.0
+          },
+          "transport": null,
+          "eta_minutes": 2.0,
+          "arrival_at": 2.0,
+          "release_at": 17.0,
+          "transport_minutes": 0,
+          "cost": 530.0
+        },
+        {
+          "slot": "B/0/0",
+          "incident": "B",
+          "role": "rescue",
+          "resource": "RT1",
+          "station": "S1",
+          "hospital": null,
+          "patients": 0,
+          "response": {
+            "origin": "a",
+            "destination": "b",
+            "edges": [
+              "a>b"
+            ],
+            "nodes": [
+              "a",
+              "b"
+            ],
+            "geometry": [
+              [
+                90.39,
+                23.73
+              ],
+              [
+                90.4,
+                23.73
+              ]
+            ],
+            "minutes": 2.0,
+            "distance_km": 1.0
+          },
+          "transport": null,
+          "eta_minutes": 2.0,
+          "arrival_at": 2.0,
+          "release_at": 17.0,
+          "transport_minutes": 0,
+          "cost": 530.0
+        },
+        {
+          "slot": "C/0/0",
+          "incident": "C",
+          "role": "ambulance",
+          "resource": "AM1",
+          "station": "S1",
+          "hospital": null,
+          "patients": 0,
+          "response": {
+            "origin": "a",
+            "destination": "a",
+            "edges": [],
+            "nodes": [
+              "a"
+            ],
+            "geometry": [
+              [
+                90.39,
+                23.73
+              ]
+            ],
+            "minutes": 0.0,
+            "distance_km": 0
+          },
+          "transport": null,
+          "eta_minutes": 0.0,
+          "arrival_at": 0.0,
+          "release_at": 15.0,
+          "transport_minutes": 0,
+          "cost": 500
+        }
+      ],
+      "incidents": [
+        {
+          "id": "A",
+          "status": "fully_served",
+          "assigned": 1,
+          "required": 1,
+          "unmet": {}
+        },
+        {
+          "id": "B",
+          "status": "fully_served",
+          "assigned": 1,
+          "required": 1,
+          "unmet": {}
+        },
+        {
+          "id": "C",
+          "status": "fully_served",
+          "assigned": 1,
+          "required": 1,
+          "unmet": {}
+        }
+      ],
+      "metrics": {
+        "search_steps": 2,
+        "assignments_attempted": 2,
+        "constraint_checks": 11,
+        "backtracks": null,
+        "backjumps": null,
+        "skipped_levels": null,
+        "pruned_values": null,
+        "arc_revisions": null,
+        "domain_wipeouts": null,
+        "conflict_sets": null,
+        "max_conflict_set": null,
+        "restarts": 0,
+        "runtime_ms": 0.06863299995529815
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "violations": [],
+        "violation_count": 0,
+        "deadline_violations": 0,
+        "budget_violations": 0,
+        "total_cost": 1560.0
+      },
+      "constraint_failures": {
+        "C3_exclusivity": 4
+      },
+      "domain_rejections": {
+        "C1_type": 6,
+        "C4_deadline": 1
+      },
+      "empty_domains": [],
+      "trace": [],
+      "local_unresolved": {
+        "raw_assignment_conflicts": {},
+        "raw_conflicting_slot_constraints": 0,
+        "raw_missing_slots": 0,
+        "termination": "feasible"
+      },
+      "preparation_ms": 0.00010999997357430402
+    }
+  ]
+}
